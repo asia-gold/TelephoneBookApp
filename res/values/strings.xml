@@ -10,14 +10,13 @@
     <string name="action_settings">Settings</string>
     <string name="action_import_export">Import/Export</string>
     <string name="action_done">Done</string>
-    
+
     <!-- ImageView Photo Context Menu Strings -->
     <string name="action_photo_by_camera">Take a picture with the camera</string>
     <string name="action_photo_from_gallery">Choose from gallery</string>
     <string name="action_photo_from_network">Upload from network</string>
-    
     <string name="title_activity_detail">DetailActivity</string>
-    
+
     <!-- AddEditActivity Strings -->
     <string name="str_name">Name</string>
     <string name="str_surname">Surname</string>
@@ -29,11 +28,9 @@
     <string name="pref_display_by_gender_title">Display Options by gender</string>
     <string name="pref_display_by_gender_summary">Allows to select display options by gender</string>
     <string name="pref_display_by_gender_default">Both</string>
-    
     <string name="pref_is_first_strted">Previously Started</string>
-    
-    
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_add_edit">AddEditActivity</string>
+    <string name="title_activity_splash">SplashActivity</string>
 
 </resources>

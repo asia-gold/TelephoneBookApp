@@ -75,6 +75,7 @@ public class AddEditActivity extends ActionBarActivity {
 					dateBirth, address);
 			Intent intent = new Intent(this, DetailActivity.class);
 			intent.putExtra("idContact", (long) newContact.getId());
+			//intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
 			return true;
 		}

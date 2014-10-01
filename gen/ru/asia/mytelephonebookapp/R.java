@@ -961,6 +961,7 @@ containing a value of this type.
     
          */
         public static final int activity_horizontal_margin=0x7f09001d;
+        public static final int activity_vertical_margin=0x7f09001e;
         /**  The platform's desired fixed height for a dialog along the major axis
          (the screen is in portrait). This may be either a fraction or a dimension.
  The platform's desired fixed height for a dialog along the major axis
@@ -1237,8 +1238,9 @@ containing a value of this type.
         public static final int activity_add_edit=0x7f030018;
         public static final int activity_detail=0x7f030019;
         public static final int activity_main=0x7f03001a;
-        public static final int item=0x7f03001b;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001c;
+        public static final int activity_splash=0x7f03001b;
+        public static final int item=0x7f03001c;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001d;
     }
     public static final class menu {
         public static final int add_edit=0x7f0e0000;
@@ -1247,6 +1249,7 @@ containing a value of this type.
         public static final int main_activity_actions=0x7f0e0003;
         public static final int photo_menu=0x7f0e0004;
         public static final int settings=0x7f0e0005;
+        public static final int splash=0x7f0e0006;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1319,6 +1322,7 @@ containing a value of this type.
         public static final int title_activity_add_edit=0x7f0b0022;
         public static final int title_activity_detail=0x7f0b0017;
         public static final int title_activity_settings=0x7f0b0021;
+        public static final int title_activity_splash=0x7f0b0023;
     }
     public static final class style {
         /** 
