@@ -5,7 +5,6 @@ public class Contact {
 	
 	private long id;
 	private String name;
-	private String surname;
 	private String dateOfBirth;
 	private String gender;
 	private String address;
@@ -14,8 +13,7 @@ public class Contact {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Contact(String surname, String name, String gender) {
-		this.surname = surname;
+	public Contact(String name, String gender) {
 		this.name = name;
 		this.gender = gender;
 	}
@@ -31,11 +29,7 @@ public class Contact {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
-	
+		
 	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
@@ -60,10 +54,6 @@ public class Contact {
 		return name;
 	}
 	
-	public String getSurname() {
-		return surname;
-	}
-	
 	public String getDateOfBirth() {
 		return dateOfBirth;
 	}
@@ -75,7 +65,5 @@ public class Contact {
 	public String getAddress() {
 		return address;
 	}
-	
-	
 
 }

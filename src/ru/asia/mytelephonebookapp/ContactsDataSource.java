@@ -16,8 +16,8 @@ public class ContactsDataSource {
 	private SQLiteDatabase database;
 	private ContactDBHelper dbHelper;
 	private String[] allColumns = {ContactDBHelper.COLUMN_ID, ContactDBHelper.COLUMN_NAME,
-			ContactDBHelper.COLUMN_SURNAME, ContactDBHelper.COLUMN_GENDER,
-			ContactDBHelper.COLUMN_DATE_BIRTH, ContactDBHelper.COLUMN_ADDRESS };
+			ContactDBHelper.COLUMN_GENDER, ContactDBHelper.COLUMN_DATE_BIRTH, 
+			ContactDBHelper.COLUMN_ADDRESS };
 	
 	public ContactsDataSource(Context context) {
 		dbHelper = new ContactDBHelper(context);
@@ -31,10 +31,9 @@ public class ContactsDataSource {
 		dbHelper.close();
 	}
 	
-	public Contact addContact(String name, String surname, String gender, String dateBorn, String address) {
+	public Contact addContact(String name, String gender, String dateBorn, String address) {
 		ContentValues values = new ContentValues();
 		values.put(ContactDBHelper.COLUMN_NAME, name);
-		values.put(ContactDBHelper.COLUMN_SURNAME, surname);
 		values.put(ContactDBHelper.COLUMN_GENDER, gender);
 		values.put(ContactDBHelper.COLUMN_DATE_BIRTH, dateBorn);
 		values.put(ContactDBHelper.COLUMN_ADDRESS, address);
@@ -86,10 +85,9 @@ public class ContactsDataSource {
 		Contact contact = new Contact();
 		contact.setId(cursor.getLong(0));
 		contact.setName(cursor.getString(1));
-		contact.setSurname(cursor.getString(2));
-		contact.setGender(cursor.getString(3));
-		contact.setDateOfBirth(cursor.getString(4));
-		contact.setAddress(cursor.getString(5));
+		contact.setGender(cursor.getString(2));
+		contact.setDateOfBirth(cursor.getString(3));
+		contact.setAddress(cursor.getString(4));
 		return contact;
 	}
 

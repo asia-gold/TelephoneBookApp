@@ -30,12 +30,10 @@ public class AddEditActivity extends ActionBarActivity {
 	private static final int REQUEST_IMAGE_CAPTURE = 1;
 	private static final int REQUEST_IMAGE_SELECT = 2;
 
-	private ContactsDataSource dataSource;
 	private PackageManager pm;
 	
 	private ImageView ivPhotoAddEdit;
 	private EditText etName;
-	private EditText etSurname;
 	private Spinner spGender;
 	private EditText etDateOfBirth;
 	private EditText etAddress;
@@ -49,32 +47,13 @@ public class AddEditActivity extends ActionBarActivity {
 
 		pm = getPackageManager();
 
-		
-
-		dataSource = new ContactsDataSource(this);
-		dataSource.open();
-
 		ivPhotoAddEdit = (ImageView) findViewById(R.id.ivPhotoAddEdit);
 		etName = (EditText) findViewById(R.id.etName);
-		etSurname = (EditText) findViewById(R.id.etSurname);
 		spGender = (Spinner) findViewById(R.id.spGender);
 		etDateOfBirth = (EditText) findViewById(R.id.etDateOfBirth);
 		etAddress = (EditText) findViewById(R.id.etAddress);
 
 		registerForContextMenu(ivPhotoAddEdit);
-
-	}
-
-	@Override
-	protected void onResume() {
-		dataSource.open();
-		super.onResume();
-	}
-
-	@Override
-	protected void onPause() {
-		dataSource.close();
-		super.onPause();
 	}
 
 	@Override
@@ -89,11 +68,10 @@ public class AddEditActivity extends ActionBarActivity {
 		int id = item.getItemId();
 		if (id == R.id.action_done) {
 			String name = etName.getText().toString();
-			String surname = etSurname.getText().toString();
 			String gender = spGender.getSelectedItem().toString();
 			String dateBirth = etDateOfBirth.getText().toString();
 			String address = etAddress.getText().toString();
-			Contact newContact = dataSource.addContact(name, surname, gender,
+			Contact newContact = MyTelephoneBookApplication.getDataSource().addContact(name, gender,
 					dateBirth, address);
 			Intent intent = new Intent(this, DetailActivity.class);
 			intent.putExtra("idContact", (long) newContact.getId());

@@ -11,60 +11,40 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class DetailActivity extends ActionBarActivity {
-	
-	private ContactsDataSource dataSource;
-	
+
 	private LinearLayout linearLayout1;
 	private ImageView ivPhotoDetail;
-	private TextView tvSurnameDetail;
 	private TextView tvNameDetail;
 	private TextView tvGender;
 	private TextView tvDateOfBirth;
 	private TextView tvAddress;
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detail);
-		
-		dataSource = new ContactsDataSource(this);
-	    dataSource.open();
-		
+
+
 		linearLayout1 = (LinearLayout) findViewById(R.id.LinearLayout1);
 		tvNameDetail = (TextView) findViewById(R.id.tvNameDetail);
-		tvSurnameDetail = (TextView) findViewById(R.id.tvSurnameDetail);
 		tvGender = (TextView) findViewById(R.id.tvGender);
 		tvDateOfBirth = (TextView) findViewById(R.id.tvDateofBirth);
 		tvAddress = (TextView) findViewById(R.id.tvAddress);
-		
+
 		Intent intent = getIntent();
 		long id = intent.getLongExtra("idContact", 1L);
 		if (id != 1L) {
-			Contact detailContact = dataSource.getContact(id);
-			
+			Contact detailContact = MyTelephoneBookApplication.getDataSource().getContact(id);
+
 			tvNameDetail.setText(detailContact.getName());
-			tvSurnameDetail.setText(detailContact.getSurname());
 			tvGender.setText(detailContact.getGender());
 			if (detailContact.getGender() == "Male") {
 				linearLayout1.setBackgroundResource(R.color.male);
 			}
 			tvDateOfBirth.setText(detailContact.getDateOfBirth());
-			tvAddress.setText(detailContact.getAddress());			
+			tvAddress.setText(detailContact.getAddress());
 		}
 	}
-	
-	@Override
-	  protected void onResume() {
-	    dataSource.open();
-	    super.onResume();
-	  }
-
-	  @Override
-	  protected void onPause() {
-	    dataSource.close();
-	    super.onPause();
-	  }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

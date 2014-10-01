@@ -52,7 +52,6 @@ public class ContactAdapter extends BaseAdapter{
 		
 		LinearLayout llItem = (LinearLayout) view.findViewById(R.id.llItem);
 		ImageView ivPhoto = (ImageView) view.findViewById(R.id.ivPhoto);
-		TextView tvSurname = (TextView) view.findViewById(R.id.tvSurname);
 		TextView tvName = (TextView) view.findViewById(R.id.tvName);
 		
 		Contact tmpValue = (Contact) contactsList.get(position);
@@ -60,7 +59,6 @@ public class ContactAdapter extends BaseAdapter{
 		if (tmpValue.getGender() == "Male") {
 			llItem.setBackgroundResource(R.color.male);
 		}
-		tvSurname.setText(tmpValue.getSurname());
 		tvName.setText(tmpValue.getName());
 		
 		return view;
