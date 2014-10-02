@@ -20,10 +20,9 @@ import android.widget.ListView;
 
 public class MainActivity extends ActionBarActivity {
 
-	private ImageView ivSplash;
 	private ListView lvContacts;
 
-	private ContactAdapter adapter;
+	//private ContactAdapter adapter;
 	private ArrayList<Contact> data;
 
 	
@@ -34,20 +33,12 @@ public class MainActivity extends ActionBarActivity {
 		// Sets default values if app launched for the first time
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 		
-		//ivSplash = (ImageView) findViewById(R.id.ivSplash);
 		lvContacts = (ListView) findViewById(R.id.lvContacts);
 
-		Contact cm1 = new Contact("Ivanov Ivan", "Male");
-		Contact cm2 = new Contact("Bennet Jane", "Female");
-		Contact cm3 = new Contact("Petrov Petr", "Male");
-
-		data = new ArrayList<>();
-		data.add(cm1);
-		data.add(cm2);
-		data.add(cm3);
+		data = MyTelephoneBookApplication.getDataSource().getAllContact();
 		
-		adapter = new ContactAdapter(this, data);
-		lvContacts.setAdapter(adapter);
+		//adapter = new ContactAdapter(this, data);
+		lvContacts.setAdapter(MyTelephoneBookApplication.getAdapter());
 		
 		lvContacts.setOnItemClickListener(new OnItemClickListener() {
 
@@ -58,11 +49,8 @@ public class MainActivity extends ActionBarActivity {
 						DetailActivity.class);
 
 				Contact cm = data.get(position);
-				String name = cm.getName();
-				String gender = cm.getGender();
 
-				intent.putExtra("name", name);
-				intent.putExtra("gender", gender);
+				intent.putExtra("idContact", cm.getId());
 				startActivity(intent);
 			}
 		});

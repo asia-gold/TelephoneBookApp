@@ -13,13 +13,13 @@
         android:layout_margin="@dimen/margin"
         android:src="@drawable/ic_launcher" />
 
-        <TextView
-            android:id="@+id/tvName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:ellipsize="end"
-            android:text="@string/app_name"
-            android:textSize="@dimen/tv_name_text_size"/>
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:ellipsize="end"
+        android:text="@string/app_name"
+        android:textSize="@dimen/tv_name_text_size" />
 
 </LinearLayout>

@@ -31,7 +31,8 @@ public class ContactsDataSource {
 		dbHelper.close();
 	}
 	
-	public Contact addContact(String name, String gender, String dateBorn, String address) {
+	// Return id of new data row
+	public long addContact(String name, String gender, String dateBorn, String address) {
 		ContentValues values = new ContentValues();
 		values.put(ContactDBHelper.COLUMN_NAME, name);
 		values.put(ContactDBHelper.COLUMN_GENDER, gender);
@@ -39,12 +40,12 @@ public class ContactsDataSource {
 		values.put(ContactDBHelper.COLUMN_ADDRESS, address);
 		long insertID = database.insert(ContactDBHelper.TABLE_NAME, null, values);
 		Log.e("---------------", "id create = " + insertID);
-		Cursor cursor = database.query(ContactDBHelper.TABLE_NAME, allColumns, 
-				ContactDBHelper.COLUMN_ID + " = " + insertID, null, null, null, null);
-		cursor.moveToFirst();
-		Contact newContact = cursorToContact(cursor);
-		cursor.close();
-		return newContact;
+//		Cursor cursor = database.query(ContactDBHelper.TABLE_NAME, allColumns, 
+//				ContactDBHelper.COLUMN_ID + " = " + insertID, null, null, null, null);
+//		cursor.moveToFirst();
+//		Contact newContact = cursorToContact(cursor);
+//		cursor.close();
+		return insertID;
 	}
 	
 	public void deleteContact(Contact contact) {
@@ -66,8 +67,8 @@ public class ContactsDataSource {
 		return newContact;
 	}
 	
-	public List<Contact> getAllContact() {
-		List<Contact> contacts = new ArrayList<>();
+	public ArrayList<Contact> getAllContact() {
+		ArrayList<Contact> contacts = new ArrayList<>();
 		
 		Cursor cursor = database.query(ContactDBHelper.TABLE_NAME, allColumns, null, null, null, null, null);
 		

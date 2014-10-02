@@ -4,15 +4,17 @@ import ru.asia.mytelephonebookapp.models.Contact;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class DetailActivity extends ActionBarActivity {
 
-	private LinearLayout linearLayout1;
+	private ScrollView scrollDetail;
 	private ImageView ivPhotoDetail;
 	private TextView tvNameDetail;
 	private TextView tvGender;
@@ -24,8 +26,7 @@ public class DetailActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detail);
 
-
-		linearLayout1 = (LinearLayout) findViewById(R.id.LinearLayout1);
+		scrollDetail = (ScrollView) findViewById(R.id.scrollDetail);
 		tvNameDetail = (TextView) findViewById(R.id.tvNameDetail);
 		tvGender = (TextView) findViewById(R.id.tvGender);
 		tvDateOfBirth = (TextView) findViewById(R.id.tvDateofBirth);
@@ -38,8 +39,9 @@ public class DetailActivity extends ActionBarActivity {
 
 			tvNameDetail.setText(detailContact.getName());
 			tvGender.setText(detailContact.getGender());
-			if (detailContact.getGender() == "Male") {
-				linearLayout1.setBackgroundResource(R.color.male);
+			Log.e("Gender", detailContact.getGender());
+			if (detailContact.getGender().matches("Male")) {
+				scrollDetail.setBackgroundResource(R.color.male);
 			}
 			tvDateOfBirth.setText(detailContact.getDateOfBirth());
 			tvAddress.setText(detailContact.getAddress());

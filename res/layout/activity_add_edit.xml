@@ -57,6 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin"
+            android:focusableInTouchMode="false"
             android:ems="10"
             android:hint="@string/str_date_of_birth"
             android:inputType="date" />

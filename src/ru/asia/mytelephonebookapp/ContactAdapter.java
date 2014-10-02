@@ -15,14 +15,20 @@ import android.widget.TextView;
 
 public class ContactAdapter extends BaseAdapter{
 	
-	private Activity contactsActivity;
+	private Context context;
 	private ArrayList<Contact> contactsList;
 	private static LayoutInflater inflater;
 	
-	public ContactAdapter(Activity activity, ArrayList<Contact> data) {
-		contactsActivity = activity;
+	public ContactAdapter(Context contex, ArrayList<Contact> data) {
+		this.context = contex;
 		contactsList = data;
-		inflater = (LayoutInflater) contactsActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	}
+	
+	@Override
+	public void notifyDataSetChanged() {
+		contactsList = MyTelephoneBookApplication.getDataSource().getAllContact();
+		super.notifyDataSetChanged();
 	}
 
 	@Override
@@ -56,7 +62,7 @@ public class ContactAdapter extends BaseAdapter{
 		
 		Contact tmpValue = (Contact) contactsList.get(position);
 		
-		if (tmpValue.getGender() == "Male") {
+		if (tmpValue.getGender().matches("Male")) {
 			llItem.setBackgroundResource(R.color.male);
 		}
 		tvName.setText(tmpValue.getName());

@@ -6,14 +6,6 @@
     android:orientation="vertical"
     tools:context="ru.asia.mytelephonebookapp.MainActivity" >
 
-    <!--<ImageView
-        android:id="@+id/ivSplash"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:scaleType="fitCenter"
-        android:src="@drawable/splash"
-        android:visibility="invisible" />-->
-
     <ListView
         android:id="@+id/lvContacts"
         android:layout_width="match_parent"
