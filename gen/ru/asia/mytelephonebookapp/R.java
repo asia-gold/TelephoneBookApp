@@ -1102,7 +1102,7 @@ containing a value of this type.
     public static final class id {
         public static final int LinearLayout1=0x7f06003e;
         public static final int RelativeLayout1=0x7f06003c;
-        public static final int action_add=0x7f06004f;
+        public static final int action_add=0x7f060051;
         public static final int action_bar=0x7f06001c;
         public static final int action_bar_activity_content=0x7f060015;
         public static final int action_bar_container=0x7f06001b;
@@ -1110,20 +1110,24 @@ containing a value of this type.
         public static final int action_bar_root=0x7f06001a;
         public static final int action_bar_subtitle=0x7f060023;
         public static final int action_bar_title=0x7f060022;
+        public static final int action_cancel=0x7f060058;
         public static final int action_context_bar=0x7f06001d;
-        public static final int action_done=0x7f06004d;
-        public static final int action_import_export=0x7f060051;
+        public static final int action_delete=0x7f060057;
+        public static final int action_done=0x7f06004e;
+        public static final int action_edit=0x7f06004f;
+        public static final int action_import_export=0x7f060053;
         public static final int action_menu_divider=0x7f060016;
         public static final int action_menu_presenter=0x7f060017;
         public static final int action_mode_close_button=0x7f060024;
-        public static final int action_photo_by_camera=0x7f060052;
-        public static final int action_photo_from_gallery=0x7f060053;
-        public static final int action_photo_from_network=0x7f060054;
-        public static final int action_remove=0x7f060050;
-        public static final int action_settings=0x7f06004e;
+        public static final int action_photo_by_camera=0x7f060054;
+        public static final int action_photo_from_gallery=0x7f060055;
+        public static final int action_photo_from_network=0x7f060056;
+        public static final int action_remove=0x7f060052;
+        public static final int action_settings=0x7f060050;
         public static final int activity_chooser_view_content=0x7f060025;
         public static final int always=0x7f06000b;
         public static final int beginning=0x7f060011;
+        public static final int chbRemove=0x7f06004d;
         public static final int checkbox=0x7f06002d;
         public static final int collapseActionView=0x7f06000d;
         public static final int default_activity_button=0x7f060028;
@@ -1241,7 +1245,8 @@ containing a value of this type.
         public static final int activity_main=0x7f03001a;
         public static final int activity_splash=0x7f03001b;
         public static final int item=0x7f03001c;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001d;
+        public static final int item_remove=0x7f03001d;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001e;
     }
     public static final class menu {
         public static final int add_edit=0x7f0e0000;
@@ -1249,8 +1254,9 @@ containing a value of this type.
         public static final int main=0x7f0e0002;
         public static final int main_activity_actions=0x7f0e0003;
         public static final int photo_menu=0x7f0e0004;
-        public static final int settings=0x7f0e0005;
-        public static final int splash=0x7f0e0006;
+        public static final int remove_menu=0x7f0e0005;
+        public static final int settings=0x7f0e0006;
+        public static final int splash=0x7f0e0007;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1296,34 +1302,36 @@ containing a value of this type.
         /**  Action Buttons 
          */
         public static final int action_add=0x7f0b000f;
+        public static final int action_cancel=0x7f0b0015;
         public static final int action_done=0x7f0b0013;
+        public static final int action_edit=0x7f0b0014;
         public static final int action_import_export=0x7f0b0012;
         /**  ImageView Photo Context Menu Strings 
          */
-        public static final int action_photo_by_camera=0x7f0b0014;
-        public static final int action_photo_from_gallery=0x7f0b0015;
-        public static final int action_photo_from_network=0x7f0b0016;
+        public static final int action_photo_by_camera=0x7f0b0016;
+        public static final int action_photo_from_gallery=0x7f0b0017;
+        public static final int action_photo_from_network=0x7f0b0018;
         public static final int action_remove=0x7f0b0010;
         public static final int action_settings=0x7f0b0011;
         public static final int app_name=0x7f0b000d;
         public static final int hello_world=0x7f0b000e;
-        public static final int pref_display_by_gender_default=0x7f0b001f;
-        public static final int pref_display_by_gender_summary=0x7f0b001e;
-        public static final int pref_display_by_gender_title=0x7f0b001d;
+        public static final int pref_display_by_gender_default=0x7f0b0021;
+        public static final int pref_display_by_gender_summary=0x7f0b0020;
+        public static final int pref_display_by_gender_title=0x7f0b001f;
         /**  Preferences Strings 
          */
-        public static final int pref_display_category=0x7f0b001c;
-        public static final int pref_is_first_strted=0x7f0b0020;
-        public static final int str_address=0x7f0b001b;
-        public static final int str_date_of_birth=0x7f0b001a;
+        public static final int pref_display_category=0x7f0b001e;
+        public static final int pref_is_first_strted=0x7f0b0022;
+        public static final int str_address=0x7f0b001d;
+        public static final int str_date_of_birth=0x7f0b001c;
         /**  AddEditActivity Strings 
          */
-        public static final int str_name=0x7f0b0018;
-        public static final int str_surname=0x7f0b0019;
-        public static final int title_activity_add_edit=0x7f0b0022;
-        public static final int title_activity_detail=0x7f0b0017;
-        public static final int title_activity_settings=0x7f0b0021;
-        public static final int title_activity_splash=0x7f0b0023;
+        public static final int str_name=0x7f0b001a;
+        public static final int str_surname=0x7f0b001b;
+        public static final int title_activity_add_edit=0x7f0b0024;
+        public static final int title_activity_detail=0x7f0b0019;
+        public static final int title_activity_settings=0x7f0b0023;
+        public static final int title_activity_splash=0x7f0b0025;
     }
     public static final class style {
         /** 

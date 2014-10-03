@@ -3,31 +3,45 @@ package ru.asia.mytelephonebookapp;
 import java.util.ArrayList;
 
 import ru.asia.mytelephonebookapp.models.Contact;
-import android.app.Activity;
 import android.content.Context;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class ContactAdapter extends BaseAdapter{
-	
+public class ContactAdapter extends BaseAdapter {
+
 	private Context context;
 	private ArrayList<Contact> contactsList;
 	private static LayoutInflater inflater;
-	
-	public ContactAdapter(Context contex, ArrayList<Contact> data) {
+	private SparseBooleanArray checkedStates;
+	private boolean isRemove;
+
+	public ContactAdapter(Context contex, ArrayList<Contact> data,
+			boolean isRemove) {
 		this.context = contex;
 		contactsList = data;
-		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		this.isRemove = isRemove;
+		inflater = (LayoutInflater) context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		checkedStates = new SparseBooleanArray(contactsList.size());
 	}
 	
+	public SparseBooleanArray getCheckedStates() {
+		return checkedStates;
+	}
+
 	@Override
 	public void notifyDataSetChanged() {
-		contactsList = MyTelephoneBookApplication.getDataSource().getAllContact();
+		contactsList = MyTelephoneBookApplication.getDataSource()
+				.getAllContact();
 		super.notifyDataSetChanged();
 	}
 
@@ -45,29 +59,70 @@ public class ContactAdapter extends BaseAdapter{
 	public long getItemId(int position) {
 		return position;
 	}
+	
+	public boolean isChecked(int position) {
+		return checkedStates.get(position, false);
+	}
 
+	public void setChecked(int position, boolean isChecked) {
+		checkedStates.put(position, isChecked);
+	}
 	
-	// Holder works faster
+	public void changeState(int position) {
+		setChecked(position, !isChecked(position));
+	}
 	
+	static class ViewHolder {
+		public LinearLayout llItem;
+		public ImageView ivPhoto;
+		public TextView tvName;
+		public CheckBox chbRemove;
+	}
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view = convertView;
 		if (view == null) {
-			view = inflater.inflate(R.layout.item, parent, false);
+			if (isRemove == true) {
+				view = inflater.inflate(R.layout.item_remove, parent, false);
+				ViewHolder removeHolder = new ViewHolder();
+				removeHolder.llItem = (LinearLayout) view
+						.findViewById(R.id.llItem);
+				removeHolder.ivPhoto = (ImageView) view
+						.findViewById(R.id.ivPhoto);
+				removeHolder.tvName = (TextView) view.findViewById(R.id.tvName);
+				removeHolder.chbRemove = (CheckBox) view
+						.findViewById(R.id.chbRemove);
+				view.setTag(removeHolder);
+			} else {
+				view = inflater.inflate(R.layout.item, parent, false);
+				ViewHolder holder = new ViewHolder();
+				holder.llItem = (LinearLayout) view.findViewById(R.id.llItem);
+				holder.ivPhoto = (ImageView) view.findViewById(R.id.ivPhoto);
+				holder.tvName = (TextView) view.findViewById(R.id.tvName);
+				view.setTag(holder);
+			}
 		}
-		
-		LinearLayout llItem = (LinearLayout) view.findViewById(R.id.llItem);
-		ImageView ivPhoto = (ImageView) view.findViewById(R.id.ivPhoto);
-		TextView tvName = (TextView) view.findViewById(R.id.tvName);
-		
+
+		ViewHolder viewHolder = (ViewHolder) view.getTag();
+
 		Contact tmpValue = (Contact) contactsList.get(position);
-		
+
 		if (tmpValue.getGender().matches("Male")) {
-			llItem.setBackgroundResource(R.color.male);
+			viewHolder.llItem.setBackgroundResource(R.color.male);
 		}
-		tvName.setText(tmpValue.getName());
-		
+		viewHolder.tvName.setText(tmpValue.getName());
+		if (isRemove == true) {
+			viewHolder.chbRemove.setTag(position);
+			viewHolder.chbRemove.setChecked(checkedStates.get(position, false));
+			viewHolder.chbRemove.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+				
+				@Override
+				public void onCheckedChanged(CompoundButton button, boolean isChecked) {
+					checkedStates.put((Integer)button.getTag(), isChecked);					
+				}
+			});
+		}
 		return view;
 	}
-
 }

@@ -40,17 +40,21 @@ public class ContactsDataSource {
 		values.put(ContactDBHelper.COLUMN_ADDRESS, address);
 		long insertID = database.insert(ContactDBHelper.TABLE_NAME, null, values);
 		Log.e("---------------", "id create = " + insertID);
-//		Cursor cursor = database.query(ContactDBHelper.TABLE_NAME, allColumns, 
-//				ContactDBHelper.COLUMN_ID + " = " + insertID, null, null, null, null);
-//		cursor.moveToFirst();
-//		Contact newContact = cursorToContact(cursor);
-//		cursor.close();
 		return insertID;
 	}
 	
 	public void deleteContact(Contact contact) {
 		long id = contact.getId();
+		Log.e("----------------", "deleted with id: " + id);
 		database.delete(ContactDBHelper.TABLE_NAME, ContactDBHelper.COLUMN_ID + " = " + id, null);
+	}
+	
+	public void deleteAllContacts(ArrayList<Contact> data) {
+		for (int i = 0; i < data.size(); i ++) {
+			Contact c = data.get(i);
+			deleteContact(c);
+		}
+		
 	}
 	
 	public Contact getContact(long id) {

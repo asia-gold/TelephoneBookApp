@@ -13,7 +13,7 @@ public class MyTelephoneBookApplication extends Application{
 		super.onCreate();
 		dataSource = new ContactsDataSource(this);
 		dataSource.open();
-		adapter = new ContactAdapter(getApplicationContext(), dataSource.getAllContact());
+		adapter = new ContactAdapter(getApplicationContext(), dataSource.getAllContact(), false);
 		Log.e("MyApp", "DataSource initialize");
 	}
 	
