@@ -1,4 +1,8 @@
 <resources>
+    
+    <style name="NoCloseButton" parent="@style/Widget.AppCompat.Light.ActionButton.CloseMode">
+        <item name="android:visibility">gone</item>
+    </style>
 
     <!--
         Base application theme for API 14+. This theme completely replaces

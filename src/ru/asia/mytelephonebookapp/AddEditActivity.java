@@ -1,5 +1,6 @@
 package ru.asia.mytelephonebookapp;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -15,6 +16,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -69,6 +71,10 @@ public class AddEditActivity extends ActionBarActivity {
 		etName = (EditText) findViewById(R.id.etName);
 		spGender = (Spinner) findViewById(R.id.spGender);
 		etDateOfBirth = (EditText) findViewById(R.id.etDateOfBirth);
+		etAddress = (EditText) findViewById(R.id.etAddress);
+		
+
+		
 		etDateOfBirth.setClickable(true);
 		etDateOfBirth.setOnClickListener(new OnClickListener() {
 
@@ -99,7 +105,7 @@ public class AddEditActivity extends ActionBarActivity {
 			}
 		});
 
-		etAddress = (EditText) findViewById(R.id.etAddress);
+		
 
 		registerForContextMenu(ivPhotoAddEdit);
 	}
@@ -115,12 +121,20 @@ public class AddEditActivity extends ActionBarActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		if (id == R.id.action_done) {
+			
+			Bitmap photo = ((BitmapDrawable)ivPhotoAddEdit.getDrawable()).getBitmap();
+			
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			photo.compress(Bitmap.CompressFormat.PNG, 300, bos);
+			byte[] photoArray = bos.toByteArray();
+			
 			String name = etName.getText().toString();
 			String gender = spGender.getSelectedItem().toString();
 			String dateBirth = etDateOfBirth.getText().toString();
 			String address = etAddress.getText().toString();
 			long contactId = MyTelephoneBookApplication.getDataSource()
-					.addContact(name, gender, dateBirth, address);
+					.addContact(photoArray, name, gender, dateBirth, address);
+			
 			Contact newContact = MyTelephoneBookApplication.getDataSource()
 					.getContact(contactId);
 			MyTelephoneBookApplication.getAdapter().notifyDataSetChanged();
@@ -196,7 +210,7 @@ public class AddEditActivity extends ActionBarActivity {
 		String imageFile = "JPEG_" + timeStamp + "_";
 		File storageDir = Environment
 				.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-		File image = File.createTempFile(imageFile, ".jgp", storageDir);
+		File image = File.createTempFile(imageFile, ".jpg", storageDir);
 		// Save a file: path for use with ACTION_VIEW intents
 		currentPhotoPath = "file:" + image.getAbsolutePath();
 		return image;

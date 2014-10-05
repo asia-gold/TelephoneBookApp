@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import ru.asia.mytelephonebookapp.models.Contact;
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -111,7 +112,12 @@ public class ContactAdapter extends BaseAdapter {
 		if (tmpValue.getGender().matches("Male")) {
 			viewHolder.llItem.setBackgroundResource(R.color.male);
 		}
+		
+		byte[] photoArray = tmpValue.getPhoto();
+		viewHolder.ivPhoto.setImageBitmap(BitmapFactory.decodeByteArray(
+				photoArray, 0, photoArray.length));
 		viewHolder.tvName.setText(tmpValue.getName());
+		
 		if (isRemove == true) {
 			viewHolder.chbRemove.setTag(position);
 			viewHolder.chbRemove.setChecked(checkedStates.get(position, false));

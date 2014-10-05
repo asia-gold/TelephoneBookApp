@@ -14,7 +14,12 @@
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
+        <item name="android:actionModeCloseButtonStyle">@style/NoCloseButton</item>
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+    
+    <style name="NoCloseButton" parent="@style/Widget.AppCompat.Light.ActionButton.CloseMode">
+        <item name="android:visibility">gone</item>
     </style>
 
 </resources>

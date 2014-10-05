@@ -423,6 +423,7 @@ int string title_activity_settings 0x7f0b0023
 int string title_activity_splash 0x7f0b0025
 int style AppBaseTheme 0x7f0c008b
 int style AppTheme 0x7f0c008c
+int style NoCloseButton 0x7f0c008d
 int style TextAppearance_AppCompat_Base_CompactMenu_Dialog 0x7f0c0063
 int style TextAppearance_AppCompat_Base_SearchResult 0x7f0c006d
 int style TextAppearance_AppCompat_Base_SearchResult_Subtitle 0x7f0c006f

@@ -4,6 +4,7 @@ package ru.asia.mytelephonebookapp.models;
 public class Contact {
 	
 	private long id;
+	private byte[] photo;
 	private String name;
 	private String dateOfBirth;
 	private String gender;
@@ -24,6 +25,10 @@ public class Contact {
 	
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
 	}
 	
 	public void setName(String name) {
@@ -48,6 +53,10 @@ public class Contact {
 	
 	public long getId() {
 		return id;
+	}
+	
+	public byte[] getPhoto() {
+		return photo;
 	}
 	
 	public String getName() {

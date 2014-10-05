@@ -4,10 +4,11 @@ import java.util.ArrayList;
 
 import ru.asia.mytelephonebookapp.models.Contact;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.view.ActionMode;
+import android.view.ActionMode;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
@@ -35,9 +36,18 @@ public class MainActivity extends ActionBarActivity {
 		// Sets default values if app launched for the first time
 		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
-		lvContacts = (ListView) findViewById(R.id.lvContacts);
-
 		data = MyTelephoneBookApplication.getDataSource().getAllContact();
+
+//		SharedPreferences sharedPreferences = PreferenceManager
+//				.getDefaultSharedPreferences(this);
+//		String gender = sharedPreferences.getString(
+//				"prefDisplayByGender",
+//				getResources().getString(
+//						R.string.pref_display_by_gender_default));
+		//data = MyTelephoneBookApplication.getDataSource()
+				//.getAllContactsByGender(gender);
+
+		lvContacts = (ListView) findViewById(R.id.lvContacts);
 
 		// adapter = new ContactAdapter(this, data, false);
 		removeAdapter = new ContactAdapter(this, data, true);
@@ -59,6 +69,8 @@ public class MainActivity extends ActionBarActivity {
 				Contact cm = data.get(position);
 
 				intent.putExtra("idContact", cm.getId());
+				
+				Log.e("------------", "Id item click " + cm.getId());
 				startActivity(intent);
 			}
 		});
@@ -97,14 +109,14 @@ public class MainActivity extends ActionBarActivity {
 	private void startRemoveListItemMode() {
 		removeModeActive = true;
 		removeMode = this
-				.startSupportActionMode(new RemoveListItemActionModeCallback());
+				.startActionMode(new RemoveListItemActionModeCallback());
 		removeAdapter = new ContactAdapter(this, MyTelephoneBookApplication
 				.getDataSource().getAllContact(), true);
 		lvContacts.setAdapter(removeAdapter);
 		lvContacts.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 	}
 
-	private void endRemoveListMode() {
+	private void endRemoveListItemMode() {
 		removeModeActive = false;
 		lvContacts.setAdapter(MyTelephoneBookApplication.getAdapter());
 		lvContacts.setChoiceMode(ListView.CHOICE_MODE_NONE);
@@ -116,7 +128,6 @@ public class MainActivity extends ActionBarActivity {
 
 		@Override
 		public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
-			//
 			actionMode.getMenuInflater().inflate(R.menu.remove_menu, menu);
 			return true;
 		}
@@ -159,7 +170,7 @@ public class MainActivity extends ActionBarActivity {
 
 		@Override
 		public void onDestroyActionMode(ActionMode actionMode) {
-			endRemoveListMode();
+			endRemoveListItemMode();
 		}
 	}
 }
