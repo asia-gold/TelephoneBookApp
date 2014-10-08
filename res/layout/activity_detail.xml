@@ -1,0 +1,61 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollDetail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/female"
+    tools:context="ru.asia.mytelephonebookapp.DetailActivity" >
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivPhotoDetail"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/iv_photo_detail_height"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tvNameDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin"
+            android:ellipsize="end"
+            android:text="@string/app_name"
+            android:textSize="@dimen/tv_name_text_size" />
+
+        <TextView
+            android:id="@+id/tvGender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin"
+            android:text="@string/app_name"
+            android:textSize="@dimen/tv_other_text_size" />
+
+        <TextView
+            android:id="@+id/tvDateofBirth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin"
+            android:text="@string/app_name"
+            android:textSize="@dimen/tv_other_text_size" />
+
+        <TextView
+            android:id="@+id/tvAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin"
+            android:ellipsize="end"
+            android:text="@string/app_name"
+            android:textSize="@dimen/tv_other_text_size" />
+    </LinearLayout>
+
+</ScrollView>

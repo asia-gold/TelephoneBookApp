@@ -1,0 +1,74 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/margin"
+    android:paddingLeft="@dimen/margin"
+    android:paddingRight="@dimen/margin"
+    android:paddingTop="@dimen/margin"
+    tools:context="ru.asia.mytelephonebookapp.AddEditActivity" >
+
+    <ImageView
+        android:id="@+id/ivPhotoAddEdit"
+        android:layout_width="@dimen/iv_photo_add_width"
+        android:layout_height="@dimen/iv_photo_add_height"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_launcher" />
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ivPhotoAddEdit"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_toRightOf="@+id/ivPhotoAddEdit"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:ems="10"
+            android:hint="@string/str_name"
+            android:inputType="textPersonName" >
+
+            <requestFocus />
+        </EditText>
+
+        <Spinner
+            android:id="@+id/spGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/arraySpinnerGender" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivPhotoAddEdit"
+        android:layout_marginTop="@dimen/margin"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/etDateOfBirth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:focusableInTouchMode="false"
+            android:ems="10"
+            android:hint="@string/str_date_of_birth"
+            android:inputType="date" />
+
+        <EditText
+            android:id="@+id/etAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/str_address"
+            android:inputType="textPostalAddress" />
+    </LinearLayout>
+
+</RelativeLayout>
