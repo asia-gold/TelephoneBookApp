@@ -61,12 +61,14 @@ public class DetailActivity extends ActionBarActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
+		switch(id) {
+		case R.id.action_edit:
+			Intent intent = getIntent();
+			long idContact = intent.getLongExtra("idContact", 0);
+			Intent editIntent = new Intent(this, AddEditActivity.class);
+			editIntent.putExtra("idContact", idContact);
+			startActivity(editIntent);			
 		}
 		return super.onOptionsItemSelected(item);
 	}

@@ -1,25 +1,47 @@
 package ru.asia.mytelephonebookapp;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+
 import ru.asia.mytelephonebookapp.models.Contact;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
-import android.view.ActionMode;
 import android.util.Log;
 import android.util.SparseBooleanArray;
+import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 
 public class MainActivity extends ActionBarActivity {
 
+	private Context context = this;
 	private ListView lvContacts;
 
 	// private ContactAdapter adapter;
@@ -38,14 +60,14 @@ public class MainActivity extends ActionBarActivity {
 
 		data = MyTelephoneBookApplication.getDataSource().getAllContact();
 
-//		SharedPreferences sharedPreferences = PreferenceManager
-//				.getDefaultSharedPreferences(this);
-//		String gender = sharedPreferences.getString(
-//				"prefDisplayByGender",
-//				getResources().getString(
-//						R.string.pref_display_by_gender_default));
-		//data = MyTelephoneBookApplication.getDataSource()
-				//.getAllContactsByGender(gender);
+		// SharedPreferences sharedPreferences = PreferenceManager
+		// .getDefaultSharedPreferences(this);
+		// String gender = sharedPreferences.getString(
+		// "prefDisplayByGender",
+		// getResources().getString(
+		// R.string.pref_display_by_gender_default));
+		// data = MyTelephoneBookApplication.getDataSource()
+		// .getAllContactsByGender(gender);
 
 		lvContacts = (ListView) findViewById(R.id.lvContacts);
 
@@ -67,13 +89,17 @@ public class MainActivity extends ActionBarActivity {
 						DetailActivity.class);
 
 				Contact cm = data.get(position);
-
-				intent.putExtra("idContact", cm.getId());
-				
 				Log.e("------------", "Id item click " + cm.getId());
+				intent.putExtra("idContact", cm.getId());
 				startActivity(intent);
 			}
 		});
+	}
+
+	@Override
+	protected void onResume() {
+		data = MyTelephoneBookApplication.getDataSource().getAllContact();
+		super.onResume();
 	}
 
 	@Override
@@ -99,6 +125,33 @@ public class MainActivity extends ActionBarActivity {
 			startActivity(intent);
 			break;
 		case R.id.action_import_export:
+			// new dialog
+			final Dialog importExportDialog = new Dialog(context,
+					R.style.CustomDialogTheme);
+			importExportDialog.setContentView(R.layout.import_export_dialog);
+
+			Button btnImport = (Button) importExportDialog
+					.findViewById(R.id.btnImport);
+			Button btnExport = (Button) importExportDialog
+					.findViewById(R.id.btnExport);
+
+			btnImport.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					// is there file?
+					importExportDialog.dismiss();
+				}
+			});
+
+			btnExport.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View view) {
+					new DBContactsExportTask(context).execute();
+					importExportDialog.dismiss();
+				}
+			});
+			importExportDialog.show();
 			break;
 		default:
 			break;

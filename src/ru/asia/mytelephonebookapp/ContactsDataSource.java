@@ -1,7 +1,6 @@
 package ru.asia.mytelephonebookapp;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import ru.asia.mytelephonebookapp.models.Contact;
 import android.content.ContentValues;
@@ -47,6 +46,21 @@ public class ContactsDataSource {
 		Log.e("---------------", "id create = " + insertID);
 		return insertID;
 	}
+	
+	public void updateContact(long id, byte[] photo, String name, String gender, String dateBorn,
+			String address) {
+		ContentValues values = new ContentValues();
+		values.put(ContactDBHelper.COLUMN_PHOTO, photo);
+		values.put(ContactDBHelper.COLUMN_NAME, name);
+		values.put(ContactDBHelper.COLUMN_GENDER, gender);
+		values.put(ContactDBHelper.COLUMN_DATE_BIRTH, dateBorn);
+		values.put(ContactDBHelper.COLUMN_ADDRESS, address);
+		String whereClause = null;
+		if (id != 0) {
+			 whereClause = ContactDBHelper.COLUMN_ID + " = " + id;
+		}
+		database.update(ContactDBHelper.TABLE_NAME, values, whereClause, null);
+	}
 
 	public void deleteContact(Contact contact) {
 		long id = contact.getId();
@@ -63,22 +77,19 @@ public class ContactsDataSource {
 	}
 
 	public Contact getContact(long id) {
-		// List<Contact> contact = new ArrayList<>();
 		Contact newContact = null;
 		Cursor cursor = database.query(ContactDBHelper.TABLE_NAME, allColumns,
 				ContactDBHelper.COLUMN_ID + " = " + id, null, null, null, null);
 		cursor.moveToFirst();
 
 		newContact = cursorToContact(cursor);
-		// contact.add(newContact);
-		// cursor.moveToNext();
 
 		cursor.close();
 		return newContact;
 	}
 
 	public ArrayList<Contact> getAllContact() {
-		ArrayList<Contact> contacts = new ArrayList<>();
+		ArrayList<Contact> contacts = new ArrayList<Contact>();
 
 		Cursor cursor = database.query(ContactDBHelper.TABLE_NAME, allColumns,
 				null, null, null, null, null);
@@ -94,7 +105,7 @@ public class ContactsDataSource {
 	}
 
 	public ArrayList<Contact> getAllContactsByGender(String gender) {
-		ArrayList<Contact> contacts = new ArrayList<>();
+		ArrayList<Contact> contacts = new ArrayList<Contact>();
 		if (TextUtils.equals(gender, "Both")) {
 			contacts = getAllContact();			
 		} else {
@@ -123,5 +134,4 @@ public class ContactsDataSource {
 		contact.setAddress(cursor.getString(5));
 		return contact;
 	}
-
 }

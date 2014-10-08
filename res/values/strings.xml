@@ -2,7 +2,10 @@
 <resources>
 
     <string name="app_name">MyTelephoneBookApp</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_detail">DetailActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_add_edit">AddEditActivity</string>
+    <string name="title_activity_splash">SplashActivity</string>
 
     <!-- Action Buttons -->
     <string name="action_add">Add</string>
@@ -13,26 +16,29 @@
     <string name="action_edit">Edit</string>
     <string name="action_cancel">Cancel</string>
 
-    <!-- ImageView Photo Context Menu Strings -->
-    <string name="action_photo_by_camera">Take a picture with the camera</string>
-    <string name="action_photo_from_gallery">Choose from gallery</string>
-    <string name="action_photo_from_network">Upload from network</string>
-    <string name="title_activity_detail">DetailActivity</string>
-
     <!-- AddEditActivity Strings -->
     <string name="str_name">Name</string>
     <string name="str_surname">Surname</string>
     <string name="str_date_of_birth">Date of Birth</string>
     <string name="str_address">Address</string>
+    
+    <!-- Import/Export Dialog Strings -->
+    <string name="btnImport">Import</string>
+    <string name="btnExport">Export</string>
+    
+    <!-- Export Task Strings -->
+    <string name="str_export_result_true">Database exported to sd card.</string>
+    <string name="str_export_result_false">Database NOT exported to sd card.</string>
+    
+    <!-- Add Photo Dialog Strings -->
+    <string name="btnCamera">Take a picture with the camera</string>
+    <string name="btnGallery">Choose from gallery</string>
+    <string name="btnNetwork">Upload from network</string>
 
     <!-- Preferences Strings -->
     <string name="pref_display_category">Display Options</string>
     <string name="pref_display_by_gender_title">Display Options by gender</string>
     <string name="pref_display_by_gender_summary">Allows to select display options by gender</string>
     <string name="pref_display_by_gender_default">Both</string>
-    <string name="pref_is_first_strted">Previously Started</string>
-    <string name="title_activity_settings">SettingsActivity</string>
-    <string name="title_activity_add_edit">AddEditActivity</string>
-    <string name="title_activity_splash">SplashActivity</string>
-
+    
 </resources>

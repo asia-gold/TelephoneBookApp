@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
@@ -20,6 +20,10 @@
     
     <style name="NoCloseButton" parent="@style/Widget.AppCompat.Light.ActionButton.CloseMode">
         <item name="android:visibility">gone</item>
+    </style>
+    
+    <style name="CustomDialogTheme" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
     </style>
 
 </resources>

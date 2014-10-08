@@ -11,6 +11,8 @@ import java.util.Locale;
 import ru.asia.mytelephonebookapp.models.Contact;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -22,26 +24,29 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class AddEditActivity extends ActionBarActivity {
 
 	private static final int REQUEST_IMAGE_CAPTURE = 1;
 	private static final int REQUEST_IMAGE_SELECT = 2;
 
+	private Context context = this;
+
 	private PackageManager pm;
-	
+
 	private Calendar calendar;
-	
+
 	private int year;
 	private int month;
 	private int day;
@@ -59,11 +64,14 @@ public class AddEditActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_edit);
 
+		Intent intent = getIntent();
+		long id = intent.getLongExtra("idContact", 0);
+
 		pm = getPackageManager();
-		
+
 		calendar = Calendar.getInstance();
-		
-		year = calendar.get(Calendar.YEAR); 
+
+		year = calendar.get(Calendar.YEAR);
 		month = calendar.get(Calendar.MONTH);
 		day = calendar.get(Calendar.DAY_OF_MONTH);
 
@@ -72,42 +80,94 @@ public class AddEditActivity extends ActionBarActivity {
 		spGender = (Spinner) findViewById(R.id.spGender);
 		etDateOfBirth = (EditText) findViewById(R.id.etDateOfBirth);
 		etAddress = (EditText) findViewById(R.id.etAddress);
-		
 
-		
+		ivPhotoAddEdit.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View view) {
+				final Dialog addPhotoDialog = new Dialog(context,
+						R.style.CustomDialogTheme);
+				addPhotoDialog.setContentView(R.layout.add_photo_dialog);
+
+				Button btnCamera = (Button) addPhotoDialog
+						.findViewById(R.id.btnCamera);
+				Button btnGallery = (Button) addPhotoDialog
+						.findViewById(R.id.btnGallery);
+				Button btnNetwork = (Button) addPhotoDialog
+						.findViewById(R.id.btnNetwork);
+
+				btnCamera.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						takePhotoByCamera();
+						addPhotoDialog.dismiss();
+					}
+				});
+
+				btnGallery.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View view) {
+						takePhotoFromGallery();
+						addPhotoDialog.dismiss();
+					}
+				});
+
+				btnNetwork.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						// Download Photo from Network
+					}
+				});
+
+				addPhotoDialog.show();
+			}
+		});
+
 		etDateOfBirth.setClickable(true);
 		etDateOfBirth.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View view) {				
-				
+			public void onClick(View view) {
+
 				DatePickerDialog datePicker = new DatePickerDialog(
 						AddEditActivity.this, new OnDateSetListener() {
 
 							@Override
-							public void onDateSet(DatePicker view, int selectedYear,
-									int monthOfYear, int dayOfMonth) {
-								
-								year = selectedYear; 
+							public void onDateSet(DatePicker view,
+									int selectedYear, int monthOfYear,
+									int dayOfMonth) {
+
+								year = selectedYear;
 								month = monthOfYear;
 								day = dayOfMonth;
-								
+
 								calendar.set(Calendar.YEAR, selectedYear);
-								calendar.set(Calendar.MONTH, monthOfYear); 
+								calendar.set(Calendar.MONTH, monthOfYear);
 								calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-								
+
 								String dateFormat = "dd/MM/yyyy";
-								SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.ENGLISH);
-								etDateOfBirth.setText(sdf.format(calendar.getTime()));
+								SimpleDateFormat sdf = new SimpleDateFormat(
+										dateFormat, Locale.ENGLISH);
+								etDateOfBirth.setText(sdf.format(calendar
+										.getTime()));
 							}
 						}, year, month, day);
 				datePicker.show();
 			}
 		});
 
-		
-
-		registerForContextMenu(ivPhotoAddEdit);
+		if (id != 0) {
+			Contact editContact = MyTelephoneBookApplication.getDataSource()
+					.getContact(id);
+			byte[] photoArray = editContact.getPhoto();
+			ivPhotoAddEdit.setImageBitmap(BitmapFactory.decodeByteArray(
+					photoArray, 0, photoArray.length));
+			etName.setText(editContact.getName());
+			// spGender
+			// etDateOfBirth.set
+			etAddress.setText(editContact.getAddress());
+		}
 	}
 
 	@Override
@@ -121,65 +181,78 @@ public class AddEditActivity extends ActionBarActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		if (id == R.id.action_done) {
-			
-			Bitmap photo = ((BitmapDrawable)ivPhotoAddEdit.getDrawable()).getBitmap();
-			
+
+			Bitmap photo = ((BitmapDrawable) ivPhotoAddEdit.getDrawable())
+					.getBitmap();
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
-			photo.compress(Bitmap.CompressFormat.PNG, 300, bos);
+			photo.compress(Bitmap.CompressFormat.PNG, 50, bos);
 			byte[] photoArray = bos.toByteArray();
-			
+
 			String name = etName.getText().toString();
 			String gender = spGender.getSelectedItem().toString();
 			String dateBirth = etDateOfBirth.getText().toString();
 			String address = etAddress.getText().toString();
-			long contactId = MyTelephoneBookApplication.getDataSource()
-					.addContact(photoArray, name, gender, dateBirth, address);
-			
-			Contact newContact = MyTelephoneBookApplication.getDataSource()
-					.getContact(contactId);
-			MyTelephoneBookApplication.getAdapter().notifyDataSetChanged();
+
+			Intent editIntent = getIntent();
+			long idContact = editIntent.getLongExtra("idContact", 0);
+
+			if (idContact != 0) {
+				MyTelephoneBookApplication.getDataSource()
+						.updateContact(idContact, photoArray, name, gender,
+								dateBirth, address);
+			} else {
+
+				idContact = MyTelephoneBookApplication.getDataSource()
+						.addContact(photoArray, name, gender, dateBirth,
+								address);
+
+//				Contact newContact = MyTelephoneBookApplication.getDataSource()
+//						.getContact(idContact);
+
+			}
 			Intent intent = new Intent(this, DetailActivity.class);
-			intent.putExtra("idContact", (long) newContact.getId());
+			intent.putExtra("idContact", (long) idContact);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
 					| Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
 			finish();
+			MyTelephoneBookApplication.getAdapter().notifyDataSetChanged();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View view,
-			ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, view, menuInfo);
+	// @Override
+	// public void onCreateContextMenu(ContextMenu menu, View view,
+	// ContextMenuInfo menuInfo) {
+	// super.onCreateContextMenu(menu, view, menuInfo);
+	//
+	// if (view.getId() == R.id.ivPhotoAddEdit) {
+	// getMenuInflater().inflate(R.menu.photo_menu, menu);
+	// if (!pm.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+	// menu.removeItem(R.id.action_photo_by_camera);
+	// }
+	// }
+	// }
+	//
+	// @Override
+	// public boolean onContextItemSelected(MenuItem item) {
+	//
+	// switch (item.getItemId()) {
+	// case R.id.action_photo_by_camera:
+	// photoByCamera();
+	// return true;
+	// case R.id.action_photo_from_gallery:
+	// photoFromGallery();
+	// return true;
+	// case R.id.action_photo_from_network:
+	// default:
+	// return super.onContextItemSelected(item);
+	// }
+	//
+	// }
 
-		if (view.getId() == R.id.ivPhotoAddEdit) {
-			getMenuInflater().inflate(R.menu.photo_menu, menu);
-			if (!pm.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
-				menu.removeItem(R.id.action_photo_by_camera);
-			}
-		}
-	}
-
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-
-		switch (item.getItemId()) {
-		case R.id.action_photo_by_camera:
-			photoByCamera();
-			return true;
-		case R.id.action_photo_from_gallery:
-			photoFromGallery();
-			return true;
-		case R.id.action_photo_from_network:
-		default:
-			return super.onContextItemSelected(item);
-		}
-
-	}
-
-	private void photoByCamera() {
+	private void takePhotoByCamera() {
 		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		// Ensure that there's a camera activity to handle the intent
 		if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -221,7 +294,7 @@ public class AddEditActivity extends ActionBarActivity {
 		if (resultCode == RESULT_OK && requestCode == REQUEST_IMAGE_CAPTURE
 				&& currentPhotoPath != null) {
 			setPic();
-			galleryAddPicture();
+			// galleryAddPicture();
 			currentPhotoPath = null;
 		}
 		if (resultCode == RESULT_OK && requestCode == REQUEST_IMAGE_SELECT) {
@@ -256,16 +329,16 @@ public class AddEditActivity extends ActionBarActivity {
 		ivPhotoAddEdit.setImageBitmap(bitmap);
 	}
 
-	private void galleryAddPicture() {
-		Intent mediaScanIntent = new Intent(
-				Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-		File file = new File(currentPhotoPath);
-		Uri contentUri = Uri.fromFile(file);
-		mediaScanIntent.setData(contentUri);
-		this.sendBroadcast(mediaScanIntent);
-	}
+	// private void galleryAddPicture() {
+	// Intent mediaScanIntent = new Intent(
+	// Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+	// File file = new File(currentPhotoPath);
+	// Uri contentUri = Uri.fromFile(file);
+	// mediaScanIntent.setData(contentUri);
+	// this.sendBroadcast(mediaScanIntent);
+	// }
 
-	private void photoFromGallery() {
+	private void takePhotoFromGallery() {
 		Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
 		galleryIntent.setType("image/*");
 		startActivityForResult(
