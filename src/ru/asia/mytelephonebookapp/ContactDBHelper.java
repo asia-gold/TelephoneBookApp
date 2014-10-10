@@ -35,7 +35,7 @@ public class ContactDBHelper extends SQLiteOpenHelper{
 		db.execSQL(DATABASE_CREATE);
 		Log.e("-------------------", "DB created");
 	}
-	// Мне не нравится эта реализация
+
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL("DROP TABLE IF EXESTS " + TABLE_NAME);

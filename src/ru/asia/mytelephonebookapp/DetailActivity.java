@@ -1,5 +1,9 @@
 package ru.asia.mytelephonebookapp;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import ru.asia.mytelephonebookapp.models.Contact;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -47,7 +51,12 @@ public class DetailActivity extends ActionBarActivity {
 			if (detailContact.getGender().matches("Male")) {
 				scrollDetail.setBackgroundResource(R.color.male);
 			}
-			tvDateOfBirth.setText(detailContact.getDateOfBirth());
+			String dateString = ContactsDataSource.formatDateToString(detailContact.getDateOfBirth());
+			if (dateString == null) {
+				tvDateOfBirth.setText("");
+			} else {
+				tvDateOfBirth.setText(dateString);
+			}			
 			tvAddress.setText(detailContact.getAddress());
 		}
 	}

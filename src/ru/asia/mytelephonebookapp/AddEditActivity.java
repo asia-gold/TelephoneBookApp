@@ -3,6 +3,7 @@ package ru.asia.mytelephonebookapp;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -157,17 +158,76 @@ public class AddEditActivity extends ActionBarActivity {
 			}
 		});
 
-		if (id != 0) {
-			Contact editContact = MyTelephoneBookApplication.getDataSource()
-					.getContact(id);
-			byte[] photoArray = editContact.getPhoto();
+		if (savedInstanceState == null) {
+			if (id != 0) {
+				Contact editContact = MyTelephoneBookApplication
+						.getDataSource().getContact(id);
+				byte[] photoArray = editContact.getPhoto();
+				ivPhotoAddEdit.setImageBitmap(BitmapFactory.decodeByteArray(
+						photoArray, 0, photoArray.length));
+				etName.setText(editContact.getName());
+				setSpinnerGenderSelection(editContact.getGender());
+				Date date = editContact.getDateOfBirth();
+				String dateString = ContactsDataSource.formatDateToString(date);
+				if (dateString == null) {
+					etDateOfBirth.setText("");
+				} else {
+					etDateOfBirth.setText(dateString);
+					calendar.setTime(date);
+					year = calendar.get(Calendar.YEAR);
+					month = calendar.get(Calendar.MONTH);
+					day = calendar.get(Calendar.DAY_OF_MONTH);
+				}
+				etAddress.setText(editContact.getAddress());
+			}
+		} else {
+			byte[] photoArray = savedInstanceState
+					.getByteArray("ivPhotoAddEdit");
+			String name = savedInstanceState.getString("etName");
+			String gender = savedInstanceState.getString("spGender");
+			String dateOfBirth = savedInstanceState.getString("etDateOfBirth");
+
+			if (dateOfBirth == null) {
+				etDateOfBirth.setText("");
+			} else {
+				etDateOfBirth.setText(dateOfBirth);
+				Date date = null;
+				try {
+					date = ContactsDataSource.formatStringToDate(dateOfBirth);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				if (date != null) {
+					calendar.setTime(date);
+					year = calendar.get(Calendar.YEAR);
+					month = calendar.get(Calendar.MONTH);
+					day = calendar.get(Calendar.DAY_OF_MONTH);
+				}
+			}
+
+			String address = savedInstanceState.getString("etAddress");
+
 			ivPhotoAddEdit.setImageBitmap(BitmapFactory.decodeByteArray(
 					photoArray, 0, photoArray.length));
-			etName.setText(editContact.getName());
-			// spGender
-			// etDateOfBirth.set
-			etAddress.setText(editContact.getAddress());
+			etName.setText(name);
+			setSpinnerGenderSelection(gender);
+			//
+			etAddress.setText(address);
+
 		}
+
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+
+		outState.putByteArray("ivPhotoAddEdit", getByteArrayFromImageView());
+		outState.putString("etName", etName.getText().toString());
+		outState.putString("spGender", spGender.getSelectedItem().toString());
+		outState.putString("etDateOfBirth", etDateOfBirth.getText().toString());
+		outState.putString("etAddress", etAddress.getText().toString());
+
+		super.onSaveInstanceState(outState);
 	}
 
 	@Override
@@ -177,20 +237,38 @@ public class AddEditActivity extends ActionBarActivity {
 		return true;
 	}
 
+	private byte[] getByteArrayFromImageView() {
+		Bitmap photo = ((BitmapDrawable) ivPhotoAddEdit.getDrawable())
+				.getBitmap();
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		photo.compress(Bitmap.CompressFormat.PNG, 0, bos);
+		byte[] photoArray = bos.toByteArray();
+		return photoArray;
+	}
+
+	private void setSpinnerGenderSelection(String gender) {
+		if (TextUtils.equals(gender, "Male")) {
+			spGender.setSelection(0);
+		} else {
+			spGender.setSelection(1);
+		}
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		if (id == R.id.action_done) {
 
-			Bitmap photo = ((BitmapDrawable) ivPhotoAddEdit.getDrawable())
-					.getBitmap();
-			ByteArrayOutputStream bos = new ByteArrayOutputStream();
-			photo.compress(Bitmap.CompressFormat.PNG, 50, bos);
-			byte[] photoArray = bos.toByteArray();
-
+			byte[] photoArray = getByteArrayFromImageView();
 			String name = etName.getText().toString();
 			String gender = spGender.getSelectedItem().toString();
-			String dateBirth = etDateOfBirth.getText().toString();
+			String dateString = etDateOfBirth.getText().toString();
+			Date dateBirth = null;
+			try {
+				dateBirth = ContactsDataSource.formatStringToDate(dateString);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 			String address = etAddress.getText().toString();
 
 			Intent editIntent = getIntent();
@@ -206,8 +284,9 @@ public class AddEditActivity extends ActionBarActivity {
 						.addContact(photoArray, name, gender, dateBirth,
 								address);
 
-//				Contact newContact = MyTelephoneBookApplication.getDataSource()
-//						.getContact(idContact);
+				// Contact newContact =
+				// MyTelephoneBookApplication.getDataSource()
+				// .getContact(idContact);
 
 			}
 			Intent intent = new Intent(this, DetailActivity.class);
@@ -306,8 +385,10 @@ public class AddEditActivity extends ActionBarActivity {
 
 	private void setPic() {
 		// Get the dimensions of the View
-		int targetWidth = ivPhotoAddEdit.getWidth();
-		int targetHeight = ivPhotoAddEdit.getHeight();
+		int targetWidth = (int) getResources().getDimension(
+				R.dimen.iv_photo_add_width);
+		int targetHeight = (int) getResources().getDimension(
+				R.dimen.iv_photo_add_height);
 
 		// Get the dimension of the bitmap
 		BitmapFactory.Options bfOptions = new BitmapFactory.Options();

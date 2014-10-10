@@ -91,6 +91,8 @@ public class DBContactsExportTask extends AsyncTask<Void, Void, Boolean> {
 	private String writeXML(ArrayList<Contact> contacts) {
 		XmlSerializer serializer = Xml.newSerializer();
 		StringWriter writer = new StringWriter();
+		
+		
 		try {
 			serializer.setOutput(writer);
 			serializer.startDocument("UTF-8", true);
@@ -104,8 +106,9 @@ public class DBContactsExportTask extends AsyncTask<Void, Void, Boolean> {
 				serializer.attribute("", "photo",
 						String.valueOf(contact.getPhoto()));
 				serializer.attribute("", "name", contact.getName());
+				String dateString = ContactsDataSource.formatDateToString(contact.getDateOfBirth());
 				serializer.attribute("", "dateOfDirth",
-						contact.getDateOfBirth());
+						dateString);
 				serializer.attribute("", "gender", contact.getGender());
 				serializer.attribute("", "address", contact.getAddress());
 				serializer.endTag("", "contact");

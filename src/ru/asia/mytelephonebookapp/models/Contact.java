@@ -1,22 +1,19 @@
 package ru.asia.mytelephonebookapp.models;
 
+import java.util.Date;
+
 
 public class Contact {
 	
 	private long id;
 	private byte[] photo;
 	private String name;
-	private String dateOfBirth;
+	private Date dateOfBirth;
 	private String gender;
 	private String address;
 	
 	public Contact() {
 		// TODO Auto-generated constructor stub
-	}
-	
-	public Contact(String name, String gender) {
-		this.name = name;
-		this.gender = gender;
 	}
 	
 	/*
@@ -35,7 +32,7 @@ public class Contact {
 		this.name = name;
 	}
 		
-	public void setDateOfBirth(String dateOfBirth) {
+	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 	
@@ -63,7 +60,7 @@ public class Contact {
 		return name;
 	}
 	
-	public String getDateOfBirth() {
+	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
 	
