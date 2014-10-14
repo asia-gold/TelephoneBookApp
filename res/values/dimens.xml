@@ -3,7 +3,7 @@
 
     <dimen name="iv_photo_width">70dp</dimen>
     <dimen name="iv_photo_height">70dp</dimen>
-    <dimen name="iv_photo_detail_height">150dp</dimen>
+    <dimen name="iv_photo_detail_height">180dp</dimen>
     <dimen name="iv_photo_add_width">100dp</dimen>
     <dimen name="iv_photo_add_height">100dp</dimen>
     <dimen name="margin">5dp</dimen>

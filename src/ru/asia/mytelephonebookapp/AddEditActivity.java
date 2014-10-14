@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Random;
 
 import ru.asia.mytelephonebookapp.models.Contact;
 import android.app.DatePickerDialog;
@@ -41,6 +42,15 @@ public class AddEditActivity extends ActionBarActivity {
 
 	private static final int REQUEST_IMAGE_CAPTURE = 1;
 	private static final int REQUEST_IMAGE_SELECT = 2;
+	
+	private static final String[] urlImages = { "http://img1.wikia.nocookie.net/__cb20101014052403/en.futurama/images/4/45/Dr._John_A._Zoidberg.png",
+												"http://upload.wikimedia.org/wikipedia/ru/9/97/Philip_J._Fry.png",
+												"http://upload.wikimedia.org/wikipedia/ru/archive/d/d4/20110107211840!Turanga_Leela.png",
+												"http://upload.wikimedia.org/wikipedia/en/thumb/0/0f/FuturamaProfessorFarnsworth.png/175px-FuturamaProfessorFarnsworth.png",
+												"https://do4a.com/data/MetaMirrorCache/080941ca2c2790d3ad0c96ceb3abd3fc.png",
+												"http://upload.wikimedia.org/wikipedia/en/f/fd/FuturamaAmyWong.png",
+												"http://fc00.deviantart.net/fs71/i/2013/031/2/7/bender_bending_rodriguez_by_car0003-d5tdyps.png"
+	};
 
 	private Context context = this;
 
@@ -118,6 +128,9 @@ public class AddEditActivity extends ActionBarActivity {
 					@Override
 					public void onClick(View view) {
 						// Download Photo from Network
+						Random random = new Random();
+						new DownloadImageTask(context, ivPhotoAddEdit).execute(urlImages[random.nextInt(urlImages.length)]);
+						addPhotoDialog.dismiss();
 					}
 				});
 

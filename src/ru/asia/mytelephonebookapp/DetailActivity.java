@@ -39,6 +39,7 @@ public class DetailActivity extends ActionBarActivity {
 
 		Intent intent = getIntent();
 		long id = intent.getLongExtra("idContact", 0);
+		Log.e("-------------", "ID from Intent" + id);
 		if (id != 0) {
 			Contact detailContact = MyTelephoneBookApplication.getDataSource()
 					.getContact(id);

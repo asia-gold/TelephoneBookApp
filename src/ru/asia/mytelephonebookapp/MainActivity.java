@@ -138,7 +138,7 @@ public class MainActivity extends ActionBarActivity {
 			btnImport.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					// is there file?
+					new DBContactsImportTask(context).execute();					
 					importExportDialog.dismiss();
 				}
 			});
@@ -157,6 +157,10 @@ public class MainActivity extends ActionBarActivity {
 			break;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void updateData() {
+		data = MyTelephoneBookApplication.getDataSource().getAllContact();
 	}
 
 	private void startRemoveListItemMode() {

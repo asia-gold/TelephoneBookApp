@@ -51,6 +51,15 @@ public class ContactsDataSource {
 		Log.e("---------------", "id create = " + insertID);
 		return insertID;
 	}
+	
+	public void addContact(Contact contact) {
+		byte[] photo = contact.getPhoto();
+		String name = contact.getName();
+		String gender = contact.getGender();
+		Date dateBorn = contact.getDateOfBirth();
+		String address = contact.getAddress();
+		addContact(photo, name, gender, dateBorn, address);
+	}
 
 	public void updateContact(long id, byte[] photo, String name,
 			String gender, Date dateBorn, String address) {
@@ -80,6 +89,10 @@ public class ContactsDataSource {
 			Contact c = data.get(i);
 			deleteContact(c);
 		}
+	}
+	
+	public void deleteAllContacts() {
+		database.delete(ContactDBHelper.TABLE_NAME, null, null);
 	}
 
 	public Contact getContact(long id) {
@@ -133,7 +146,7 @@ public class ContactsDataSource {
 	public static String formatDateToString(Date date) {
 		String dateString = null;
 		if (date == null) {
-			dateString = null;
+			dateString = "";
 		} else {
 			String dateFormat = "dd/MM/yyyy";
 			SimpleDateFormat sdf = new SimpleDateFormat(dateFormat,

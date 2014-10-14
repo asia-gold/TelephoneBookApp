@@ -21,6 +21,7 @@ import ru.asia.mytelephonebookapp.models.Contact;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.util.Base64;
 import android.util.Log;
 import android.util.Xml;
 import android.widget.Toast;
@@ -29,7 +30,7 @@ public class DBContactsExportTask extends AsyncTask<Void, Void, Boolean> {
 
 	private static final String EXPORT_FILE_PATH = Environment
 			.getExternalStorageDirectory().getPath();
-	private static final String EXPORT_FILE_NAME = "/export.xml";
+	private static final String EXPORT_FILE_NAME = "/database.xml";
 	private Context context;
 
 	public DBContactsExportTask(Context context) {
@@ -102,15 +103,34 @@ public class DBContactsExportTask extends AsyncTask<Void, Void, Boolean> {
 			serializer.attribute("", "name", ContactDBHelper.TABLE_NAME);
 			for (Contact contact : contacts) {
 				serializer.startTag("", "contact");
-				serializer.attribute("", "id", String.valueOf(contact.getId()));
-				serializer.attribute("", "photo",
-						String.valueOf(contact.getPhoto()));
-				serializer.attribute("", "name", contact.getName());
+				// ID
+				serializer.startTag("", "id");
+				serializer.text(String.valueOf(contact.getId()));
+				serializer.endTag("", "id");
+				// Photo
+				String photo = Base64.encodeToString(contact.getPhoto(), 1);
+				serializer.startTag("", "photo");
+				serializer.text(photo);
+				serializer.endTag("", "photo");
+				// Name
+				serializer.startTag("", "name");
+				serializer.text(contact.getName());
+				serializer.endTag("", "name");
+				// Date of Birth
 				String dateString = ContactsDataSource.formatDateToString(contact.getDateOfBirth());
-				serializer.attribute("", "dateOfDirth",
-						dateString);
-				serializer.attribute("", "gender", contact.getGender());
-				serializer.attribute("", "address", contact.getAddress());
+				
+				serializer.startTag("", "dateOfBirth");
+				serializer.text(dateString);
+				serializer.endTag("", "dateOfBirth");
+				// Gender
+				serializer.startTag("", "gender");
+				serializer.text(contact.getGender());
+				serializer.endTag("", "gender");
+				// Address
+				serializer.startTag("", "address");
+				serializer.text(contact.getAddress());
+				serializer.endTag("", "address");
+				
 				serializer.endTag("", "contact");
 			}
 			serializer.endTag("", "table");
