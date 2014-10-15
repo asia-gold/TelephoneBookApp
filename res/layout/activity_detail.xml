@@ -3,7 +3,7 @@
     android:id="@+id/scrollDetail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/female"
+    android:background="@color/female_pink"
     tools:context="ru.asia.mytelephonebookapp.DetailActivity" >
 
     <LinearLayout

@@ -13,8 +13,8 @@ public class MyTelephoneBookApplication extends Application{
 		super.onCreate();
 		dataSource = new ContactsDataSource(this);
 		dataSource.open();
-		adapter = new ContactAdapter(getApplicationContext(),
-				dataSource.getAllContact(), false);
+//		adapter = new ContactAdapter(getApplicationContext(),
+//				dataSource.getAllContact(), false);
 		Log.e("MyApp", "DataSource initialize");
 	}
 
@@ -22,9 +22,9 @@ public class MyTelephoneBookApplication extends Application{
 		return dataSource;
 	}
 
-	public static ContactAdapter getAdapter() {
-		return adapter;
-	}
+//	public static ContactAdapter getAdapter() {
+//		return adapter;
+//	}
 	
 	@Override
 	public void onTerminate() {

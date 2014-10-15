@@ -24,9 +24,19 @@
     </string-array>
     
     <string-array name="arrayValuesByGender">
-        <item>Male</item>
-        <item>Female</item>
-        <item>Both</item>
+        <item>1</item>
+        <item>0</item>
+        <item>2</item>
+    </string-array>
+    
+    <string-array name="array_entries_color_theme">
+        <item>Blue/Pink</item>
+        <item>Violet/Yellow</item>
+    </string-array>
+    
+    <string-array name="array_values_color_theme">
+        <item>BluePink</item>
+        <item>VioletYellow</item>
     </string-array>
     
 </resources>

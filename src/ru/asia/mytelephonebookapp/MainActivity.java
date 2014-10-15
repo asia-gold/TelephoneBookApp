@@ -6,6 +6,8 @@ import ru.asia.mytelephonebookapp.dialogs.ImportExportDialog;
 import ru.asia.mytelephonebookapp.models.Contact;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
@@ -27,37 +29,43 @@ public class MainActivity extends ActionBarActivity {
 	private ListView lvContacts;
 	private TextView tvEmpty;
 
-	private ContactAdapter adapter;
+	public ContactAdapter adapter;
 	private ContactAdapter removeAdapter;
 	private ArrayList<Contact> data;
 
 	private ActionMode removeMode;
 	private boolean removeModeActive = false;
 
+	private SharedPreferences settings;
+	int gender = 0;
+	boolean notify = false;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		// Sets default values if app launched for the first time
-		PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+		// // Sets default values if app launched for the first time
+		// PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
-		data = MyTelephoneBookApplication.getDataSource().getAllContact();
+		settings = PreferenceManager.getDefaultSharedPreferences(context);
+		String genderSetting = settings.getString(
+				"prefDisplayByGender", "2");
+		Log.e("SharedPreferences", settings.getString(
+				"prefDisplayByGender", "2"));
+		gender = Integer.valueOf(genderSetting);
+		
+		
+		
+		
 
-		// SharedPreferences sharedPreferences = PreferenceManager
-		// .getDefaultSharedPreferences(this);
-		// String gender = sharedPreferences.getString(
-		// "prefDisplayByGender",
-		// getResources().getString(
-		// R.string.pref_display_by_gender_default));
-		// data = MyTelephoneBookApplication.getDataSource()
-		// .getAllContactsByGender(gender);
+		data = MyTelephoneBookApplication.getDataSource().getAllContactsByGender(gender);
 
 		lvContacts = (ListView) findViewById(R.id.lvContacts);
 		tvEmpty = (TextView) findViewById(R.id.tvEmpty);
 		tvEmpty.setText(R.string.str_empty_view);
 		lvContacts.setEmptyView(tvEmpty);
 
-		adapter = MyTelephoneBookApplication.getAdapter();
+		adapter =new ContactAdapter(this, data, false);
 		removeAdapter = new ContactAdapter(this, data, true);
 		lvContacts.setAdapter(adapter);
 
@@ -73,8 +81,7 @@ public class MainActivity extends ActionBarActivity {
 					CheckBox checkBox = (CheckBox) view
 							.findViewById(R.id.chbRemove);
 					checkBox.setChecked(!checkBox.isChecked());
-					MyTelephoneBookApplication.getAdapter().changeState(
-							position);
+					removeAdapter.changeState(position);
 				} else {
 
 					Intent intent = new Intent(MainActivity.this,
@@ -87,32 +94,49 @@ public class MainActivity extends ActionBarActivity {
 				}
 			}
 		});
+		
+		
+	}
+	
+	@Override
+	protected void onStart() {
+		notify = settings.getBoolean("notify", false);
+		
+		if (notify) {
+			Log.e("SharedPreferences", "Notify " + notify);
+			adapter.notifyDataSetChanged();
+			settings = getPreferences(MODE_PRIVATE);
+			Editor editor = settings.edit();
+			editor.putBoolean("notify", false);
+			editor.commit();
+		}
+		super.onStart();
 	}
 
 	@Override
 	protected void onResume() {
-		data = MyTelephoneBookApplication.getDataSource().getAllContact();
+		data = MyTelephoneBookApplication.getDataSource().getAllContactsByGender(gender);		
 		super.onResume();
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main_activity_actions, menu);
-//		if (adapter.isEmpty()) {
-//			menu.getItem(1).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-//		}
-		return true;
-	}
-	
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
 		if (adapter.isEmpty()) {
 			menu.removeItem(R.id.action_remove);
-		} else {
-			menu.add(Menu.NONE, R.id.action_remove, 1, R.string.action_remove);
 		}
 		return true;
 	}
+
+	// @Override
+	// public boolean onPrepareOptionsMenu(Menu menu) {
+	// if (adapter.isEmpty()) {
+	// menu.removeItem(R.id.action_remove);
+	// } else {
+	// menu.add(Menu.NONE, R.id.action_remove, 1, R.string.action_remove);
+	// }
+	// return true;
+	// }
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -131,44 +155,13 @@ public class MainActivity extends ActionBarActivity {
 			break;
 		case R.id.action_import_export:
 			new ImportExportDialog().show(getFragmentManager(), "dialog");
-			invalidateOptionsMenu();
-			// new dialog
-			// final Dialog importExportDialog = new Dialog(context);
-			// importExportDialog.setContentView(R.layout.import_export_dialog);
-			// importExportDialog.setTitle(getResources().getString(R.string.action_import_export));
-			//
-			//
-			// Button btnImport = (Button) importExportDialog
-			// .findViewById(R.id.btnImport);
-			// Button btnExport = (Button) importExportDialog
-			// .findViewById(R.id.btnExport);
-			//
-			// btnImport.setOnClickListener(new OnClickListener() {
-			// @Override
-			// public void onClick(View view) {
-			// new DBContactsImportTask(context).execute();
-			// importExportDialog.dismiss();
-			// }
-			// });
-			//
-			// btnExport.setOnClickListener(new OnClickListener() {
-			//
-			// @Override
-			// public void onClick(View view) {
-			// new DBContactsExportTask(context).execute();
-			// importExportDialog.dismiss();
-			// }
-			// });
-			// importExportDialog.show();
-			// break;
-			// default:
-			// break;
+			break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
 	public void updateData() {
-		data = MyTelephoneBookApplication.getDataSource().getAllContact();
+		data = MyTelephoneBookApplication.getDataSource().getAllContactsByGender(gender);
 	}
 
 	private void startRemoveListItemMode() {
@@ -183,9 +176,9 @@ public class MainActivity extends ActionBarActivity {
 
 	private void endRemoveListItemMode() {
 		removeModeActive = false;
-		lvContacts.setAdapter(MyTelephoneBookApplication.getAdapter());
+		lvContacts.setAdapter(adapter);
 		lvContacts.setChoiceMode(ListView.CHOICE_MODE_NONE);
-		MyTelephoneBookApplication.getAdapter().notifyDataSetChanged();
+		adapter.notifyDataSetChanged();
 	}
 
 	private class RemoveListItemActionModeCallback implements

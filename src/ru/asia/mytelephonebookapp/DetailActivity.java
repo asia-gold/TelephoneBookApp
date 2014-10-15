@@ -47,10 +47,10 @@ public class DetailActivity extends ActionBarActivity {
 			
 			if (detailContact.getIsMale()) {
 				tvGender.setText(getResources().getString(R.string.str_male));
-				scrollDetail.setBackgroundResource(R.color.male);
+				scrollDetail.setBackgroundResource(R.color.male_blue);
 			} else {
 				tvGender.setText(getResources().getString(R.string.str_female));
-				scrollDetail.setBackgroundResource(R.color.female);
+				scrollDetail.setBackgroundResource(R.color.female_pink);
 			}
 			
 //			tvGender.setText(detailContact.getGender());

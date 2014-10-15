@@ -47,5 +47,7 @@
     <string name="pref_display_by_gender_title">Contacts filter</string>
     <string name="pref_display_by_gender_summary">Allows to select display options by gender</string>
     <string name="pref_display_by_gender_default">Show all</string>
-    
+    <string name="pref_colors_by_gender_title">Choose color theme</string>
+    <string name="pref_colors_by_gender_summary">Allows to select color theme</string>
+    <string name="pref_colors_by_gender_default">Blue/Pink</string>
 </resources>

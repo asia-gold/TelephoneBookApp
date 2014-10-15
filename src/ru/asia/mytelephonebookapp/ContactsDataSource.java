@@ -52,7 +52,7 @@ public class ContactsDataSource {
 		Log.e("---------------", "id create = " + insertID);
 		return insertID;
 	}
-	
+
 	public void addContact(Contact contact) {
 		byte[] photo = contact.getPhoto();
 		String name = contact.getName();
@@ -92,7 +92,7 @@ public class ContactsDataSource {
 			deleteContact(c);
 		}
 	}
-	
+
 	public void deleteAllContacts() {
 		database.delete(ContactDBHelper.TABLE_NAME, null, null);
 	}
@@ -125,25 +125,27 @@ public class ContactsDataSource {
 		return contacts;
 	}
 
-//	public ArrayList<Contact> getAllContactsByGender(String gender) {
-//		ArrayList<Contact> contacts = new ArrayList<Contact>();
-//		if (TextUtils.equals(gender, "Both")) {
-//			contacts = getAllContact();
-//		} else {
-//			Cursor cursor = database.query(ContactDBHelper.TABLE_NAME,
-//					allColumns, ContactDBHelper.COLUMN_GENDER + " = " + gender,
-//					null, null, null, null);
-//
-//			cursor.moveToFirst();
-//			while (!cursor.isAfterLast()) {
-//				Contact contact = cursorToContact(cursor);
-//				contacts.add(contact);
-//				cursor.moveToNext();
-//			}
-//			cursor.close();
-//		}
-//		return contacts;
-//	}
+	public ArrayList<Contact> getAllContactsByGender(int gender) {
+		ArrayList<Contact> contacts = new ArrayList<Contact>();
+		
+		if (gender == 2) {
+			contacts = getAllContact();
+		} else {
+
+			Cursor cursor = database.query(ContactDBHelper.TABLE_NAME,
+					allColumns, ContactDBHelper.COLUMN_GENDER + " = " + gender,
+					null, null, null, null);
+
+			cursor.moveToFirst();
+			while (!cursor.isAfterLast()) {
+				Contact contact = cursorToContact(cursor);
+				contacts.add(contact);
+				cursor.moveToNext();
+			}
+			cursor.close();
+		}
+		return contacts;
+	}
 
 	public static String formatDateToString(Date date) {
 		String dateString = null;

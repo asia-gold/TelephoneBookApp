@@ -11,14 +11,16 @@ import java.util.Locale;
 import java.util.Random;
 
 import ru.asia.mytelephonebookapp.models.Contact;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -29,12 +31,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -72,6 +73,8 @@ public class AddEditActivity extends ActionBarActivity {
 	private EditText etAddress;
 
 	private String currentPhotoPath;
+	
+	private SharedPreferences settings;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -304,7 +307,8 @@ public class AddEditActivity extends ActionBarActivity {
 						.addContact(photoArray, name, isMale, dateBirth,
 								address);
 			}
-			MyTelephoneBookApplication.getAdapter().notifyDataSetChanged();
+			notifyMainActivity();
+			
 			Intent intent = new Intent(this, DetailActivity.class);
 			intent.putExtra("idContact", (long) idContact);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -315,6 +319,15 @@ public class AddEditActivity extends ActionBarActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	private void notifyMainActivity() {
+		
+		settings = getPreferences(MODE_PRIVATE);
+		Editor editor = settings.edit();
+		editor.putBoolean("notify", true);
+		editor.commit();
+		Log.e("AddEdit", "notifyMainActivity()");
 	}
 	
 	private boolean getBooleanFromString(String gender){
