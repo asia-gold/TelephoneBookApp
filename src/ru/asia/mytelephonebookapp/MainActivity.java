@@ -27,7 +27,7 @@ public class MainActivity extends ActionBarActivity {
 	private ListView lvContacts;
 	private TextView tvEmpty;
 
-	// private ContactAdapter adapter;
+	private ContactAdapter adapter;
 	private ContactAdapter removeAdapter;
 	private ArrayList<Contact> data;
 
@@ -57,9 +57,9 @@ public class MainActivity extends ActionBarActivity {
 		tvEmpty.setText(R.string.str_empty_view);
 		lvContacts.setEmptyView(tvEmpty);
 
-		// adapter = new ContactAdapter(this, data, false);
+		adapter = MyTelephoneBookApplication.getAdapter();
 		removeAdapter = new ContactAdapter(this, data, true);
-		lvContacts.setAdapter(MyTelephoneBookApplication.getAdapter());
+		lvContacts.setAdapter(adapter);
 
 		lvContacts.setItemsCanFocus(false);
 
@@ -97,12 +97,19 @@ public class MainActivity extends ActionBarActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main_activity_actions, menu);
-		if (data == null) {
-			menu.getItem(1).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+//		if (adapter.isEmpty()) {
+//			menu.getItem(1).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+//		}
+		return true;
+	}
+	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		if (adapter.isEmpty()) {
+			menu.removeItem(R.id.action_remove);
 		} else {
-			menu.getItem(1).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+			menu.add(Menu.NONE, R.id.action_remove, 1, R.string.action_remove);
 		}
 		return true;
 	}
@@ -124,7 +131,7 @@ public class MainActivity extends ActionBarActivity {
 			break;
 		case R.id.action_import_export:
 			new ImportExportDialog().show(getFragmentManager(), "dialog");
-			;
+			invalidateOptionsMenu();
 			// new dialog
 			// final Dialog importExportDialog = new Dialog(context);
 			// importExportDialog.setContentView(R.layout.import_export_dialog);
@@ -219,6 +226,7 @@ public class MainActivity extends ActionBarActivity {
 						contactsToRemove);
 				adapter.notifyDataSetChanged();
 				updateData();
+				invalidateOptionsMenu();
 				actionMode.finish();
 				break;
 			case R.id.action_cancel:
