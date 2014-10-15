@@ -209,6 +209,7 @@ public class MainActivity extends ActionBarActivity {
 				MyTelephoneBookApplication.getDataSource().deleteAllContacts(
 						contactsToRemove);
 				adapter.notifyDataSetChanged();
+				updateData();
 				actionMode.finish();
 				break;
 			case R.id.action_cancel:

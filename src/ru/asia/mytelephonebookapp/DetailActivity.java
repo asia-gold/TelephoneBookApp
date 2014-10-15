@@ -1,9 +1,5 @@
 package ru.asia.mytelephonebookapp;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import ru.asia.mytelephonebookapp.models.Contact;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -29,7 +25,7 @@ public class DetailActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detail);
-
+		
 		scrollDetail = (ScrollView) findViewById(R.id.scrollDetail);
 		ivPhotoDetail = (ImageView) findViewById(R.id.ivPhotoDetail);
 		tvNameDetail = (TextView) findViewById(R.id.tvNameDetail);
@@ -47,6 +43,7 @@ public class DetailActivity extends ActionBarActivity {
 			ivPhotoDetail.setImageBitmap(BitmapFactory.decodeByteArray(
 					photoArray, 0, photoArray.length));
 			tvNameDetail.setText(detailContact.getName());
+			setTitle(detailContact.getName());
 			
 			if (detailContact.getIsMale()) {
 				tvGender.setText(getResources().getString(R.string.str_male));

@@ -26,6 +26,7 @@
     <string name="str_surname">Surname</string>
     <string name="str_date_of_birth">Date of Birth</string>
     <string name="str_address">Address</string>
+    <string name="str_no_name_typed">You must fill name field.</string>
     
     <!-- Import/Export Dialog Strings -->
     <string name="title_import_export">Import/Export</string>

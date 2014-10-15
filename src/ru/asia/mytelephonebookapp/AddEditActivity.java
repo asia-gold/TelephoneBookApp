@@ -77,6 +77,8 @@ public class AddEditActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_edit);
+		
+		setTitle("Add contact");
 
 		Intent intent = getIntent();
 		long id = intent.getLongExtra("idContact", 0);
@@ -132,47 +134,6 @@ public class AddEditActivity extends ActionBarActivity {
 					}
 				};
 				dialog.show(getFragmentManager(), "dialog");
-
-				// final Dialog addPhotoDialog = new Dialog(context,
-				// R.style.CustomDialogTheme);
-				// addPhotoDialog.setContentView(R.layout.add_photo_dialog);
-				//
-				// Button btnCamera = (Button) addPhotoDialog
-				// .findViewById(R.id.btnCamera);
-				// Button btnGallery = (Button) addPhotoDialog
-				// .findViewById(R.id.btnGallery);
-				// Button btnNetwork = (Button) addPhotoDialog
-				// .findViewById(R.id.btnNetwork);
-				//
-				// btnCamera.setOnClickListener(new OnClickListener() {
-				// @Override
-				// public void onClick(View view) {
-				// takePhotoByCamera();
-				// addPhotoDialog.dismiss();
-				// }
-				// });
-				//
-				// btnGallery.setOnClickListener(new OnClickListener() {
-				//
-				// @Override
-				// public void onClick(View view) {
-				// takePhotoFromGallery();
-				// addPhotoDialog.dismiss();
-				// }
-				// });
-				//
-				// btnNetwork.setOnClickListener(new OnClickListener() {
-				// @Override
-				// public void onClick(View view) {
-				// // Download Photo from Network
-				// Random random = new Random();
-				// new DownloadImageTask(context,
-				// ivPhotoAddEdit).execute(urlImages[random.nextInt(urlImages.length)]);
-				// addPhotoDialog.dismiss();
-				// }
-				// });
-				//
-				// addPhotoDialog.show();
 			}
 		});
 
@@ -217,6 +178,7 @@ public class AddEditActivity extends ActionBarActivity {
 				ivPhotoAddEdit.setImageBitmap(BitmapFactory.decodeByteArray(
 						photoArray, 0, photoArray.length));
 				etName.setText(editContact.getName());
+				setTitle("Edit contact " + editContact.getName());
 
 				setSpinnerGenderSelection(editContact.getIsMale());		
 				
@@ -257,28 +219,23 @@ public class AddEditActivity extends ActionBarActivity {
 					day = calendar.get(Calendar.DAY_OF_MONTH);
 				}
 			}
-
 			String address = savedInstanceState.getString("etAddress");
 
 			ivPhotoAddEdit.setImageBitmap(BitmapFactory.decodeByteArray(
 					photoArray, 0, photoArray.length));
 			etName.setText(name);
 			setSpinnerGenderSelection(isMale);
-			//
 			etAddress.setText(address);
-
 		}
-
+		
 	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 
 		outState.putByteArray("ivPhotoAddEdit", getByteArrayFromImageView());
-		outState.putString("etName", etName.getText().toString());
-		
-		String gender = spGender.getSelectedItem().toString();
-		
+		outState.putString("etName", etName.getText().toString());		
+		String gender = spGender.getSelectedItem().toString();		
 		outState.putBoolean("spGender", getBooleanFromString(gender));
 		outState.putString("etDateOfBirth", etDateOfBirth.getText().toString());
 		outState.putString("etAddress", etAddress.getText().toString());
@@ -317,6 +274,12 @@ public class AddEditActivity extends ActionBarActivity {
 
 			byte[] photoArray = getByteArrayFromImageView();
 			String name = etName.getText().toString();
+			
+			if (name.matches("")) {
+				Toast.makeText(context, getResources().getString(R.string.str_no_name_typed), Toast.LENGTH_LONG).show();
+				return false;
+			}
+			
 			String gender = spGender.getSelectedItem().toString();
 			boolean isMale = getBooleanFromString(gender);
 			String dateString = etDateOfBirth.getText().toString();
@@ -340,11 +303,6 @@ public class AddEditActivity extends ActionBarActivity {
 				idContact = MyTelephoneBookApplication.getDataSource()
 						.addContact(photoArray, name, isMale, dateBirth,
 								address);
-
-				// Contact newContact =
-				// MyTelephoneBookApplication.getDataSource()
-				// .getContact(idContact);
-
 			}
 			MyTelephoneBookApplication.getAdapter().notifyDataSetChanged();
 			Intent intent = new Intent(this, DetailActivity.class);
