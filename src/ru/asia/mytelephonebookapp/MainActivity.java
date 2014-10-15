@@ -1,27 +1,9 @@
 package ru.asia.mytelephonebookapp;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.StringReader;
 import java.util.ArrayList;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-
+import ru.asia.mytelephonebookapp.dialogs.ImportExportDialog;
 import ru.asia.mytelephonebookapp.models.Contact;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,16 +15,16 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity {
 
 	private Context context = this;
 	private ListView lvContacts;
+	private TextView tvEmpty;
 
 	// private ContactAdapter adapter;
 	private ContactAdapter removeAdapter;
@@ -70,6 +52,9 @@ public class MainActivity extends ActionBarActivity {
 		// .getAllContactsByGender(gender);
 
 		lvContacts = (ListView) findViewById(R.id.lvContacts);
+		tvEmpty = (TextView) findViewById(R.id.tvEmpty);
+		tvEmpty.setText(R.string.str_empty_view);
+		lvContacts.setEmptyView(tvEmpty);
 
 		// adapter = new ContactAdapter(this, data, false);
 		removeAdapter = new ContactAdapter(this, data, true);
@@ -106,6 +91,11 @@ public class MainActivity extends ActionBarActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main_activity_actions, menu);
+		if (data == null) {
+			menu.getItem(1).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+		} else {
+			menu.getItem(1).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		}
 		return true;
 	}
 
@@ -125,36 +115,38 @@ public class MainActivity extends ActionBarActivity {
 			startActivity(intent);
 			break;
 		case R.id.action_import_export:
+			new ImportExportDialog().show(getFragmentManager(), "dialog");;
 			// new dialog
-			final Dialog importExportDialog = new Dialog(context,
-					R.style.CustomDialogTheme);
-			importExportDialog.setContentView(R.layout.import_export_dialog);
-
-			Button btnImport = (Button) importExportDialog
-					.findViewById(R.id.btnImport);
-			Button btnExport = (Button) importExportDialog
-					.findViewById(R.id.btnExport);
-
-			btnImport.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					new DBContactsImportTask(context).execute();					
-					importExportDialog.dismiss();
-				}
-			});
-
-			btnExport.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View view) {
-					new DBContactsExportTask(context).execute();
-					importExportDialog.dismiss();
-				}
-			});
-			importExportDialog.show();
-			break;
-		default:
-			break;
+//			final Dialog importExportDialog = new Dialog(context);
+//			importExportDialog.setContentView(R.layout.import_export_dialog);
+//			importExportDialog.setTitle(getResources().getString(R.string.action_import_export));
+//			
+//
+//			Button btnImport = (Button) importExportDialog
+//					.findViewById(R.id.btnImport);
+//			Button btnExport = (Button) importExportDialog
+//					.findViewById(R.id.btnExport);
+//
+//			btnImport.setOnClickListener(new OnClickListener() {
+//				@Override
+//				public void onClick(View view) {
+//					new DBContactsImportTask(context).execute();					
+//					importExportDialog.dismiss();
+//				}
+//			});
+//
+//			btnExport.setOnClickListener(new OnClickListener() {
+//
+//				@Override
+//				public void onClick(View view) {
+//					new DBContactsExportTask(context).execute();
+//					importExportDialog.dismiss();
+//				}
+//			});
+//			importExportDialog.show();
+//			break;
+//		default:
+//			break;
 		}
 		return super.onOptionsItemSelected(item);
 	}

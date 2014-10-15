@@ -52,7 +52,6 @@ public class DBContactsImportTask extends AsyncTask<Void, Void, ArrayList<Contac
 
 			contacts = handler.getParsedData();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return contacts;
@@ -60,19 +59,21 @@ public class DBContactsImportTask extends AsyncTask<Void, Void, ArrayList<Contac
 
 	@Override
 	protected void onPostExecute(ArrayList<Contact> result) {
+		String message = null;
 		MyTelephoneBookApplication.getDataSource().deleteAllContacts();
 		if (result == null) {
-			Toast.makeText(context, "No files for import", Toast.LENGTH_LONG)
-					.show();
+			message = context.getResources()
+					.getString(R.string.str_import_result_false);
 		} else {
 			for (Contact contact : result) {
 				MyTelephoneBookApplication.getDataSource().addContact(contact);
 			}
 			MyTelephoneBookApplication.getAdapter().notifyDataSetChanged();
 			((MainActivity)context).updateData();
-			Toast.makeText(context, "Database imported", Toast.LENGTH_LONG)
-			.show();
+			message = context.getResources()
+					.getString(R.string.str_import_result_true);
 		}
+		Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 	}
 
 }

@@ -13,8 +13,11 @@ import java.util.Random;
 import ru.asia.mytelephonebookapp.models.Contact;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -42,15 +45,15 @@ public class AddEditActivity extends ActionBarActivity {
 
 	private static final int REQUEST_IMAGE_CAPTURE = 1;
 	private static final int REQUEST_IMAGE_SELECT = 2;
-	
-	private static final String[] urlImages = { "http://img1.wikia.nocookie.net/__cb20101014052403/en.futurama/images/4/45/Dr._John_A._Zoidberg.png",
-												"http://upload.wikimedia.org/wikipedia/ru/9/97/Philip_J._Fry.png",
-												"http://upload.wikimedia.org/wikipedia/ru/archive/d/d4/20110107211840!Turanga_Leela.png",
-												"http://upload.wikimedia.org/wikipedia/en/thumb/0/0f/FuturamaProfessorFarnsworth.png/175px-FuturamaProfessorFarnsworth.png",
-												"https://do4a.com/data/MetaMirrorCache/080941ca2c2790d3ad0c96ceb3abd3fc.png",
-												"http://upload.wikimedia.org/wikipedia/en/f/fd/FuturamaAmyWong.png",
-												"http://fc00.deviantart.net/fs71/i/2013/031/2/7/bender_bending_rodriguez_by_car0003-d5tdyps.png"
-	};
+
+	private static final String[] urlImages = {
+			"http://img1.wikia.nocookie.net/__cb20101014052403/en.futurama/images/4/45/Dr._John_A._Zoidberg.png",
+			"http://upload.wikimedia.org/wikipedia/ru/9/97/Philip_J._Fry.png",
+			"http://upload.wikimedia.org/wikipedia/ru/archive/d/d4/20110107211840!Turanga_Leela.png",
+			"http://upload.wikimedia.org/wikipedia/en/thumb/0/0f/FuturamaProfessorFarnsworth.png/175px-FuturamaProfessorFarnsworth.png",
+			"https://do4a.com/data/MetaMirrorCache/080941ca2c2790d3ad0c96ceb3abd3fc.png",
+			"http://upload.wikimedia.org/wikipedia/en/f/fd/FuturamaAmyWong.png",
+			"http://fc00.deviantart.net/fs71/i/2013/031/2/7/bender_bending_rodriguez_by_car0003-d5tdyps.png" };
 
 	private Context context = this;
 
@@ -96,45 +99,80 @@ public class AddEditActivity extends ActionBarActivity {
 
 			@Override
 			public void onClick(View view) {
-				final Dialog addPhotoDialog = new Dialog(context,
-						R.style.CustomDialogTheme);
-				addPhotoDialog.setContentView(R.layout.add_photo_dialog);
 
-				Button btnCamera = (Button) addPhotoDialog
-						.findViewById(R.id.btnCamera);
-				Button btnGallery = (Button) addPhotoDialog
-						.findViewById(R.id.btnGallery);
-				Button btnNetwork = (Button) addPhotoDialog
-						.findViewById(R.id.btnNetwork);
-
-				btnCamera.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						takePhotoByCamera();
-						addPhotoDialog.dismiss();
-					}
-				});
-
-				btnGallery.setOnClickListener(new OnClickListener() {
+				DialogFragment dialog = new DialogFragment() {
 
 					@Override
-					public void onClick(View view) {
-						takePhotoFromGallery();
-						addPhotoDialog.dismiss();
-					}
-				});
+					public Dialog onCreateDialog(Bundle savedInstanceState) {
+						AlertDialog.Builder builder = new AlertDialog.Builder(
+								context);
+						builder.setTitle(R.string.title_add_photo).setItems(
+								R.array.array_add_photo,
+								new DialogInterface.OnClickListener() {
 
-				btnNetwork.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						// Download Photo from Network
-						Random random = new Random();
-						new DownloadImageTask(context, ivPhotoAddEdit).execute(urlImages[random.nextInt(urlImages.length)]);
-						addPhotoDialog.dismiss();
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+										switch (which) {
+										case 0:
+											takePhotoByCamera();
+											break;
+										case 1:
+											takePhotoFromGallery();
+											break;
+										case 2:
+											Random random = new Random();
+											new DownloadImageTask(context,
+													ivPhotoAddEdit).execute(urlImages[random
+													.nextInt(urlImages.length)]);
+										}
+									}
+								});
+						return builder.create();
 					}
-				});
+				};
+				dialog.show(getFragmentManager(), "dialog");
 
-				addPhotoDialog.show();
+				// final Dialog addPhotoDialog = new Dialog(context,
+				// R.style.CustomDialogTheme);
+				// addPhotoDialog.setContentView(R.layout.add_photo_dialog);
+				//
+				// Button btnCamera = (Button) addPhotoDialog
+				// .findViewById(R.id.btnCamera);
+				// Button btnGallery = (Button) addPhotoDialog
+				// .findViewById(R.id.btnGallery);
+				// Button btnNetwork = (Button) addPhotoDialog
+				// .findViewById(R.id.btnNetwork);
+				//
+				// btnCamera.setOnClickListener(new OnClickListener() {
+				// @Override
+				// public void onClick(View view) {
+				// takePhotoByCamera();
+				// addPhotoDialog.dismiss();
+				// }
+				// });
+				//
+				// btnGallery.setOnClickListener(new OnClickListener() {
+				//
+				// @Override
+				// public void onClick(View view) {
+				// takePhotoFromGallery();
+				// addPhotoDialog.dismiss();
+				// }
+				// });
+				//
+				// btnNetwork.setOnClickListener(new OnClickListener() {
+				// @Override
+				// public void onClick(View view) {
+				// // Download Photo from Network
+				// Random random = new Random();
+				// new DownloadImageTask(context,
+				// ivPhotoAddEdit).execute(urlImages[random.nextInt(urlImages.length)]);
+				// addPhotoDialog.dismiss();
+				// }
+				// });
+				//
+				// addPhotoDialog.show();
 			}
 		});
 
@@ -182,7 +220,7 @@ public class AddEditActivity extends ActionBarActivity {
 				setSpinnerGenderSelection(editContact.getGender());
 				Date date = editContact.getDateOfBirth();
 				String dateString = ContactsDataSource.formatDateToString(date);
-				if (dateString == null) {
+				if (dateString.matches("")) {
 					etDateOfBirth.setText("");
 				} else {
 					etDateOfBirth.setText(dateString);
@@ -313,36 +351,6 @@ public class AddEditActivity extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
-	// @Override
-	// public void onCreateContextMenu(ContextMenu menu, View view,
-	// ContextMenuInfo menuInfo) {
-	// super.onCreateContextMenu(menu, view, menuInfo);
-	//
-	// if (view.getId() == R.id.ivPhotoAddEdit) {
-	// getMenuInflater().inflate(R.menu.photo_menu, menu);
-	// if (!pm.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
-	// menu.removeItem(R.id.action_photo_by_camera);
-	// }
-	// }
-	// }
-	//
-	// @Override
-	// public boolean onContextItemSelected(MenuItem item) {
-	//
-	// switch (item.getItemId()) {
-	// case R.id.action_photo_by_camera:
-	// photoByCamera();
-	// return true;
-	// case R.id.action_photo_from_gallery:
-	// photoFromGallery();
-	// return true;
-	// case R.id.action_photo_from_network:
-	// default:
-	// return super.onContextItemSelected(item);
-	// }
-	//
-	// }
 
 	private void takePhotoByCamera() {
 		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

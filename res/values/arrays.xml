@@ -6,10 +6,21 @@
         <item>Female</item>
     </string-array>
     
+    <string-array name="array_import_export">
+        <item>Import</item>
+        <item>Export</item>
+    </string-array>
+    
+    <string-array name="array_add_photo">
+        <item>Take a picture with the camera</item>
+        <item>Choose from gallery</item>
+        <item>Upload from network</item>
+    </string-array>
+    
     <string-array name="arrayEntriesByGender">
-        <item>Gender Male</item>
-        <item>Gender Female</item>
-        <item>Gender Both</item>
+        <item>Show male only</item>
+        <item>Show female only</item>
+        <item>Show all</item>
     </string-array>
     
     <string-array name="arrayValuesByGender">
