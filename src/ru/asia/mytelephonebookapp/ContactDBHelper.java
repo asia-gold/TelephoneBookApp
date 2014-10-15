@@ -15,14 +15,14 @@ public class ContactDBHelper extends SQLiteOpenHelper{
 	public static final String COLUMN_ID = "_id";
 	public static final String COLUMN_PHOTO = "photo";
 	public static final String COLUMN_NAME = "name";
-	public static final String COLUMN_GENDER = "gender";
+	public static final String COLUMN_GENDER = "isMale";
 	public static final String COLUMN_DATE_BIRTH = "dateBorn";
 	public static final String COLUMN_ADDRESS = "address";
 			
 	private static final String DATABASE_CREATE = "create table "
 			+ TABLE_NAME + "(" + COLUMN_ID + " integer primary key autoincrement, "
 			+ COLUMN_PHOTO + " BLOB, " + COLUMN_NAME + " text not null, " 
-			+ COLUMN_GENDER + " text, " + COLUMN_DATE_BIRTH + " text, " 
+			+ COLUMN_GENDER + " integer default 0, " + COLUMN_DATE_BIRTH + " text, " 
 			+ COLUMN_ADDRESS + " text" + ");";
 	
 	

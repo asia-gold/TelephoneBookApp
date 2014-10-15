@@ -123,9 +123,9 @@ public class DBContactsExportTask extends AsyncTask<Void, Void, Boolean> {
 				serializer.text(dateString);
 				serializer.endTag("", "dateOfBirth");
 				// Gender
-				serializer.startTag("", "gender");
-				serializer.text(contact.getGender());
-				serializer.endTag("", "gender");
+				serializer.startTag("", "isMale");
+				serializer.text(String.valueOf(contact.getIsMale()));
+				serializer.endTag("", "isMale");
 				// Address
 				serializer.startTag("", "address");
 				serializer.text(contact.getAddress());

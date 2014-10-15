@@ -70,8 +70,8 @@ public class XMLContentHandler extends DefaultHandler{
 				e.printStackTrace();
 			}
 			contact.setDateOfBirth(date);
-		} else if (inContact == true && localName.equals("gender")) {
-			contact.setGender(builder.toString().trim());
+		} else if (inContact == true && localName.equals("isMale")) {
+			contact.setIsMale(Boolean.valueOf(builder.toString().trim()));
 		} else if (inContact == true && localName.equals("address")) {
 			contact.setAddress(builder.toString().trim());
 		}

@@ -37,11 +37,12 @@ public class ContactsDataSource {
 	}
 
 	// Return id of new data row
-	public long addContact(byte[] photo, String name, String gender,
+	public long addContact(byte[] photo, String name, boolean isMale,
 			Date dateBorn, String address) {
 		ContentValues values = new ContentValues();
 		values.put(ContactDBHelper.COLUMN_PHOTO, photo);
 		values.put(ContactDBHelper.COLUMN_NAME, name);
+		int gender = (isMale == true ? 1 : 0);
 		values.put(ContactDBHelper.COLUMN_GENDER, gender);
 		String dateBornString = formatDateToString(dateBorn);
 		values.put(ContactDBHelper.COLUMN_DATE_BIRTH, dateBornString);
@@ -55,17 +56,18 @@ public class ContactsDataSource {
 	public void addContact(Contact contact) {
 		byte[] photo = contact.getPhoto();
 		String name = contact.getName();
-		String gender = contact.getGender();
+		boolean isMale = contact.getIsMale();
 		Date dateBorn = contact.getDateOfBirth();
 		String address = contact.getAddress();
-		addContact(photo, name, gender, dateBorn, address);
+		addContact(photo, name, isMale, dateBorn, address);
 	}
 
 	public void updateContact(long id, byte[] photo, String name,
-			String gender, Date dateBorn, String address) {
+			boolean isMale, Date dateBorn, String address) {
 		ContentValues values = new ContentValues();
 		values.put(ContactDBHelper.COLUMN_PHOTO, photo);
 		values.put(ContactDBHelper.COLUMN_NAME, name);
+		int gender = (isMale == true ? 1 : 0);
 		values.put(ContactDBHelper.COLUMN_GENDER, gender);
 		String dateBornString = formatDateToString(dateBorn);
 		values.put(ContactDBHelper.COLUMN_DATE_BIRTH, dateBornString);
@@ -123,25 +125,25 @@ public class ContactsDataSource {
 		return contacts;
 	}
 
-	public ArrayList<Contact> getAllContactsByGender(String gender) {
-		ArrayList<Contact> contacts = new ArrayList<Contact>();
-		if (TextUtils.equals(gender, "Both")) {
-			contacts = getAllContact();
-		} else {
-			Cursor cursor = database.query(ContactDBHelper.TABLE_NAME,
-					allColumns, ContactDBHelper.COLUMN_GENDER + " = " + gender,
-					null, null, null, null);
-
-			cursor.moveToFirst();
-			while (!cursor.isAfterLast()) {
-				Contact contact = cursorToContact(cursor);
-				contacts.add(contact);
-				cursor.moveToNext();
-			}
-			cursor.close();
-		}
-		return contacts;
-	}
+//	public ArrayList<Contact> getAllContactsByGender(String gender) {
+//		ArrayList<Contact> contacts = new ArrayList<Contact>();
+//		if (TextUtils.equals(gender, "Both")) {
+//			contacts = getAllContact();
+//		} else {
+//			Cursor cursor = database.query(ContactDBHelper.TABLE_NAME,
+//					allColumns, ContactDBHelper.COLUMN_GENDER + " = " + gender,
+//					null, null, null, null);
+//
+//			cursor.moveToFirst();
+//			while (!cursor.isAfterLast()) {
+//				Contact contact = cursorToContact(cursor);
+//				contacts.add(contact);
+//				cursor.moveToNext();
+//			}
+//			cursor.close();
+//		}
+//		return contacts;
+//	}
 
 	public static String formatDateToString(Date date) {
 		String dateString = null;
@@ -175,7 +177,8 @@ public class ContactsDataSource {
 		contact.setId(cursor.getLong(0));
 		contact.setPhoto(cursor.getBlob(1));
 		contact.setName(cursor.getString(2));
-		contact.setGender(cursor.getString(3));
+		boolean isMale = (cursor.getInt(3) == 1 ? true : false);
+		contact.setIsMale(isMale);
 		Date tmpDate = null;
 		try {
 			tmpDate = formatStringToDate(cursor.getString(4));

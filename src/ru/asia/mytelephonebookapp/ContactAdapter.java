@@ -109,8 +109,10 @@ public class ContactAdapter extends BaseAdapter {
 
 		Contact tmpValue = (Contact) contactsList.get(position);
 
-		if (tmpValue.getGender().matches("Male")) {
+		if (tmpValue.getIsMale()) {
 			viewHolder.llItem.setBackgroundResource(R.color.male);
+		} else {
+			viewHolder.llItem.setBackgroundResource(R.color.female);
 		}
 		
 		byte[] photoArray = tmpValue.getPhoto();

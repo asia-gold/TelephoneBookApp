@@ -9,7 +9,7 @@ public class Contact {
 	private byte[] photo;
 	private String name;
 	private Date dateOfBirth;
-	private String gender;
+	private boolean isMale;
 	private String address;
 	
 	public Contact() {
@@ -36,8 +36,8 @@ public class Contact {
 		this.dateOfBirth = dateOfBirth;
 	}
 	
-	public void setGender(String gender) {
-		this.gender = gender;
+	public void setIsMale(boolean isMale) {
+		this.isMale = isMale;
 	}
 	
 	public void setAddress(String address) {
@@ -64,8 +64,8 @@ public class Contact {
 		return dateOfBirth;
 	}
 	
-	public String getGender() {
-		return gender;
+	public boolean getIsMale() {
+		return isMale;
 	}
 	
 	public String getAddress() {

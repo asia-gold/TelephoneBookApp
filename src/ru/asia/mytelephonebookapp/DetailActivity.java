@@ -47,11 +47,22 @@ public class DetailActivity extends ActionBarActivity {
 			ivPhotoDetail.setImageBitmap(BitmapFactory.decodeByteArray(
 					photoArray, 0, photoArray.length));
 			tvNameDetail.setText(detailContact.getName());
-			tvGender.setText(detailContact.getGender());
-			Log.e("Gender", detailContact.getGender());
-			if (detailContact.getGender().matches("Male")) {
+			
+			if (detailContact.getIsMale()) {
+				tvGender.setText(getResources().getString(R.string.str_male));
 				scrollDetail.setBackgroundResource(R.color.male);
+			} else {
+				tvGender.setText(getResources().getString(R.string.str_female));
+				scrollDetail.setBackgroundResource(R.color.female);
 			}
+			
+//			tvGender.setText(detailContact.getGender());
+//			Log.e("Gender", detailContact.getGender());
+//			if (detailContact.getGender().matches("Male")) {
+//				scrollDetail.setBackgroundResource(R.color.male);
+//			}
+			
+			
 			String dateString = ContactsDataSource.formatDateToString(detailContact.getDateOfBirth());
 			if (dateString == null) {
 				tvDateOfBirth.setText("");

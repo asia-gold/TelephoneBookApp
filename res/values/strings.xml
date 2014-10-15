@@ -8,6 +8,9 @@
     <string name="title_activity_splash">SplashActivity</string>
     
     <string name="str_empty_view">Tap + to add a contact</string>
+    
+    <string name="str_male">Male</string>
+    <string name="str_female">Female</string>
 
     <!-- Action Buttons -->
     <string name="action_add">Add</string>

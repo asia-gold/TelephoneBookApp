@@ -217,7 +217,9 @@ public class AddEditActivity extends ActionBarActivity {
 				ivPhotoAddEdit.setImageBitmap(BitmapFactory.decodeByteArray(
 						photoArray, 0, photoArray.length));
 				etName.setText(editContact.getName());
-				setSpinnerGenderSelection(editContact.getGender());
+
+				setSpinnerGenderSelection(editContact.getIsMale());		
+				
 				Date date = editContact.getDateOfBirth();
 				String dateString = ContactsDataSource.formatDateToString(date);
 				if (dateString.matches("")) {
@@ -235,7 +237,7 @@ public class AddEditActivity extends ActionBarActivity {
 			byte[] photoArray = savedInstanceState
 					.getByteArray("ivPhotoAddEdit");
 			String name = savedInstanceState.getString("etName");
-			String gender = savedInstanceState.getString("spGender");
+			boolean isMale = savedInstanceState.getBoolean("spGender");
 			String dateOfBirth = savedInstanceState.getString("etDateOfBirth");
 
 			if (dateOfBirth == null) {
@@ -261,7 +263,7 @@ public class AddEditActivity extends ActionBarActivity {
 			ivPhotoAddEdit.setImageBitmap(BitmapFactory.decodeByteArray(
 					photoArray, 0, photoArray.length));
 			etName.setText(name);
-			setSpinnerGenderSelection(gender);
+			setSpinnerGenderSelection(isMale);
 			//
 			etAddress.setText(address);
 
@@ -274,7 +276,10 @@ public class AddEditActivity extends ActionBarActivity {
 
 		outState.putByteArray("ivPhotoAddEdit", getByteArrayFromImageView());
 		outState.putString("etName", etName.getText().toString());
-		outState.putString("spGender", spGender.getSelectedItem().toString());
+		
+		String gender = spGender.getSelectedItem().toString();
+		
+		outState.putBoolean("spGender", getBooleanFromString(gender));
 		outState.putString("etDateOfBirth", etDateOfBirth.getText().toString());
 		outState.putString("etAddress", etAddress.getText().toString());
 
@@ -297,8 +302,8 @@ public class AddEditActivity extends ActionBarActivity {
 		return photoArray;
 	}
 
-	private void setSpinnerGenderSelection(String gender) {
-		if (TextUtils.equals(gender, "Male")) {
+	private void setSpinnerGenderSelection(boolean isMale) {
+		if (isMale) {
 			spGender.setSelection(0);
 		} else {
 			spGender.setSelection(1);
@@ -313,6 +318,7 @@ public class AddEditActivity extends ActionBarActivity {
 			byte[] photoArray = getByteArrayFromImageView();
 			String name = etName.getText().toString();
 			String gender = spGender.getSelectedItem().toString();
+			boolean isMale = getBooleanFromString(gender);
 			String dateString = etDateOfBirth.getText().toString();
 			Date dateBirth = null;
 			try {
@@ -327,12 +333,12 @@ public class AddEditActivity extends ActionBarActivity {
 
 			if (idContact != 0) {
 				MyTelephoneBookApplication.getDataSource()
-						.updateContact(idContact, photoArray, name, gender,
+						.updateContact(idContact, photoArray, name, isMale,
 								dateBirth, address);
 			} else {
 
 				idContact = MyTelephoneBookApplication.getDataSource()
-						.addContact(photoArray, name, gender, dateBirth,
+						.addContact(photoArray, name, isMale, dateBirth,
 								address);
 
 				// Contact newContact =
@@ -340,16 +346,25 @@ public class AddEditActivity extends ActionBarActivity {
 				// .getContact(idContact);
 
 			}
+			MyTelephoneBookApplication.getAdapter().notifyDataSetChanged();
 			Intent intent = new Intent(this, DetailActivity.class);
 			intent.putExtra("idContact", (long) idContact);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
 					| Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
 			finish();
-			MyTelephoneBookApplication.getAdapter().notifyDataSetChanged();
+			
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	private boolean getBooleanFromString(String gender){
+		boolean isMale = false;
+		if (gender.matches(getResources().getString(R.string.str_male))) {
+			isMale = true;
+		}	
+		return isMale;
 	}
 
 	private void takePhotoByCamera() {
