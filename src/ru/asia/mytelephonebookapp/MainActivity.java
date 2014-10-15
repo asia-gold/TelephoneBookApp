@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -68,15 +69,22 @@ public class MainActivity extends ActionBarActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 
-				MyTelephoneBookApplication.getAdapter().changeState(position);
+				if (removeModeActive == true) {
+					CheckBox checkBox = (CheckBox) view
+							.findViewById(R.id.chbRemove);
+					checkBox.setChecked(!checkBox.isChecked());
+					MyTelephoneBookApplication.getAdapter().changeState(
+							position);
+				} else {
 
-				Intent intent = new Intent(MainActivity.this,
-						DetailActivity.class);
+					Intent intent = new Intent(MainActivity.this,
+							DetailActivity.class);
 
-				Contact cm = data.get(position);
-				Log.e("------------", "Id item click " + cm.getId());
-				intent.putExtra("idContact", cm.getId());
-				startActivity(intent);
+					Contact cm = data.get(position);
+					Log.e("------------", "Id item click " + cm.getId());
+					intent.putExtra("idContact", cm.getId());
+					startActivity(intent);
+				}
 			}
 		});
 	}
@@ -115,42 +123,43 @@ public class MainActivity extends ActionBarActivity {
 			startActivity(intent);
 			break;
 		case R.id.action_import_export:
-			new ImportExportDialog().show(getFragmentManager(), "dialog");;
+			new ImportExportDialog().show(getFragmentManager(), "dialog");
+			;
 			// new dialog
-//			final Dialog importExportDialog = new Dialog(context);
-//			importExportDialog.setContentView(R.layout.import_export_dialog);
-//			importExportDialog.setTitle(getResources().getString(R.string.action_import_export));
-//			
-//
-//			Button btnImport = (Button) importExportDialog
-//					.findViewById(R.id.btnImport);
-//			Button btnExport = (Button) importExportDialog
-//					.findViewById(R.id.btnExport);
-//
-//			btnImport.setOnClickListener(new OnClickListener() {
-//				@Override
-//				public void onClick(View view) {
-//					new DBContactsImportTask(context).execute();					
-//					importExportDialog.dismiss();
-//				}
-//			});
-//
-//			btnExport.setOnClickListener(new OnClickListener() {
-//
-//				@Override
-//				public void onClick(View view) {
-//					new DBContactsExportTask(context).execute();
-//					importExportDialog.dismiss();
-//				}
-//			});
-//			importExportDialog.show();
-//			break;
-//		default:
-//			break;
+			// final Dialog importExportDialog = new Dialog(context);
+			// importExportDialog.setContentView(R.layout.import_export_dialog);
+			// importExportDialog.setTitle(getResources().getString(R.string.action_import_export));
+			//
+			//
+			// Button btnImport = (Button) importExportDialog
+			// .findViewById(R.id.btnImport);
+			// Button btnExport = (Button) importExportDialog
+			// .findViewById(R.id.btnExport);
+			//
+			// btnImport.setOnClickListener(new OnClickListener() {
+			// @Override
+			// public void onClick(View view) {
+			// new DBContactsImportTask(context).execute();
+			// importExportDialog.dismiss();
+			// }
+			// });
+			//
+			// btnExport.setOnClickListener(new OnClickListener() {
+			//
+			// @Override
+			// public void onClick(View view) {
+			// new DBContactsExportTask(context).execute();
+			// importExportDialog.dismiss();
+			// }
+			// });
+			// importExportDialog.show();
+			// break;
+			// default:
+			// break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	public void updateData() {
 		data = MyTelephoneBookApplication.getDataSource().getAllContact();
 	}
