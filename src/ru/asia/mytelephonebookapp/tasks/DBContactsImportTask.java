@@ -1,4 +1,4 @@
-package ru.asia.mytelephonebookapp;
+package ru.asia.mytelephonebookapp.tasks;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,6 +11,10 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
+import ru.asia.mytelephonebookapp.MainActivity;
+import ru.asia.mytelephonebookapp.MyTelephoneBookApplication;
+import ru.asia.mytelephonebookapp.R;
+import ru.asia.mytelephonebookapp.R.string;
 import ru.asia.mytelephonebookapp.models.Contact;
 import android.content.Context;
 import android.os.AsyncTask;

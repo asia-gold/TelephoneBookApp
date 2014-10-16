@@ -1,8 +1,9 @@
-package ru.asia.mytelephonebookapp;
+package ru.asia.mytelephonebookapp.tasks;
 
 import java.io.InputStream;
 import java.net.URL;
 
+import ru.asia.mytelephonebookapp.R;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -52,7 +53,7 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap>{
 			progressDialog.dismiss();
 		} else {
 			progressDialog.dismiss();
-			Toast.makeText(context, "Some Error Occurred", Toast.LENGTH_LONG).show();
+			Toast.makeText(context, context.getResources().getString(R.string.str_error_download), Toast.LENGTH_LONG).show();
 		}
 		super.onPostExecute(result);
 	}

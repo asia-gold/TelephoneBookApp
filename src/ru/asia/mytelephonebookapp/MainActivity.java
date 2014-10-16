@@ -203,7 +203,8 @@ public class MainActivity extends ActionBarActivity {
 		removeModeActive = false;
 		lvContacts.setAdapter(adapter);
 		lvContacts.setChoiceMode(ListView.CHOICE_MODE_NONE);
-		updateData();
+		data = MyTelephoneBookApplication.getDataSource()
+				.getAllContactsByGender(gender);
 		adapter.updateAdapterData(data);
 		invalidateOptionsMenu();
 	}

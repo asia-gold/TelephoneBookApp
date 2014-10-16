@@ -11,7 +11,7 @@
         android:layout_width="@dimen/iv_photo_width"
         android:layout_height="@dimen/iv_photo_height"
         android:layout_margin="@dimen/margin_layout"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/anonim" />
 
     <TextView
         android:id="@+id/tvName"

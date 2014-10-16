@@ -18,7 +18,7 @@
             android:layout_height="@dimen/iv_photo_detail_height"
             android:layout_weight="2.02"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/anonim" />
 
         <TextView
             android:id="@+id/tvNameDetail"

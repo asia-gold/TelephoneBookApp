@@ -1,4 +1,4 @@
-package ru.asia.mytelephonebookapp;
+package ru.asia.mytelephonebookapp.tasks;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -9,6 +9,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import ru.asia.mytelephonebookapp.ContactsDataSource;
 import ru.asia.mytelephonebookapp.models.Contact;
 import android.util.Base64;
 

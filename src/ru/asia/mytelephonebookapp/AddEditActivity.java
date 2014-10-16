@@ -11,6 +11,7 @@ import java.util.Locale;
 import java.util.Random;
 
 import ru.asia.mytelephonebookapp.models.Contact;
+import ru.asia.mytelephonebookapp.tasks.DownloadImageTask;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
@@ -26,6 +27,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -47,14 +50,19 @@ public class AddEditActivity extends ActionBarActivity {
 	private static final int REQUEST_IMAGE_CAPTURE = 1;
 	private static final int REQUEST_IMAGE_SELECT = 2;
 
-	private static final String[] urlImages = {
+	private static final String[] maleUrlImages = {
 			"http://img1.wikia.nocookie.net/__cb20101014052403/en.futurama/images/4/45/Dr._John_A._Zoidberg.png",
 			"http://upload.wikimedia.org/wikipedia/ru/9/97/Philip_J._Fry.png",
-			"http://upload.wikimedia.org/wikipedia/ru/archive/d/d4/20110107211840!Turanga_Leela.png",
 			"http://upload.wikimedia.org/wikipedia/en/thumb/0/0f/FuturamaProfessorFarnsworth.png/175px-FuturamaProfessorFarnsworth.png",
 			"https://do4a.com/data/MetaMirrorCache/080941ca2c2790d3ad0c96ceb3abd3fc.png",
+			"http://fc00.deviantart.net/fs71/i/2013/031/2/7/bender_bending_rodriguez_by_car0003-d5tdyps.png",
+			"http://posmotre.li/images/f/f1/Hermes_2.png",
+			"http://dic.academic.ru/pictures/wiki/files/76/Lieutenant_Kif_Kroker.png" };
+
+	private static final String[] femaleUrlImages = {
 			"http://upload.wikimedia.org/wikipedia/en/f/fd/FuturamaAmyWong.png",
-			"http://fc00.deviantart.net/fs71/i/2013/031/2/7/bender_bending_rodriguez_by_car0003-d5tdyps.png" };
+			"http://upload.wikimedia.org/wikipedia/ru/archive/d/d4/20110107211840!Turanga_Leela.png",
+			"http://upload.wikimedia.org/wikipedia/en/6/6a/Mom_(Futurama).png" };
 
 	private Context context = this;
 
@@ -71,7 +79,7 @@ public class AddEditActivity extends ActionBarActivity {
 	private EditText etAddress;
 
 	private String currentPhotoPath;
-	
+
 	private long id;
 	private SharedPreferences settings;
 
@@ -97,24 +105,24 @@ public class AddEditActivity extends ActionBarActivity {
 		etAddress = (EditText) findViewById(R.id.etAddress);
 
 		initializeListenerForImageView();
-		
-		etDateOfBirth.setClickable(true);
-		initializeListenerForEditTextDate();	
 
-		restoreInstanceState(savedInstanceState);		
+		etDateOfBirth.setClickable(true);
+		initializeListenerForEditTextDate();
+
+		restoreInstanceState(savedInstanceState);
 	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		outState.putByteArray("ivPhotoAddEdit", getByteArrayFromImageView());
-		outState.putString("etName", etName.getText().toString());		
-		String gender = spGender.getSelectedItem().toString();		
+		outState.putString("etName", etName.getText().toString());
+		String gender = spGender.getSelectedItem().toString();
 		outState.putBoolean("spGender", getBooleanFromString(gender));
 		outState.putString("etDateOfBirth", etDateOfBirth.getText().toString());
 		outState.putString("etAddress", etAddress.getText().toString());
 		super.onSaveInstanceState(outState);
 	}
-	
+
 	private void initializeListenerForImageView() {
 		ivPhotoAddEdit.setOnClickListener(new OnClickListener() {
 
@@ -142,15 +150,35 @@ public class AddEditActivity extends ActionBarActivity {
 											if (isCameraAvailable()) {
 												takePhotoFromGallery();
 											} else {
-												Toast.makeText(context, getResources().getString(R.string.str_no_camera), 
-														Toast.LENGTH_LONG).show();
+												Toast.makeText(
+														context,
+														getResources()
+																.getString(
+																		R.string.str_no_camera),
+														Toast.LENGTH_LONG)
+														.show();
 											}
 											break;
 										case 2:
-											Random random = new Random();
-											new DownloadImageTask(context,
-													ivPhotoAddEdit).execute(urlImages[random
-													.nextInt(urlImages.length)]);
+											if (isInternetAvailable()) {
+												Random random = new Random();
+												String gender = spGender
+														.getSelectedItem()
+														.toString();
+												if (gender.matches("Male")) {
+													new DownloadImageTask(
+															context,
+															ivPhotoAddEdit)
+															.execute(maleUrlImages[random
+																	.nextInt(maleUrlImages.length)]);
+												} else {
+													new DownloadImageTask(
+															context,
+															ivPhotoAddEdit)
+															.execute(femaleUrlImages[random
+																	.nextInt(femaleUrlImages.length)]);
+												}
+											}
 										}
 									}
 								});
@@ -161,7 +189,7 @@ public class AddEditActivity extends ActionBarActivity {
 			}
 		});
 	}
-	
+
 	private void initializeListenerForEditTextDate() {
 		etDateOfBirth.setOnClickListener(new OnClickListener() {
 
@@ -195,7 +223,7 @@ public class AddEditActivity extends ActionBarActivity {
 			}
 		});
 	}
-	
+
 	private void restoreInstanceState(Bundle savedInstanceState) {
 		if (savedInstanceState == null) {
 			if (id != 0) {
@@ -207,8 +235,8 @@ public class AddEditActivity extends ActionBarActivity {
 				etName.setText(editContact.getName());
 				setTitle("Edit contact " + editContact.getName());
 
-				setSpinnerGenderSelection(editContact.getIsMale());		
-				
+				setSpinnerGenderSelection(editContact.getIsMale());
+
 				Date date = editContact.getDateOfBirth();
 				String dateString = ContactsDataSource.formatDateToString(date);
 				if (dateString.matches("")) {
@@ -286,12 +314,14 @@ public class AddEditActivity extends ActionBarActivity {
 			notifyMainActivity();
 			byte[] photoArray = getByteArrayFromImageView();
 			String name = etName.getText().toString();
-			
+
 			if (name.matches("")) {
-				Toast.makeText(context, getResources().getString(R.string.str_no_name_typed), Toast.LENGTH_LONG).show();
+				Toast.makeText(context,
+						getResources().getString(R.string.str_no_name_typed),
+						Toast.LENGTH_LONG).show();
 				return false;
 			}
-			
+
 			String gender = spGender.getSelectedItem().toString();
 			boolean isMale = getBooleanFromString(gender);
 			String dateString = etDateOfBirth.getText().toString();
@@ -316,39 +346,40 @@ public class AddEditActivity extends ActionBarActivity {
 						.addContact(photoArray, name, isMale, dateBirth,
 								address);
 			}
-			
+
 			Intent intent = new Intent(this, DetailActivity.class);
 			intent.putExtra("idContact", (long) idContact);
 			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
 					| Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
 			finish();
-			
+
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	private void notifyMainActivity() {
-		
+
 		settings = getPreferences(MODE_PRIVATE);
 		Editor editor = settings.edit();
 		editor.putBoolean("notify", true);
 		editor.commit();
 		Log.e("AddEdit", "notifyMainActivity()");
 	}
-	
-	private boolean getBooleanFromString(String gender){
+
+	private boolean getBooleanFromString(String gender) {
 		boolean isMale = false;
 		if (gender.matches(getResources().getString(R.string.str_male))) {
 			isMale = true;
-		}	
+		}
 		return isMale;
 	}
-	
+
 	private boolean isCameraAvailable() {
 		final PackageManager packageManager = getPackageManager();
-		boolean isCamera = packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA);
+		boolean isCamera = packageManager
+				.hasSystemFeature(PackageManager.FEATURE_CAMERA);
 		return isCamera;
 	}
 
@@ -447,5 +478,31 @@ public class AddEditActivity extends ActionBarActivity {
 				.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 		cursor.moveToFirst();
 		return cursor.getString(columnIndex);
+	}
+
+	private boolean isInternetAvailable() {
+		boolean hasWifiNet = false;
+		boolean hasMobileNet = false;
+		ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo[] networkInfo = manager.getAllNetworkInfo();
+		for (NetworkInfo ni : networkInfo) {
+			if (ni.getTypeName().equalsIgnoreCase("WIFI")) {
+				if (ni.isConnected()) {
+					hasWifiNet = true;
+				}
+			} else if (ni.getTypeName().equalsIgnoreCase("MOBILE")) {
+				if (ni.isConnected()) {
+					hasMobileNet = true;
+				}
+			}
+		}
+		if (hasMobileNet || hasWifiNet) {
+			// Everything just fine
+		} else {
+			Toast.makeText(this,
+					getResources().getString(R.string.str_no_internet),
+					Toast.LENGTH_LONG).show();
+		}
+		return hasMobileNet || hasWifiNet;
 	}
 }

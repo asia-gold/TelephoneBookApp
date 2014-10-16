@@ -1,4 +1,4 @@
-package ru.asia.mytelephonebookapp;
+package ru.asia.mytelephonebookapp.tasks;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,6 +17,11 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xmlpull.v1.XmlSerializer;
 
+import ru.asia.mytelephonebookapp.ContactDBHelper;
+import ru.asia.mytelephonebookapp.ContactsDataSource;
+import ru.asia.mytelephonebookapp.MyTelephoneBookApplication;
+import ru.asia.mytelephonebookapp.R;
+import ru.asia.mytelephonebookapp.R.string;
 import ru.asia.mytelephonebookapp.models.Contact;
 import android.content.Context;
 import android.os.AsyncTask;

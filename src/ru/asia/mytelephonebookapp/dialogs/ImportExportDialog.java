@@ -1,8 +1,8 @@
 package ru.asia.mytelephonebookapp.dialogs;
 
-import ru.asia.mytelephonebookapp.DBContactsExportTask;
-import ru.asia.mytelephonebookapp.DBContactsImportTask;
 import ru.asia.mytelephonebookapp.R;
+import ru.asia.mytelephonebookapp.tasks.DBContactsExportTask;
+import ru.asia.mytelephonebookapp.tasks.DBContactsImportTask;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;

@@ -25,9 +25,13 @@
     <string name="str_address">Address</string>
     <string name="str_no_camera">You have no camera on device.</string>
     <string name="str_no_name_typed">Name field can\'t be empty.</string>
+    <string name="str_no_internet">You have no internet connection.</string>
     
     <!-- Import/Export Dialog Strings -->
     <string name="title_import_export">Import/Export</string>
+    
+    <!-- Download Image Task -->
+    <string name="str_error_download">Error download image</string>
     
     <!-- Export Task Strings -->
     <string name="str_export_result_true">Database was exported.</string>
