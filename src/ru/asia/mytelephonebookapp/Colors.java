@@ -34,24 +34,24 @@ public class Colors {
 		} else {
 			i = 1; 
 		}
-		setMaleColor(maleColors[i]);
-		setFemaleColor(femaleColors[i]);
+		setMaleColorId(maleColors[i]);
+		setFemaleColorId(femaleColors[i]);
 	}
 	
-	private void setMaleColor(int maleColor) {
+	private void setMaleColorId(int maleColor) {
 		this.maleColor = maleColor;
 	}
 	
-	private void setFemaleColor(int femaleColor) {
+	private void setFemaleColorId(int femaleColor) {
 		this.femaleColor = femaleColor;
 	}
 	
-	public int getMaleColor() {
+	public int getMaleColorId() {
 		getColorsFromSettings();
 		return maleColor;
 	}
 	
-	public int getFemaleColor() {
+	public int getFemaleColorId() {
 		getColorsFromSettings();
 		return femaleColor;
 	}

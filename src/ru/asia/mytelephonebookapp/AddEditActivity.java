@@ -81,13 +81,12 @@ public class AddEditActivity extends ActionBarActivity {
 	private String currentPhotoPath;
 
 	private long id;
-	private SharedPreferences settings;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_edit);
-		setTitle("Add contact");
+		setTitle(R.string.str_add_contact);
 
 		Intent intent = getIntent();
 		id = intent.getLongExtra("idContact", 0);
@@ -104,10 +103,23 @@ public class AddEditActivity extends ActionBarActivity {
 		etDateOfBirth = (EditText) findViewById(R.id.etDateOfBirth);
 		etAddress = (EditText) findViewById(R.id.etAddress);
 
-		initializeListenerForImageView();
+		ivPhotoAddEdit.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View view) {
+				showAddPhotoDialog();
+			}
+		});
 
 		etDateOfBirth.setClickable(true);
-		initializeListenerForEditTextDate();
+		etDateOfBirth.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View view) {
+
+				showDatePickerDialog();
+			}
+		});
 
 		restoreInstanceState(savedInstanceState);
 	}
@@ -115,113 +127,92 @@ public class AddEditActivity extends ActionBarActivity {
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		outState.putByteArray("ivPhotoAddEdit", getByteArrayFromImageView());
-		outState.putString("etName", etName.getText().toString());
-		String gender = spGender.getSelectedItem().toString();
-		outState.putBoolean("spGender", getBooleanFromString(gender));
+//		outState.putString("etName", etName.getText().toString());
+//		String gender = spGender.getSelectedItem().toString();
+//		outState.putBoolean("spGender", getBooleanFromString(gender));
 		outState.putString("etDateOfBirth", etDateOfBirth.getText().toString());
-		outState.putString("etAddress", etAddress.getText().toString());
+//		outState.putString("etAddress", etAddress.getText().toString());
 		super.onSaveInstanceState(outState);
 	}
 
-	private void initializeListenerForImageView() {
-		ivPhotoAddEdit.setOnClickListener(new OnClickListener() {
+	private void showAddPhotoDialog() {
+		DialogFragment dialog = new DialogFragment() {
 
 			@Override
-			public void onClick(View view) {
-
-				DialogFragment dialog = new DialogFragment() {
-
-					@Override
-					public Dialog onCreateDialog(Bundle savedInstanceState) {
-						AlertDialog.Builder builder = new AlertDialog.Builder(
-								context);
-						builder.setTitle(R.string.title_add_photo).setItems(
-								R.array.array_add_photo,
-								new DialogInterface.OnClickListener() {
-
-									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
-										switch (which) {
-										case 0:
-											takePhotoByCamera();
-											break;
-										case 1:
-											if (isCameraAvailable()) {
-												takePhotoFromGallery();
-											} else {
-												Toast.makeText(
-														context,
-														getResources()
-																.getString(
-																		R.string.str_no_camera),
-														Toast.LENGTH_LONG)
-														.show();
-											}
-											break;
-										case 2:
-											if (isInternetAvailable()) {
-												Random random = new Random();
-												String gender = spGender
-														.getSelectedItem()
-														.toString();
-												if (gender.matches("Male")) {
-													new DownloadImageTask(
-															context,
-															ivPhotoAddEdit)
-															.execute(maleUrlImages[random
-																	.nextInt(maleUrlImages.length)]);
-												} else {
-													new DownloadImageTask(
-															context,
-															ivPhotoAddEdit)
-															.execute(femaleUrlImages[random
-																	.nextInt(femaleUrlImages.length)]);
-												}
-											}
-										}
-									}
-								});
-						return builder.create();
-					}
-				};
-				dialog.show(getFragmentManager(), "dialog");
-			}
-		});
-	}
-
-	private void initializeListenerForEditTextDate() {
-		etDateOfBirth.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View view) {
-
-				DatePickerDialog datePicker = new DatePickerDialog(
-						AddEditActivity.this, new OnDateSetListener() {
+			public Dialog onCreateDialog(Bundle savedInstanceState) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				builder.setTitle(R.string.title_add_photo).setItems(
+						R.array.array_add_photo,
+						new DialogInterface.OnClickListener() {
 
 							@Override
-							public void onDateSet(DatePicker view,
-									int selectedYear, int monthOfYear,
-									int dayOfMonth) {
-
-								year = selectedYear;
-								month = monthOfYear;
-								day = dayOfMonth;
-
-								calendar.set(Calendar.YEAR, selectedYear);
-								calendar.set(Calendar.MONTH, monthOfYear);
-								calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-								String dateFormat = "dd/MM/yyyy";
-								SimpleDateFormat sdf = new SimpleDateFormat(
-										dateFormat, Locale.ENGLISH);
-								etDateOfBirth.setText(sdf.format(calendar
-										.getTime()));
+							public void onClick(DialogInterface dialog,
+									int which) {
+								switch (which) {
+								case 0:
+									if (isCameraAvailable()) {
+										takePhotoByCamera();
+									} else {
+										Toast.makeText(
+												context,
+												getResources().getString(
+														R.string.str_no_camera),
+												Toast.LENGTH_LONG).show();
+									}
+									break;
+								case 1:
+									takePhotoFromGallery();
+									break;
+								case 2:
+									downloadImage();
+								}
 							}
-						}, year, month, day);
-				datePicker.show();
+						});
+				return builder.create();
 			}
-		});
+		};
+		dialog.show(getFragmentManager(), "dialog");
+	}
+
+	private void showDatePickerDialog() {
+		DatePickerDialog datePicker = new DatePickerDialog(
+				AddEditActivity.this, new OnDateSetListener() {
+
+					@Override
+					public void onDateSet(DatePicker view, int selectedYear,
+							int monthOfYear, int dayOfMonth) {
+
+						year = selectedYear;
+						month = monthOfYear;
+						day = dayOfMonth;
+
+						calendar.set(Calendar.YEAR, selectedYear);
+						calendar.set(Calendar.MONTH, monthOfYear);
+						calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+						String dateFormat = "dd/MM/yyyy";
+						SimpleDateFormat sdf = new SimpleDateFormat(dateFormat,
+								Locale.ENGLISH);
+						etDateOfBirth.setText(sdf.format(calendar.getTime()));
+					}
+				}, year, month, day);
+		datePicker.show();
+	}
+
+	private void downloadImage() {
+		if (isInternetAvailable()) {
+			Random random = new Random();
+			String gender = spGender.getSelectedItem().toString();
+			if (gender.matches("Male")) {
+				new DownloadImageTask(context, ivPhotoAddEdit)
+						.execute(maleUrlImages[random
+								.nextInt(maleUrlImages.length)]);
+			} else {
+				new DownloadImageTask(context, ivPhotoAddEdit)
+						.execute(femaleUrlImages[random
+								.nextInt(femaleUrlImages.length)]);
+			}
+		}
 	}
 
 	private void restoreInstanceState(Bundle savedInstanceState) {
@@ -233,7 +224,7 @@ public class AddEditActivity extends ActionBarActivity {
 				ivPhotoAddEdit.setImageBitmap(BitmapFactory.decodeByteArray(
 						photoArray, 0, photoArray.length));
 				etName.setText(editContact.getName());
-				setTitle("Edit contact " + editContact.getName());
+				setTitle(String.format(getResources().getString(R.string.str_edit_contact), editContact.getName()));
 
 				setSpinnerGenderSelection(editContact.getIsMale());
 
@@ -253,8 +244,8 @@ public class AddEditActivity extends ActionBarActivity {
 		} else {
 			byte[] photoArray = savedInstanceState
 					.getByteArray("ivPhotoAddEdit");
-			String name = savedInstanceState.getString("etName");
-			boolean isMale = savedInstanceState.getBoolean("spGender");
+//			String name = savedInstanceState.getString("etName");
+//			boolean isMale = savedInstanceState.getBoolean("spGender");
 			String dateOfBirth = savedInstanceState.getString("etDateOfBirth");
 
 			if (dateOfBirth == null) {
@@ -274,13 +265,13 @@ public class AddEditActivity extends ActionBarActivity {
 					day = calendar.get(Calendar.DAY_OF_MONTH);
 				}
 			}
-			String address = savedInstanceState.getString("etAddress");
+//			String address = savedInstanceState.getString("etAddress");
 
 			ivPhotoAddEdit.setImageBitmap(BitmapFactory.decodeByteArray(
 					photoArray, 0, photoArray.length));
-			etName.setText(name);
-			setSpinnerGenderSelection(isMale);
-			etAddress.setText(address);
+//			etName.setText(name);
+//			setSpinnerGenderSelection(isMale);
+//			etAddress.setText(address);
 		}
 	}
 
@@ -361,7 +352,8 @@ public class AddEditActivity extends ActionBarActivity {
 
 	private void notifyMainActivity() {
 
-		settings = getPreferences(MODE_PRIVATE);
+		SharedPreferences settings = getSharedPreferences("preferences",
+				MODE_PRIVATE);
 		Editor editor = settings.edit();
 		editor.putBoolean("notify", true);
 		editor.commit();

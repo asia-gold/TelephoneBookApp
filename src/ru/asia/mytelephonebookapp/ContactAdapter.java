@@ -83,7 +83,7 @@ public class ContactAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view = convertView;
 		if (view == null) {
-			if (isRemove == true) {
+			if (isRemove) {
 				view = inflater.inflate(R.layout.item_remove, parent, false);
 				ViewHolder removeHolder = new ViewHolder();
 				removeHolder.llItem = (LinearLayout) view
@@ -111,9 +111,9 @@ public class ContactAdapter extends BaseAdapter {
 		Colors colors = new Colors(context);
 
 		if (tmpValue.getIsMale()) {
-			viewHolder.llItem.setBackgroundResource(colors.getMaleColor());
+			viewHolder.llItem.setBackgroundResource(colors.getMaleColorId());
 		} else {
-			viewHolder.llItem.setBackgroundResource(colors.getFemaleColor());
+			viewHolder.llItem.setBackgroundResource(colors.getFemaleColorId());
 		}
 		
 		byte[] photoArray = tmpValue.getPhoto();

@@ -19,6 +19,8 @@
     <string name="action_cancel">Cancel</string>
 
     <!-- AddEditActivity Strings -->
+    <string name="str_add_contact">Add contact</string>
+    <string name="str_edit_contact">Edit contact %s</string>
     <string name="str_name">Name</string>
     <string name="str_surname">Surname</string>
     <string name="str_date_of_birth">Date of Birth</string>

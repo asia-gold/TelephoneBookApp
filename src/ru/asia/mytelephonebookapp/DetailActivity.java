@@ -49,10 +49,10 @@ public class DetailActivity extends ActionBarActivity {
 			
 			if (detailContact.getIsMale()) {
 				tvGender.setText(getResources().getString(R.string.str_male));
-				scrollDetail.setBackgroundResource(colors.getMaleColor());
+				scrollDetail.setBackgroundResource(colors.getMaleColorId());
 			} else {
 				tvGender.setText(getResources().getString(R.string.str_female));
-				scrollDetail.setBackgroundResource(colors.getFemaleColor());
+				scrollDetail.setBackgroundResource(colors.getFemaleColorId());
 			}
 			
 			String dateString = ContactsDataSource.formatDateToString(detailContact.getDateOfBirth());

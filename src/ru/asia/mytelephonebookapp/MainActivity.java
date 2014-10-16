@@ -48,7 +48,7 @@ public class MainActivity extends ActionBarActivity {
 
 		settings = PreferenceManager.getDefaultSharedPreferences(context);
 		String genderSetting = settings.getString("prefDisplayByGender",
-				"Show all");
+				getResources().getString(R.string.pref_display_by_gender_default));
 		Log.e("SharedPreferences",
 				settings.getString("prefDisplayByGender", "Show all"));
 
@@ -100,7 +100,7 @@ public class MainActivity extends ActionBarActivity {
 
 	private boolean isGenderSettingChange() {
 		String genderSetting = settings.getString("prefDisplayByGender",
-				"Show All");
+				getResources().getString(R.string.pref_display_by_gender_default));
 		int newGender = getIntGender(genderSetting);
 		if (gender != newGender) {
 			gender = newGender;
@@ -111,7 +111,7 @@ public class MainActivity extends ActionBarActivity {
 
 	private boolean isColorSettingChange() {
 		String colorSetting = settings.getString("prefColorsByGender",
-				"Blue/Pink");
+				getResources().getString(R.string.pref_colors_by_gender_default));
 		if (!colorTheme.matches(colorTheme)) {
 			colorTheme = colorSetting;
 			return true;
@@ -121,7 +121,8 @@ public class MainActivity extends ActionBarActivity {
 	}
 
 	private boolean isNotifyChange() {
-		notify = settings.getBoolean("notify", false);
+		SharedPreferences sPref = getSharedPreferences("preferences", MODE_PRIVATE);
+		notify = sPref.getBoolean("notify", false);
 		if (notify) {
 			Log.e("SharedPreferences", "Notify " + notify);
 			settings = getPreferences(MODE_PRIVATE);
