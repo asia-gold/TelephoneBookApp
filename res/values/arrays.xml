@@ -24,9 +24,9 @@
     </string-array>
     
     <string-array name="arrayValuesByGender">
-        <item>1</item>
-        <item>0</item>
-        <item>2</item>
+        <item>Show male only</item>
+        <item>Show female only</item>
+        <item>Show all</item>
     </string-array>
     
     <string-array name="array_entries_color_theme">
@@ -35,8 +35,8 @@
     </string-array>
     
     <string-array name="array_values_color_theme">
-        <item>BluePink</item>
-        <item>VioletYellow</item>
+        <item>Blue/Pink</item>
+        <item>Violet/Yellow</item>
     </string-array>
     
 </resources>

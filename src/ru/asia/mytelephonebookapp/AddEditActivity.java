@@ -58,8 +58,6 @@ public class AddEditActivity extends ActionBarActivity {
 
 	private Context context = this;
 
-	private PackageManager pm;
-
 	private Calendar calendar;
 
 	private int year;
@@ -85,8 +83,6 @@ public class AddEditActivity extends ActionBarActivity {
 
 		Intent intent = getIntent();
 		long id = intent.getLongExtra("idContact", 0);
-
-		pm = getPackageManager();
 
 		calendar = Calendar.getInstance();
 

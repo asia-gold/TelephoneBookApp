@@ -3,7 +3,7 @@
 
     <string name="app_name">MyTelephoneBookApp</string>
     <string name="title_activity_detail">DetailActivity</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_settings">Settings</string>
     <string name="title_activity_add_edit">AddEditActivity</string>
     <string name="title_activity_splash">SplashActivity</string>
     

@@ -39,13 +39,12 @@ public class ContactAdapter extends BaseAdapter {
 		return checkedStates;
 	}
 
-	@Override
-	public void notifyDataSetChanged() {
-		contactsList = MyTelephoneBookApplication.getDataSource()
-				.getAllContact();
-		super.notifyDataSetChanged();
+	public void updateAdapterData(ArrayList<Contact> data) {
+		contactsList.clear();
+		contactsList.addAll(data);
+		this.notifyDataSetChanged();
 	}
-
+	
 	@Override
 	public int getCount() {
 		return contactsList.size();
@@ -108,11 +107,13 @@ public class ContactAdapter extends BaseAdapter {
 		ViewHolder viewHolder = (ViewHolder) view.getTag();
 
 		Contact tmpValue = (Contact) contactsList.get(position);
+		
+		Colors colors = new Colors(context);
 
 		if (tmpValue.getIsMale()) {
-			viewHolder.llItem.setBackgroundResource(R.color.male_blue);
+			viewHolder.llItem.setBackgroundResource(colors.getMaleColor());
 		} else {
-			viewHolder.llItem.setBackgroundResource(R.color.female_pink);
+			viewHolder.llItem.setBackgroundResource(colors.getFemaleColor());
 		}
 		
 		byte[] photoArray = tmpValue.getPhoto();

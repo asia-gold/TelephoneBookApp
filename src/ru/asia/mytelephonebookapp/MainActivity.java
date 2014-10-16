@@ -37,27 +37,21 @@ public class MainActivity extends ActionBarActivity {
 	private boolean removeModeActive = false;
 
 	private SharedPreferences settings;
-	int gender = 0;
+	int gender = 2;
 	boolean notify = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		// // Sets default values if app launched for the first time
-		// PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-
+		
 		settings = PreferenceManager.getDefaultSharedPreferences(context);
 		String genderSetting = settings.getString(
-				"prefDisplayByGender", "2");
+				"prefDisplayByGender", "Show all");
 		Log.e("SharedPreferences", settings.getString(
-				"prefDisplayByGender", "2"));
-		gender = Integer.valueOf(genderSetting);
+				"prefDisplayByGender", "Show all"));
 		
-		
-		
-		
-
+		getIntGender(genderSetting);
 		data = MyTelephoneBookApplication.getDataSource().getAllContactsByGender(gender);
 
 		lvContacts = (ListView) findViewById(R.id.lvContacts);
@@ -65,7 +59,7 @@ public class MainActivity extends ActionBarActivity {
 		tvEmpty.setText(R.string.str_empty_view);
 		lvContacts.setEmptyView(tvEmpty);
 
-		adapter =new ContactAdapter(this, data, false);
+		adapter = new ContactAdapter(this, data, false);
 		removeAdapter = new ContactAdapter(this, data, true);
 		lvContacts.setAdapter(adapter);
 
@@ -81,7 +75,7 @@ public class MainActivity extends ActionBarActivity {
 					CheckBox checkBox = (CheckBox) view
 							.findViewById(R.id.chbRemove);
 					checkBox.setChecked(!checkBox.isChecked());
-					removeAdapter.changeState(position);
+					//removeAdapter.changeState(position);
 				} else {
 
 					Intent intent = new Intent(MainActivity.this,
@@ -97,25 +91,24 @@ public class MainActivity extends ActionBarActivity {
 		
 		
 	}
-	
-	@Override
-	protected void onStart() {
-		notify = settings.getBoolean("notify", false);
-		
-		if (notify) {
-			Log.e("SharedPreferences", "Notify " + notify);
-			adapter.notifyDataSetChanged();
-			settings = getPreferences(MODE_PRIVATE);
-			Editor editor = settings.edit();
-			editor.putBoolean("notify", false);
-			editor.commit();
-		}
-		super.onStart();
-	}
 
 	@Override
 	protected void onResume() {
-		data = MyTelephoneBookApplication.getDataSource().getAllContactsByGender(gender);		
+		
+		String genderSetting = settings.getString(
+				"prefDisplayByGender", "2");
+		getIntGender(genderSetting);
+		
+//		notify = settings.getBoolean("notify", false);		
+//		if (notify) {
+//			Log.e("SharedPreferences", "Notify " + notify);
+//			settings = getPreferences(MODE_PRIVATE);
+//			Editor editor = settings.edit();
+//			editor.putBoolean("notify", false);
+//			editor.commit();
+//		}
+		updateData();	
+		adapter.updateAdapterData(data);
 		super.onResume();
 	}
 
@@ -127,16 +120,6 @@ public class MainActivity extends ActionBarActivity {
 		}
 		return true;
 	}
-
-	// @Override
-	// public boolean onPrepareOptionsMenu(Menu menu) {
-	// if (adapter.isEmpty()) {
-	// menu.removeItem(R.id.action_remove);
-	// } else {
-	// menu.add(Menu.NONE, R.id.action_remove, 1, R.string.action_remove);
-	// }
-	// return true;
-	// }
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -159,6 +142,16 @@ public class MainActivity extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	private void getIntGender(String genderSettings) {
+		if (genderSettings.matches("Show male only")) {
+			gender = 1;
+		} else if (genderSettings.matches("Show female only")) {
+			gender = 0;
+		} else {
+			gender = 2;
+		}
+	}
 
 	public void updateData() {
 		data = MyTelephoneBookApplication.getDataSource().getAllContactsByGender(gender);
@@ -178,7 +171,9 @@ public class MainActivity extends ActionBarActivity {
 		removeModeActive = false;
 		lvContacts.setAdapter(adapter);
 		lvContacts.setChoiceMode(ListView.CHOICE_MODE_NONE);
-		adapter.notifyDataSetChanged();
+		updateData();
+		adapter.updateAdapterData(data);
+		invalidateOptionsMenu();
 	}
 
 	private class RemoveListItemActionModeCallback implements
@@ -216,14 +211,13 @@ public class MainActivity extends ActionBarActivity {
 				Log.e("----------------", "Contact to remove: "
 						+ contactsToRemove.toString());
 				MyTelephoneBookApplication.getDataSource().deleteAllContacts(
-						contactsToRemove);
-				adapter.notifyDataSetChanged();
-				updateData();
-				invalidateOptionsMenu();
+						contactsToRemove);				
 				actionMode.finish();
 				break;
+				
 			case R.id.action_cancel:
 				actionMode.finish();
+				break;
 			}
 			return false;
 		}

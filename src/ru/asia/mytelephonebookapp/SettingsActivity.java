@@ -11,6 +11,7 @@ import android.preference.PreferenceFragment;
 public class SettingsActivity extends PreferenceActivity {
 	
 	public static final String KEY_PREF_DISPLAY_BY_GENDER = "prefDisplayByGender";
+	public static final String KEY_PREF_COLORS_BY_GENDER = "prefColorsByGender";
 	
 	public static final String KEY_NOTIFY = "notify";
 
@@ -33,11 +34,15 @@ public class SettingsActivity extends PreferenceActivity {
 		public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 			if (key.equals(KEY_PREF_DISPLAY_BY_GENDER)) {
 				Preference genderPreference = findPreference(key);
-				//genderPreference.setSummary(sharedPreferences.getString(key, ""));
+				genderPreference.setSummary(sharedPreferences.getString(key, ""));
 			}	
-			if (key.equals(KEY_NOTIFY)) {
-				Preference notifyPreference = findPreference(key);
+			if (key.equals(KEY_PREF_COLORS_BY_GENDER)) {
+				Preference colorsPreference = findPreference(key);
+				colorsPreference.setSummary(sharedPreferences.getString(key, ""));
 			}
+//			if (key.equals(KEY_NOTIFY)) {
+//				Preference notifyPreference = findPreference(key);
+//			}
 		}
 		
 		@Override

@@ -45,20 +45,15 @@ public class DetailActivity extends ActionBarActivity {
 			tvNameDetail.setText(detailContact.getName());
 			setTitle(detailContact.getName());
 			
+			Colors colors = new Colors(this);
+			
 			if (detailContact.getIsMale()) {
 				tvGender.setText(getResources().getString(R.string.str_male));
-				scrollDetail.setBackgroundResource(R.color.male_blue);
+				scrollDetail.setBackgroundResource(colors.getMaleColor());
 			} else {
 				tvGender.setText(getResources().getString(R.string.str_female));
-				scrollDetail.setBackgroundResource(R.color.female_pink);
+				scrollDetail.setBackgroundResource(colors.getFemaleColor());
 			}
-			
-//			tvGender.setText(detailContact.getGender());
-//			Log.e("Gender", detailContact.getGender());
-//			if (detailContact.getGender().matches("Male")) {
-//				scrollDetail.setBackgroundResource(R.color.male);
-//			}
-			
 			
 			String dateString = ContactsDataSource.formatDateToString(detailContact.getDateOfBirth());
 			if (dateString == null) {
@@ -72,21 +67,26 @@ public class DetailActivity extends ActionBarActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.detail, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intent = new Intent();
 		int id = item.getItemId();
 		switch(id) {
 		case R.id.action_edit:
-			Intent intent = getIntent();
+			intent = getIntent();
 			long idContact = intent.getLongExtra("idContact", 0);
 			Intent editIntent = new Intent(this, AddEditActivity.class);
 			editIntent.putExtra("idContact", idContact);
-			startActivity(editIntent);			
+			startActivity(editIntent);	
+			break;
+		case R.id.action_settings:
+			intent.setClass(this, SettingsActivity.class);
+			startActivity(intent);
+			break;
 		}
 		return super.onOptionsItemSelected(item);
 	}

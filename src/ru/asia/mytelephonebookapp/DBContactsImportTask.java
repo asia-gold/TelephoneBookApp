@@ -68,8 +68,9 @@ public class DBContactsImportTask extends AsyncTask<Void, Void, ArrayList<Contac
 			for (Contact contact : result) {
 				MyTelephoneBookApplication.getDataSource().addContact(contact);
 			}
-			((MainActivity)context).adapter.notifyDataSetChanged();
+			
 			((MainActivity)context).updateData();
+			((MainActivity)context).adapter.updateAdapterData(MyTelephoneBookApplication.getDataSource().getAllContact());
 			((MainActivity)context).invalidateOptionsMenu();
 			message = context.getResources()
 					.getString(R.string.str_import_result_true);
