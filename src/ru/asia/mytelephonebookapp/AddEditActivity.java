@@ -72,17 +72,17 @@ public class AddEditActivity extends ActionBarActivity {
 
 	private String currentPhotoPath;
 	
+	private long id;
 	private SharedPreferences settings;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_edit);
-		
 		setTitle("Add contact");
 
 		Intent intent = getIntent();
-		long id = intent.getLongExtra("idContact", 0);
+		id = intent.getLongExtra("idContact", 0);
 
 		calendar = Calendar.getInstance();
 
@@ -96,6 +96,26 @@ public class AddEditActivity extends ActionBarActivity {
 		etDateOfBirth = (EditText) findViewById(R.id.etDateOfBirth);
 		etAddress = (EditText) findViewById(R.id.etAddress);
 
+		initializeListenerForImageView();
+		
+		etDateOfBirth.setClickable(true);
+		initializeListenerForEditTextDate();	
+
+		restoreInstanceState(savedInstanceState);		
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		outState.putByteArray("ivPhotoAddEdit", getByteArrayFromImageView());
+		outState.putString("etName", etName.getText().toString());		
+		String gender = spGender.getSelectedItem().toString();		
+		outState.putBoolean("spGender", getBooleanFromString(gender));
+		outState.putString("etDateOfBirth", etDateOfBirth.getText().toString());
+		outState.putString("etAddress", etAddress.getText().toString());
+		super.onSaveInstanceState(outState);
+	}
+	
+	private void initializeListenerForImageView() {
 		ivPhotoAddEdit.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -119,7 +139,12 @@ public class AddEditActivity extends ActionBarActivity {
 											takePhotoByCamera();
 											break;
 										case 1:
-											takePhotoFromGallery();
+											if (isCameraAvailable()) {
+												takePhotoFromGallery();
+											} else {
+												Toast.makeText(context, getResources().getString(R.string.str_no_camera), 
+														Toast.LENGTH_LONG).show();
+											}
 											break;
 										case 2:
 											Random random = new Random();
@@ -135,8 +160,9 @@ public class AddEditActivity extends ActionBarActivity {
 				dialog.show(getFragmentManager(), "dialog");
 			}
 		});
-
-		etDateOfBirth.setClickable(true);
+	}
+	
+	private void initializeListenerForEditTextDate() {
 		etDateOfBirth.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -168,7 +194,9 @@ public class AddEditActivity extends ActionBarActivity {
 				datePicker.show();
 			}
 		});
-
+	}
+	
+	private void restoreInstanceState(Bundle savedInstanceState) {
 		if (savedInstanceState == null) {
 			if (id != 0) {
 				Contact editContact = MyTelephoneBookApplication
@@ -226,25 +254,10 @@ public class AddEditActivity extends ActionBarActivity {
 			setSpinnerGenderSelection(isMale);
 			etAddress.setText(address);
 		}
-		
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-
-		outState.putByteArray("ivPhotoAddEdit", getByteArrayFromImageView());
-		outState.putString("etName", etName.getText().toString());		
-		String gender = spGender.getSelectedItem().toString();		
-		outState.putBoolean("spGender", getBooleanFromString(gender));
-		outState.putString("etDateOfBirth", etDateOfBirth.getText().toString());
-		outState.putString("etAddress", etAddress.getText().toString());
-
-		super.onSaveInstanceState(outState);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.add_edit, menu);
 		return true;
 	}
@@ -332,6 +345,12 @@ public class AddEditActivity extends ActionBarActivity {
 		}	
 		return isMale;
 	}
+	
+	private boolean isCameraAvailable() {
+		final PackageManager packageManager = getPackageManager();
+		boolean isCamera = packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA);
+		return isCamera;
+	}
 
 	private void takePhotoByCamera() {
 		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -411,15 +430,6 @@ public class AddEditActivity extends ActionBarActivity {
 		Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, bfOptions);
 		ivPhotoAddEdit.setImageBitmap(bitmap);
 	}
-
-	// private void galleryAddPicture() {
-	// Intent mediaScanIntent = new Intent(
-	// Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-	// File file = new File(currentPhotoPath);
-	// Uri contentUri = Uri.fromFile(file);
-	// mediaScanIntent.setData(contentUri);
-	// this.sendBroadcast(mediaScanIntent);
-	// }
 
 	private void takePhotoFromGallery() {
 		Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
