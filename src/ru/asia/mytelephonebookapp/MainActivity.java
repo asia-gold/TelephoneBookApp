@@ -37,22 +37,24 @@ public class MainActivity extends ActionBarActivity {
 	private boolean removeModeActive = false;
 
 	private SharedPreferences settings;
-	int gender = 2;
-	boolean notify = false;
+	private int gender = 2;
+	private String colorTheme = "Blue/Pink";
+	private boolean notify = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
 		settings = PreferenceManager.getDefaultSharedPreferences(context);
-		String genderSetting = settings.getString(
-				"prefDisplayByGender", "Show all");
-		Log.e("SharedPreferences", settings.getString(
-				"prefDisplayByGender", "Show all"));
-		
-		getIntGender(genderSetting);
-		data = MyTelephoneBookApplication.getDataSource().getAllContactsByGender(gender);
+		String genderSetting = settings.getString("prefDisplayByGender",
+				"Show all");
+		Log.e("SharedPreferences",
+				settings.getString("prefDisplayByGender", "Show all"));
+
+		gender = getIntGender(genderSetting);
+		data = MyTelephoneBookApplication.getDataSource()
+				.getAllContactsByGender(gender);
 
 		lvContacts = (ListView) findViewById(R.id.lvContacts);
 		tvEmpty = (TextView) findViewById(R.id.tvEmpty);
@@ -75,7 +77,7 @@ public class MainActivity extends ActionBarActivity {
 					CheckBox checkBox = (CheckBox) view
 							.findViewById(R.id.chbRemove);
 					checkBox.setChecked(!checkBox.isChecked());
-					//removeAdapter.changeState(position);
+					// removeAdapter.changeState(position);
 				} else {
 
 					Intent intent = new Intent(MainActivity.this,
@@ -88,28 +90,61 @@ public class MainActivity extends ActionBarActivity {
 				}
 			}
 		});
-		
-		
+
 	}
 
 	@Override
 	protected void onResume() {
-		
-		String genderSetting = settings.getString(
-				"prefDisplayByGender", "2");
-		getIntGender(genderSetting);
-		
-//		notify = settings.getBoolean("notify", false);		
-//		if (notify) {
-//			Log.e("SharedPreferences", "Notify " + notify);
-//			settings = getPreferences(MODE_PRIVATE);
-//			Editor editor = settings.edit();
-//			editor.putBoolean("notify", false);
-//			editor.commit();
-//		}
-		updateData();	
-		adapter.updateAdapterData(data);
+		updateData();
 		super.onResume();
+	}
+
+	private boolean isGenderSettingChange() {
+		String genderSetting = settings.getString("prefDisplayByGender",
+				"Show All");
+		int newGender = getIntGender(genderSetting);
+		if (gender != newGender) {
+			gender = newGender;
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isColorSettingChange() {
+		String colorSetting = settings.getString("prefColorsByGender",
+				"Blue/Pink");
+		if (!colorTheme.matches(colorTheme)) {
+			colorTheme = colorSetting;
+			return true;
+		}
+		return false;
+
+	}
+
+	private boolean isNotifyChange() {
+		notify = settings.getBoolean("notify", false);
+		if (notify) {
+			Log.e("SharedPreferences", "Notify " + notify);
+			settings = getPreferences(MODE_PRIVATE);
+			Editor editor = settings.edit();
+			editor.putBoolean("notify", false);
+			editor.commit();
+			adapter.updateAdapterData(data);
+			invalidateOptionsMenu();
+			return true;
+		}
+		return false;
+	}
+
+	public void updateData() {
+		if (isGenderSettingChange() || isColorSettingChange()
+				|| isNotifyChange()) {
+			data = MyTelephoneBookApplication.getDataSource()
+					.getAllContactsByGender(gender);
+			adapter.updateAdapterData(data);
+			invalidateOptionsMenu();
+			Log.e("Main", "Update data ");
+		}
 	}
 
 	@Override
@@ -142,19 +177,17 @@ public class MainActivity extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	private void getIntGender(String genderSettings) {
-		if (genderSettings.matches("Show male only")) {
-			gender = 1;
-		} else if (genderSettings.matches("Show female only")) {
-			gender = 0;
-		} else {
-			gender = 2;
-		}
-	}
 
-	public void updateData() {
-		data = MyTelephoneBookApplication.getDataSource().getAllContactsByGender(gender);
+	private int getIntGender(String genderSettings) {
+		int genderInt = 2;
+		if (genderSettings.matches("Show male only")) {
+			genderInt = 1;
+		} else if (genderSettings.matches("Show female only")) {
+			genderInt = 0;
+		} else {
+			genderInt = 2;
+		}
+		return genderInt;
 	}
 
 	private void startRemoveListItemMode() {
@@ -211,10 +244,10 @@ public class MainActivity extends ActionBarActivity {
 				Log.e("----------------", "Contact to remove: "
 						+ contactsToRemove.toString());
 				MyTelephoneBookApplication.getDataSource().deleteAllContacts(
-						contactsToRemove);				
+						contactsToRemove);
 				actionMode.finish();
 				break;
-				
+
 			case R.id.action_cancel:
 				actionMode.finish();
 				break;

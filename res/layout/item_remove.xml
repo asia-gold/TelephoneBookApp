@@ -3,14 +3,14 @@
     android:id="@+id/llItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/female_pink"
+    android:background="@color/female_0"
     android:orientation="horizontal" >
 
     <ImageView
         android:id="@+id/ivPhoto"
         android:layout_width="@dimen/iv_photo_width"
         android:layout_height="@dimen/iv_photo_height"
-        android:layout_margin="@dimen/margin"
+        android:layout_margin="@dimen/margin_layout"
         android:src="@drawable/ic_launcher" />
 
     <TextView

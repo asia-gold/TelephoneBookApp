@@ -6,7 +6,16 @@
     <dimen name="iv_photo_detail_height">180dp</dimen>
     <dimen name="iv_photo_add_width">100dp</dimen>
     <dimen name="iv_photo_add_height">100dp</dimen>
-    <dimen name="margin">5dp</dimen>
+    
+    <dimen name="margin_layout">5dp</dimen>
+    <dimen name="margin_top">5dp</dimen>
+    <dimen name="margin_left">5dp</dimen>
+    
+    <dimen name="padding_bottom">5dp</dimen>
+    <dimen name="padding_left">5dp</dimen>
+    <dimen name="padding_right">5dp</dimen>
+    <dimen name="padding_top">5dp</dimen>
+    
     <dimen name="tv_name_text_size">22sp</dimen>
     <dimen name="tv_other_text_size">20sp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>

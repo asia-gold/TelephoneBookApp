@@ -8,8 +8,8 @@ import android.util.Log;
 
 public class Colors {
 	
-	private static final int[] maleColors = { R.color.male_blue, R.color.male_violet };	
-	private static final int[] femaleColors = { R.color.female_pink, R.color.female_yellow };
+	private static final int[] maleColors = { R.color.male_0, R.color.male_1 };	
+	private static final int[] femaleColors = { R.color.female_0, R.color.female_1 };
 	
 	private int maleColor;
 	private int femaleColor;

@@ -270,7 +270,7 @@ public class AddEditActivity extends ActionBarActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		if (id == R.id.action_done) {
-
+			notifyMainActivity();
 			byte[] photoArray = getByteArrayFromImageView();
 			String name = etName.getText().toString();
 			
@@ -303,7 +303,6 @@ public class AddEditActivity extends ActionBarActivity {
 						.addContact(photoArray, name, isMale, dateBirth,
 								address);
 			}
-			notifyMainActivity();
 			
 			Intent intent = new Intent(this, DetailActivity.class);
 			intent.putExtra("idContact", (long) idContact);
