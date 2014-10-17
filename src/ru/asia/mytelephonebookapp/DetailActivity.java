@@ -2,8 +2,10 @@ package ru.asia.mytelephonebookapp;
 
 import ru.asia.mytelephonebookapp.models.Contact;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -20,6 +22,8 @@ public class DetailActivity extends ActionBarActivity {
 	private TextView tvGender;
 	private TextView tvDateOfBirth;
 	private TextView tvAddress;
+	
+	private Contact detailContact;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,40 +39,66 @@ public class DetailActivity extends ActionBarActivity {
 
 		Intent intent = getIntent();
 		long id = intent.getLongExtra("idContact", 0);
+		Log.e("-------------", "ID from Intent" + id);
 		if (id != 0) {
-			Contact detailContact = MyTelephoneBookApplication.getDataSource()
+			detailContact = MyTelephoneBookApplication.getDataSource()
 					.getContact(id);
 			byte[] photoArray = detailContact.getPhoto();
 			ivPhotoDetail.setImageBitmap(BitmapFactory.decodeByteArray(
 					photoArray, 0, photoArray.length));
 			tvNameDetail.setText(detailContact.getName());
-			tvGender.setText(detailContact.getGender());
-			Log.e("Gender", detailContact.getGender());
-			if (detailContact.getGender().matches("Male")) {
-				scrollDetail.setBackgroundResource(R.color.male);
+			setTitle(detailContact.getName());
+
+			if (detailContact.getIsMale()) {
+				tvGender.setText(getResources().getString(R.string.str_male));
+			} else {
+				tvGender.setText(getResources().getString(R.string.str_female));
 			}
-			tvDateOfBirth.setText(detailContact.getDateOfBirth());
+
+			String dateString = ContactsDataSource
+					.formatDateToString(detailContact.getDateOfBirth());
+			if (dateString == null) {
+				tvDateOfBirth.setText("");
+			} else {
+				tvDateOfBirth.setText(dateString);
+			}
 			tvAddress.setText(detailContact.getAddress());
 		}
 	}
 
 	@Override
+	protected void onResume() {
+		Colors colors = new Colors(this);
+		if (detailContact.getIsMale()) {
+			scrollDetail.setBackgroundResource(colors.getMaleColorId());
+		} else {
+			scrollDetail.setBackgroundResource(colors.getFemaleColorId());
+		}
+		super.onResume();
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.detail, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intent = new Intent();
 		int id = item.getItemId();
-		switch(id) {
+		switch (id) {
 		case R.id.action_edit:
-			Intent intent = getIntent();
+			intent = getIntent();
 			long idContact = intent.getLongExtra("idContact", 0);
 			Intent editIntent = new Intent(this, AddEditActivity.class);
 			editIntent.putExtra("idContact", idContact);
-			startActivity(editIntent);			
+			startActivity(editIntent);
+			break;
+		case R.id.action_settings:
+			intent.setClass(this, SettingsActivity.class);
+			startActivity(intent);
+			break;
 		}
 		return super.onOptionsItemSelected(item);
 	}

@@ -39,13 +39,12 @@ public class ContactAdapter extends BaseAdapter {
 		return checkedStates;
 	}
 
-	@Override
-	public void notifyDataSetChanged() {
-		contactsList = MyTelephoneBookApplication.getDataSource()
-				.getAllContact();
-		super.notifyDataSetChanged();
+	public void updateAdapterData(ArrayList<Contact> data) {
+		contactsList.clear();
+		contactsList.addAll(data);
+		this.notifyDataSetChanged();
 	}
-
+	
 	@Override
 	public int getCount() {
 		return contactsList.size();
@@ -84,7 +83,7 @@ public class ContactAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view = convertView;
 		if (view == null) {
-			if (isRemove == true) {
+			if (isRemove) {
 				view = inflater.inflate(R.layout.item_remove, parent, false);
 				ViewHolder removeHolder = new ViewHolder();
 				removeHolder.llItem = (LinearLayout) view
@@ -108,9 +107,13 @@ public class ContactAdapter extends BaseAdapter {
 		ViewHolder viewHolder = (ViewHolder) view.getTag();
 
 		Contact tmpValue = (Contact) contactsList.get(position);
+		
+		Colors colors = new Colors(context);
 
-		if (tmpValue.getGender().matches("Male")) {
-			viewHolder.llItem.setBackgroundResource(R.color.male);
+		if (tmpValue.getIsMale()) {
+			viewHolder.llItem.setBackgroundResource(colors.getMaleColorId());
+		} else {
+			viewHolder.llItem.setBackgroundResource(colors.getFemaleColorId());
 		}
 		
 		byte[] photoArray = tmpValue.getPhoto();

@@ -17,9 +17,13 @@ public final class R {
         public static final int abc_slide_out_top=0x7f040005;
     }
     public static final class array {
-        public static final int arrayEntriesByGender=0x7f0d0001;
+        public static final int arrayEntriesByGender=0x7f0d0003;
         public static final int arraySpinnerGender=0x7f0d0000;
-        public static final int arrayValuesByGender=0x7f0d0002;
+        public static final int arrayValuesByGender=0x7f0d0004;
+        public static final int array_add_photo=0x7f0d0002;
+        public static final int array_entries_color_theme=0x7f0d0005;
+        public static final int array_import_export=0x7f0d0001;
+        public static final int array_values_color_theme=0x7f0d0006;
     }
     public static final class attr {
         /**  Custom divider drawable to use for elements in the action bar. 
@@ -863,12 +867,14 @@ containing a value of this type.
         public static final int abc_split_action_bar_is_narrow=0x7f070002;
     }
     public static final class color {
-        public static final int abc_search_url_text_holo=0x7f080005;
+        public static final int abc_search_url_text_holo=0x7f080007;
         public static final int abc_search_url_text_normal=0x7f080000;
         public static final int abc_search_url_text_pressed=0x7f080002;
         public static final int abc_search_url_text_selected=0x7f080001;
-        public static final int female=0x7f080003;
-        public static final int male=0x7f080004;
+        public static final int female_0=0x7f080003;
+        public static final int female_1=0x7f080005;
+        public static final int male_0=0x7f080004;
+        public static final int male_1=0x7f080006;
     }
     public static final class dimen {
         /**  Default height of an action bar. 
@@ -960,8 +966,8 @@ containing a value of this type.
          would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
     
          */
-        public static final int activity_horizontal_margin=0x7f09001d;
-        public static final int activity_vertical_margin=0x7f09001e;
+        public static final int activity_horizontal_margin=0x7f090023;
+        public static final int activity_vertical_margin=0x7f090024;
         /**  The platform's desired fixed height for a dialog along the major axis
          (the screen is in portrait). This may be either a fraction or a dimension.
  The platform's desired fixed height for a dialog along the major axis
@@ -999,9 +1005,15 @@ containing a value of this type.
         public static final int iv_photo_detail_height=0x7f090017;
         public static final int iv_photo_height=0x7f090016;
         public static final int iv_photo_width=0x7f090015;
-        public static final int margin=0x7f09001a;
-        public static final int tv_name_text_size=0x7f09001b;
-        public static final int tv_other_text_size=0x7f09001c;
+        public static final int margin_layout=0x7f09001a;
+        public static final int margin_left=0x7f09001c;
+        public static final int margin_top=0x7f09001b;
+        public static final int padding_bottom=0x7f09001d;
+        public static final int padding_left=0x7f09001e;
+        public static final int padding_right=0x7f09001f;
+        public static final int padding_top=0x7f090020;
+        public static final int tv_name_text_size=0x7f090021;
+        public static final int tv_other_text_size=0x7f090022;
     }
     public static final class drawable {
         public static final int abc_ab_bottom_solid_dark_holo=0x7f020000;
@@ -1091,18 +1103,19 @@ containing a value of this type.
         public static final int abc_textfield_searchview_holo_light=0x7f020054;
         public static final int abc_textfield_searchview_right_holo_dark=0x7f020055;
         public static final int abc_textfield_searchview_right_holo_light=0x7f020056;
-        public static final int ic_action_accept=0x7f020057;
-        public static final int ic_action_import_export=0x7f020058;
-        public static final int ic_action_new=0x7f020059;
-        public static final int ic_action_remove=0x7f02005a;
-        public static final int ic_action_settings=0x7f02005b;
-        public static final int ic_launcher=0x7f02005c;
-        public static final int splash=0x7f02005d;
+        public static final int anonim=0x7f020057;
+        public static final int ic_action_accept=0x7f020058;
+        public static final int ic_action_import_export=0x7f020059;
+        public static final int ic_action_new=0x7f02005a;
+        public static final int ic_action_remove=0x7f02005b;
+        public static final int ic_action_settings=0x7f02005c;
+        public static final int ic_launcher=0x7f02005d;
+        public static final int splash=0x7f02005e;
+        public static final int splash_land=0x7f02005f;
     }
     public static final class id {
         public static final int LinearLayout1=0x7f06003e;
-        public static final int RelativeLayout1=0x7f06003c;
-        public static final int action_add=0x7f060056;
+        public static final int action_add=0x7f060051;
         public static final int action_bar=0x7f06001c;
         public static final int action_bar_activity_content=0x7f060015;
         public static final int action_bar_container=0x7f06001b;
@@ -1110,26 +1123,21 @@ containing a value of this type.
         public static final int action_bar_root=0x7f06001a;
         public static final int action_bar_subtitle=0x7f060023;
         public static final int action_bar_title=0x7f060022;
-        public static final int action_cancel=0x7f06005a;
+        public static final int action_cancel=0x7f060055;
         public static final int action_context_bar=0x7f06001d;
-        public static final int action_delete=0x7f060059;
-        public static final int action_done=0x7f060053;
-        public static final int action_edit=0x7f060054;
-        public static final int action_import_export=0x7f060058;
+        public static final int action_delete=0x7f060054;
+        public static final int action_done=0x7f06004e;
+        public static final int action_edit=0x7f06004f;
+        public static final int action_import_export=0x7f060053;
         public static final int action_menu_divider=0x7f060016;
         public static final int action_menu_presenter=0x7f060017;
         public static final int action_mode_close_button=0x7f060024;
-        public static final int action_remove=0x7f060057;
-        public static final int action_settings=0x7f060055;
+        public static final int action_remove=0x7f060052;
+        public static final int action_settings=0x7f060050;
         public static final int activity_chooser_view_content=0x7f060025;
         public static final int always=0x7f06000b;
         public static final int beginning=0x7f060011;
-        public static final int btnCamera=0x7f06004a;
-        public static final int btnExport=0x7f06004e;
-        public static final int btnGallery=0x7f06004b;
-        public static final int btnImport=0x7f06004d;
-        public static final int btnNetwork=0x7f06004c;
-        public static final int chbRemove=0x7f060052;
+        public static final int chbRemove=0x7f06004d;
         public static final int checkbox=0x7f06002d;
         public static final int collapseActionView=0x7f06000d;
         public static final int default_activity_button=0x7f060028;
@@ -1148,13 +1156,13 @@ containing a value of this type.
         public static final int icon=0x7f06002a;
         public static final int ifRoom=0x7f06000a;
         public static final int image=0x7f060027;
-        public static final int ivPhoto=0x7f060050;
+        public static final int ivPhoto=0x7f06004b;
         public static final int ivPhotoAddEdit=0x7f06003d;
-        public static final int ivPhotoDetail=0x7f060044;
+        public static final int ivPhotoDetail=0x7f060043;
         public static final int listMode=0x7f060001;
         public static final int list_item=0x7f060029;
-        public static final int llItem=0x7f06004f;
-        public static final int lvContacts=0x7f060049;
+        public static final int llItem=0x7f06004a;
+        public static final int lvContacts=0x7f060048;
         public static final int middle=0x7f060012;
         public static final int never=0x7f060009;
         public static final int none=0x7f060010;
@@ -1162,7 +1170,7 @@ containing a value of this type.
         public static final int progress_circular=0x7f060018;
         public static final int progress_horizontal=0x7f060019;
         public static final int radio=0x7f06002f;
-        public static final int scrollDetail=0x7f060043;
+        public static final int scrollDetail=0x7f06003c;
         public static final int search_badge=0x7f060032;
         public static final int search_bar=0x7f060031;
         public static final int search_button=0x7f060033;
@@ -1183,11 +1191,12 @@ containing a value of this type.
         public static final int tabMode=0x7f060002;
         public static final int title=0x7f06002b;
         public static final int top_action_bar=0x7f060020;
-        public static final int tvAddress=0x7f060048;
-        public static final int tvDateofBirth=0x7f060047;
-        public static final int tvGender=0x7f060046;
-        public static final int tvName=0x7f060051;
-        public static final int tvNameDetail=0x7f060045;
+        public static final int tvAddress=0x7f060047;
+        public static final int tvDateofBirth=0x7f060046;
+        public static final int tvEmpty=0x7f060049;
+        public static final int tvGender=0x7f060045;
+        public static final int tvName=0x7f06004c;
+        public static final int tvNameDetail=0x7f060044;
         public static final int up=0x7f060021;
         public static final int useLogo=0x7f060003;
         public static final int withText=0x7f06000c;
@@ -1246,20 +1255,15 @@ containing a value of this type.
         public static final int activity_detail=0x7f030019;
         public static final int activity_main=0x7f03001a;
         public static final int activity_splash=0x7f03001b;
-        public static final int add_photo_dialog=0x7f03001c;
-        public static final int import_export_dialog=0x7f03001d;
-        public static final int item=0x7f03001e;
-        public static final int item_remove=0x7f03001f;
-        public static final int support_simple_spinner_dropdown_item=0x7f030020;
+        public static final int item=0x7f03001c;
+        public static final int item_remove=0x7f03001d;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001e;
     }
     public static final class menu {
         public static final int add_edit=0x7f0e0000;
         public static final int detail=0x7f0e0001;
-        public static final int main=0x7f0e0002;
-        public static final int main_activity_actions=0x7f0e0003;
-        public static final int remove_menu=0x7f0e0004;
-        public static final int settings=0x7f0e0005;
-        public static final int splash=0x7f0e0006;
+        public static final int main_activity_actions=0x7f0e0002;
+        public static final int remove_menu=0x7f0e0003;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1312,35 +1316,47 @@ containing a value of this type.
         public static final int action_remove=0x7f0b0013;
         public static final int action_settings=0x7f0b0014;
         public static final int app_name=0x7f0b000d;
-        /**  Add Photo Dialog Strings 
-         */
-        public static final int btnCamera=0x7f0b0021;
-        public static final int btnExport=0x7f0b001e;
-        public static final int btnGallery=0x7f0b0022;
-        /**  Import/Export Dialog Strings 
-         */
-        public static final int btnImport=0x7f0b001d;
-        public static final int btnNetwork=0x7f0b0023;
-        public static final int pref_display_by_gender_default=0x7f0b0027;
-        public static final int pref_display_by_gender_summary=0x7f0b0026;
-        public static final int pref_display_by_gender_title=0x7f0b0025;
+        public static final int pref_colors_by_gender_default=0x7f0b002f;
+        public static final int pref_colors_by_gender_summary=0x7f0b002e;
+        public static final int pref_colors_by_gender_title=0x7f0b002d;
+        public static final int pref_display_by_gender_default=0x7f0b002c;
+        public static final int pref_display_by_gender_summary=0x7f0b002b;
+        public static final int pref_display_by_gender_title=0x7f0b002a;
         /**  Preferences Strings 
          */
-        public static final int pref_display_category=0x7f0b0024;
-        public static final int str_address=0x7f0b001c;
-        public static final int str_date_of_birth=0x7f0b001b;
-        public static final int str_export_result_false=0x7f0b0020;
-        /**  Export Task Strings 
-         */
-        public static final int str_export_result_true=0x7f0b001f;
+        public static final int pref_display_category=0x7f0b0029;
         /**  AddEditActivity Strings 
          */
-        public static final int str_name=0x7f0b0019;
-        public static final int str_surname=0x7f0b001a;
-        public static final int title_activity_add_edit=0x7f0b0010;
-        public static final int title_activity_detail=0x7f0b000e;
-        public static final int title_activity_settings=0x7f0b000f;
-        public static final int title_activity_splash=0x7f0b0011;
+        public static final int str_add_contact=0x7f0b0019;
+        public static final int str_address=0x7f0b001e;
+        public static final int str_date_of_birth=0x7f0b001d;
+        public static final int str_edit_contact=0x7f0b001a;
+        public static final int str_empty_view=0x7f0b000f;
+        /**  Download Image Task 
+         */
+        public static final int str_error_download=0x7f0b0023;
+        public static final int str_export_result_false=0x7f0b0025;
+        /**  Export Task Strings 
+         */
+        public static final int str_export_result_true=0x7f0b0024;
+        public static final int str_female=0x7f0b0011;
+        public static final int str_import_result_false=0x7f0b0027;
+        /**  Import Task Strings 
+         */
+        public static final int str_import_result_true=0x7f0b0026;
+        public static final int str_male=0x7f0b0010;
+        public static final int str_name=0x7f0b001b;
+        public static final int str_no_camera=0x7f0b001f;
+        public static final int str_no_internet=0x7f0b0021;
+        public static final int str_no_name_typed=0x7f0b0020;
+        public static final int str_surname=0x7f0b001c;
+        public static final int title_activity_settings=0x7f0b000e;
+        /**  Add Photo Dialog Strings 
+         */
+        public static final int title_add_photo=0x7f0b0028;
+        /**  Import/Export Dialog Strings 
+         */
+        public static final int title_import_export=0x7f0b0022;
     }
     public static final class style {
         /** 
@@ -1369,7 +1385,6 @@ containing a value of this type.
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f0c008c;
-        public static final int CustomDialogTheme=0x7f0c008e;
         public static final int NoCloseButton=0x7f0c008d;
         /**  Mimic text appearance in select_dialog_item.xml 
          */

@@ -10,7 +10,15 @@
             android:summary="@string/pref_display_by_gender_summary"
             android:entries="@array/arrayEntriesByGender"
             android:entryValues="@array/arrayValuesByGender"
-            android:defaultValue="@string/pref_display_by_gender_default"/>
+            android:defaultValue="Show all"/>
+        
+        <ListPreference 
+            android:key="prefColorsByGender"
+            android:title="@string/pref_colors_by_gender_title"
+            android:summary="@string/pref_colors_by_gender_summary"
+            android:entries="@array/array_entries_color_theme"
+            android:entryValues="@array/array_values_color_theme"
+            android:defaultValue="Blue/Pink"/>
         
     </PreferenceCategory>
     

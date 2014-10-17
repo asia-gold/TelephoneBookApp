@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="female">#fc64fc</color>
-    <color name="male">#64bdfc</color>
+    <color name="female_0">#FFC4F7</color>
+    <color name="male_0">#C4C9FF</color>
+    
+    <color name="female_1">#EDE5AD</color>
+    <color name="male_1">#DCADED</color>
     
 </resources>

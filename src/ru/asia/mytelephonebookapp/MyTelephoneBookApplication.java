@@ -6,24 +6,16 @@ import android.util.Log;
 public class MyTelephoneBookApplication extends Application{
 		
 	private static ContactsDataSource dataSource;
-	private static ContactAdapter adapter;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		dataSource = new ContactsDataSource(this);
 		dataSource.open();
-		adapter = new ContactAdapter(getApplicationContext(),
-				dataSource.getAllContact(), false);
-		Log.e("MyApp", "DataSource initialize");
 	}
 
 	public static ContactsDataSource getDataSource() {
 		return dataSource;
-	}
-
-	public static ContactAdapter getAdapter() {
-		return adapter;
 	}
 	
 	@Override
