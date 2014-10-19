@@ -88,7 +88,7 @@ public class AddEditActivity extends ActionBarActivity {
 		setTitle(R.string.str_add_contact);
 
 		Intent intent = getIntent();
-		id = intent.getLongExtra("idContact", 0);
+		id = intent.getLongExtra("idContact", -1);
 
 		calendar = Calendar.getInstance();
 
@@ -211,9 +211,9 @@ public class AddEditActivity extends ActionBarActivity {
 
 	private void restoreInstanceState(Bundle savedInstanceState) {
 		if (savedInstanceState == null) {
-			if (id != 0) {
+			if (id != -1) {
 				Contact editContact = MyTelephoneBookApplication
-						.getDataSource().getContact(id);
+						.getDataProvider().getContact(id);
 				byte[] photoArray = editContact.getPhoto();
 				ivPhotoAddEdit.setImageBitmap(BitmapFactory.decodeByteArray(
 						photoArray, 0, photoArray.length));
@@ -312,15 +312,15 @@ public class AddEditActivity extends ActionBarActivity {
 			String address = etAddress.getText().toString();
 
 			Intent editIntent = getIntent();
-			long idContact = editIntent.getLongExtra("idContact", 0);
+			long idContact = editIntent.getLongExtra("idContact", -1);
 
-			if (idContact != 0) {
-				MyTelephoneBookApplication.getDataSource()
+			if (idContact != -1) {
+				MyTelephoneBookApplication.getDataProvider()
 						.updateContact(idContact, photoArray, name, isMale,
 								dateBirth, address);
 			} else {
 
-				idContact = MyTelephoneBookApplication.getDataSource()
+				idContact = MyTelephoneBookApplication.getDataProvider()
 						.addContact(photoArray, name, isMale, dateBirth,
 								address);
 			}

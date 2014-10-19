@@ -15,11 +15,13 @@ import ru.asia.mytelephonebookapp.MyTelephoneBookApplication;
 import ru.asia.mytelephonebookapp.R;
 import ru.asia.mytelephonebookapp.models.Contact;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.widget.Toast;
 
-public class DBContactsImportTask extends AsyncTask<Void, Void, ArrayList<Contact>> {
+public class DataContactsImportTask extends AsyncTask<Void, Void, ArrayList<Contact>> {
 
 	private static final String IMPORT_FILE_NAME = "/database.xml";
 
@@ -27,7 +29,7 @@ public class DBContactsImportTask extends AsyncTask<Void, Void, ArrayList<Contac
 	private InputSource inputSource;
 	private ArrayList<Contact> contacts;
 
-	public DBContactsImportTask(Context context) {
+	public DataContactsImportTask(Context context) {
 		this.context = context;
 	}
 
@@ -62,22 +64,31 @@ public class DBContactsImportTask extends AsyncTask<Void, Void, ArrayList<Contac
 	@Override
 	protected void onPostExecute(ArrayList<Contact> result) {
 		String message = null;
-		MyTelephoneBookApplication.getDataSource().deleteAllContacts();
+		MyTelephoneBookApplication.getDataProvider().deleteAllContacts();
 		if (result == null) {
 			message = context.getResources()
 					.getString(R.string.str_import_result_false);
 		} else {
 			for (Contact contact : result) {
-				MyTelephoneBookApplication.getDataSource().addContact(contact);
+				MyTelephoneBookApplication.getDataProvider().addContact(contact);
 			}
-			
+			notifyMainActivity();
 			((MainActivity)context).updateData();
-			((MainActivity)context).adapter.updateAdapterData(MyTelephoneBookApplication.getDataSource().getAllContact());
-			((MainActivity)context).invalidateOptionsMenu();
+			//((MainActivity)context).adapter.updateAdapterData(MyTelephoneBookApplication.getDataProvider().getAllContact());
+			//((MainActivity)context).invalidateOptionsMenu();
 			message = context.getResources()
 					.getString(R.string.str_import_result_true);
 		}
 		Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+	}
+	
+	private void notifyMainActivity() {
+
+		SharedPreferences settings = context.getSharedPreferences("preferences",
+				context.MODE_PRIVATE);
+		Editor editor = settings.edit();
+		editor.putBoolean("notify", true);
+		editor.commit();
 	}
 
 }

@@ -1,8 +1,8 @@
 package ru.asia.mytelephonebookapp.dialogs;
 
 import ru.asia.mytelephonebookapp.R;
-import ru.asia.mytelephonebookapp.tasks.DBContactsExportTask;
-import ru.asia.mytelephonebookapp.tasks.DBContactsImportTask;
+import ru.asia.mytelephonebookapp.tasks.DataContactsExportTask;
+import ru.asia.mytelephonebookapp.tasks.DataContactsImportTask;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -22,10 +22,10 @@ public class ImportExportDialog extends DialogFragment {
 					public void onClick(DialogInterface dialog, int which) {
 						switch (which) {
 						case 0:
-							new DBContactsImportTask(getActivity()).execute();
+							new DataContactsImportTask(getActivity()).execute();
 							break;
 						case 1:
-							new DBContactsExportTask(getActivity()).execute();
+							new DataContactsExportTask(getActivity()).execute();
 							break;
 						}						
 					}

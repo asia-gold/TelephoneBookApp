@@ -11,6 +11,7 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -50,7 +51,7 @@ public class MainActivity extends ActionBarActivity {
 				getResources().getString(R.string.pref_display_by_gender_default));
 
 		gender = getIntGender(genderSetting);
-		data = MyTelephoneBookApplication.getDataSource()
+		data = MyTelephoneBookApplication.getDataProvider()
 				.getAllContactsByGender(gender);
 
 		lvContacts = (ListView) findViewById(R.id.lvContacts);
@@ -129,8 +130,11 @@ public class MainActivity extends ActionBarActivity {
 	public void updateData() {
 		if (isGenderSettingChange() || isColorSettingChange()
 				|| isNotifyChange()) {
-			data = MyTelephoneBookApplication.getDataSource()
+			data = MyTelephoneBookApplication.getDataProvider()
 					.getAllContactsByGender(gender);
+			
+			Log.e("MainActivity", "data " + data.toString());
+			
 			adapter.updateAdapterData(data);
 			invalidateOptionsMenu();
 		}
@@ -184,7 +188,7 @@ public class MainActivity extends ActionBarActivity {
 		removeMode = this
 				.startActionMode(new RemoveListItemActionModeCallback());
 		removeAdapter = new ContactAdapter(this, MyTelephoneBookApplication
-				.getDataSource().getAllContact(), true);
+				.getDataProvider().getAllContact(), true);
 		lvContacts.setAdapter(removeAdapter);
 		lvContacts.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 	}
@@ -193,7 +197,7 @@ public class MainActivity extends ActionBarActivity {
 		removeModeActive = false;
 		lvContacts.setAdapter(adapter);
 		lvContacts.setChoiceMode(ListView.CHOICE_MODE_NONE);
-		data = MyTelephoneBookApplication.getDataSource()
+		data = MyTelephoneBookApplication.getDataProvider()
 				.getAllContactsByGender(gender);
 		adapter.updateAdapterData(data);
 		invalidateOptionsMenu();
@@ -218,7 +222,7 @@ public class MainActivity extends ActionBarActivity {
 			switch (menu.getItemId()) {
 			case R.id.action_delete:
 				ArrayList<Contact> allContacts = MyTelephoneBookApplication
-						.getDataSource().getAllContact();
+						.getDataProvider().getAllContact();
 				ArrayList<Contact> contactsToRemove = new ArrayList<Contact>();
 				ContactAdapter adapter = (ContactAdapter) lvContacts
 						.getAdapter();
@@ -229,7 +233,7 @@ public class MainActivity extends ActionBarActivity {
 						contactsToRemove.add(allContacts.get(i));
 					}
 				}
-				MyTelephoneBookApplication.getDataSource().deleteAllContacts(
+				MyTelephoneBookApplication.getDataProvider().deleteAllContacts(
 						contactsToRemove);
 				actionMode.finish();
 				break;

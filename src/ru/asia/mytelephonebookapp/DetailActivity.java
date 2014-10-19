@@ -2,10 +2,8 @@ package ru.asia.mytelephonebookapp;
 
 import ru.asia.mytelephonebookapp.models.Contact;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -38,10 +36,10 @@ public class DetailActivity extends ActionBarActivity {
 		tvAddress = (TextView) findViewById(R.id.tvAddress);
 
 		Intent intent = getIntent();
-		long id = intent.getLongExtra("idContact", 0);
+		long id = intent.getLongExtra("idContact", -1);
 		Log.e("-------------", "ID from Intent" + id);
-		if (id != 0) {
-			detailContact = MyTelephoneBookApplication.getDataSource()
+		if (id != -1) {
+			detailContact = MyTelephoneBookApplication.getDataProvider()
 					.getContact(id);
 			byte[] photoArray = detailContact.getPhoto();
 			ivPhotoDetail.setImageBitmap(BitmapFactory.decodeByteArray(
@@ -90,7 +88,7 @@ public class DetailActivity extends ActionBarActivity {
 		switch (id) {
 		case R.id.action_edit:
 			intent = getIntent();
-			long idContact = intent.getLongExtra("idContact", 0);
+			long idContact = intent.getLongExtra("idContact", -1);
 			Intent editIntent = new Intent(this, AddEditActivity.class);
 			editIntent.putExtra("idContact", idContact);
 			startActivity(editIntent);

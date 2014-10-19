@@ -29,21 +29,21 @@ import android.util.Base64;
 import android.util.Xml;
 import android.widget.Toast;
 
-public class DBContactsExportTask extends AsyncTask<Void, Void, Boolean> {
+public class DataContactsExportTask extends AsyncTask<Void, Void, Boolean> {
 
 	private static final String EXPORT_FILE_PATH = Environment
 			.getExternalStorageDirectory().getPath();
 	private static final String EXPORT_FILE_NAME = "/database.xml";
 	private Context context;
 
-	public DBContactsExportTask(Context context) {
+	public DataContactsExportTask(Context context) {
 		this.context = context;
 	}
 
 	@Override
 	protected Boolean doInBackground(Void... params) {
 		ArrayList<Contact> contactsList = MyTelephoneBookApplication
-				.getDataSource().getAllContact();
+				.getDataProvider().getAllContact();
 
 		String xmlString = writeXML(contactsList);
 		try {

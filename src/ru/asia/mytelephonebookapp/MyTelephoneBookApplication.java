@@ -1,26 +1,32 @@
 package ru.asia.mytelephonebookapp;
 
+import ru.asia.mytelephonebookapp.dataproviders.DataProvider;
+import ru.asia.mytelephonebookapp.dataproviders.SQLiteDataProvider;
 import android.app.Application;
-import android.util.Log;
 
 public class MyTelephoneBookApplication extends Application{
 		
-	private static ContactsDataSource dataSource;
+	private static DataProvider dataProvider;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		dataSource = new ContactsDataSource(this);
-		dataSource.open();
+		dataProvider = new SQLiteDataProvider(this);
+		//dataProvider = new MemoryDataProvider(this);
 	}
 
-	public static ContactsDataSource getDataSource() {
-		return dataSource;
+	public static DataProvider getDataProvider() {
+		return dataProvider;
 	}
 	
 	@Override
 	public void onTerminate() {
-		dataSource.close();
+		if (dataProvider instanceof SQLiteDataProvider) {
+			//dataProvider.deleteAllContacts();
+			((SQLiteDataProvider) dataProvider).close();
+		} else {
+			dataProvider = null;
+		}
 		super.onTerminate();
 	}
 }
