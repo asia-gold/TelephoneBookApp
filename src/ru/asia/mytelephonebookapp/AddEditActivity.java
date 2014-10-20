@@ -44,6 +44,12 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+/**
+ * Activity for add new contact or edit existing.
+ * 
+ * @author Asia
+ *
+ */
 public class AddEditActivity extends ActionBarActivity {
 
 	private static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -129,6 +135,9 @@ public class AddEditActivity extends ActionBarActivity {
 		super.onSaveInstanceState(outState);
 	}
 
+	/**
+	 * Show dialog, when user tap the ImageView, to choose photo source.
+	 */
 	private void showAddPhotoDialog() {
 		DialogFragment dialog = new DialogFragment() {
 
@@ -168,6 +177,9 @@ public class AddEditActivity extends ActionBarActivity {
 		dialog.show(getFragmentManager(), "dialog");
 	}
 
+	/**
+	 * Show dialog to set date of birth.
+	 */
 	private void showDatePickerDialog() {
 		DatePickerDialog datePicker = new DatePickerDialog(
 				AddEditActivity.this, new OnDateSetListener() {
@@ -193,6 +205,9 @@ public class AddEditActivity extends ActionBarActivity {
 		datePicker.show();
 	}
 
+	/**
+	 * Call async task to download image from network, using String arrays of urls.
+	 */
 	private void downloadImage() {
 		if (isInternetAvailable()) {
 			Random random = new Random();
@@ -209,6 +224,13 @@ public class AddEditActivity extends ActionBarActivity {
 		}
 	}
 
+	/**
+	 * Restore instance state from @param savedInstanceState, if it is not null.
+	 * If it is null, get data from data provider, using id, if it is not equals -1.
+	 * If id equals -1, Activity's views is empty.
+	 * 
+	 * @param savedInstanceState
+	 */
 	private void restoreInstanceState(Bundle savedInstanceState) {
 		if (savedInstanceState == null) {
 			if (id != -1) {
@@ -268,6 +290,11 @@ public class AddEditActivity extends ActionBarActivity {
 		return true;
 	}
 
+	/**
+	 * Get photo from ImageView and convert it to byte array.
+	 * 
+	 * @return byte[] representation of photo.
+	 */
 	private byte[] getByteArrayFromImageView() {
 		Bitmap photo = ((BitmapDrawable) ivPhotoAddEdit.getDrawable())
 				.getBitmap();
@@ -277,6 +304,11 @@ public class AddEditActivity extends ActionBarActivity {
 		return photoArray;
 	}
 
+	/**
+	 * Set selected item for spinner.
+	 * 
+	 * @param isMale
+	 */
 	private void setSpinnerGenderSelection(boolean isMale) {
 		if (isMale) {
 			spGender.setSelection(0);
@@ -337,6 +369,9 @@ public class AddEditActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	/**
+	 * Set notify preference value to true.
+	 */
 	private void notifyMainActivity() {
 
 		SharedPreferences settings = getSharedPreferences("preferences",
@@ -346,6 +381,13 @@ public class AddEditActivity extends ActionBarActivity {
 		editor.commit();
 	}
 
+	/**
+	 * Get boolean representation of String @param gender.
+	 * 
+	 * @param gender
+	 * @return          <code>true</code> if @param gender matches str_male.
+     *                  <code>false</code> if not.
+	 */
 	private boolean getBooleanFromString(String gender) {
 		boolean isMale = false;
 		if (gender.matches(getResources().getString(R.string.str_male))) {
@@ -354,6 +396,12 @@ public class AddEditActivity extends ActionBarActivity {
 		return isMale;
 	}
 
+	/**
+	 * Called to check camera available.
+	 * 
+	 * @return          <code>true</code> if device has camera.
+     *                  <code>false</code> if not.
+	 */
 	private boolean isCameraAvailable() {
 		final PackageManager packageManager = getPackageManager();
 		boolean isCamera = packageManager
@@ -361,6 +409,9 @@ public class AddEditActivity extends ActionBarActivity {
 		return isCamera;
 	}
 
+	/**
+	 * Start new Activity to capture a photo.
+	 */
 	private void takePhotoByCamera() {
 		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		// Ensure that there's a camera activity to handle the intent
@@ -385,6 +436,12 @@ public class AddEditActivity extends ActionBarActivity {
 		}
 	}
 
+	/**
+	 * create a collision-resistant file name, using a date-time stamp.
+	 * 
+	 * @return file of image.
+	 * @throws IOException
+	 */
 	private File createImageFile() throws IOException {
 		// Create an image file name
 		String timeStamp = new SimpleDateFormat("yyMMdd_HHmmss")
@@ -403,7 +460,6 @@ public class AddEditActivity extends ActionBarActivity {
 		if (resultCode == RESULT_OK && requestCode == REQUEST_IMAGE_CAPTURE
 				&& currentPhotoPath != null) {
 			setPic();
-			// galleryAddPicture();
 			currentPhotoPath = null;
 		}
 		if (resultCode == RESULT_OK && requestCode == REQUEST_IMAGE_SELECT) {
@@ -413,6 +469,9 @@ public class AddEditActivity extends ActionBarActivity {
 		}
 	}
 
+	/**
+	 * Scale photo to match the size of the destination ImageView.
+	 */
 	private void setPic() {
 		// Get the dimensions of the View
 		int targetWidth = (int) getResources().getDimension(
@@ -440,6 +499,9 @@ public class AddEditActivity extends ActionBarActivity {
 		ivPhotoAddEdit.setImageBitmap(bitmap);
 	}
 
+	/**
+	 * Start new Activity to choose photo from gallery.
+	 */
 	private void takePhotoFromGallery() {
 		Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
 		galleryIntent.setType("image/*");
@@ -448,6 +510,12 @@ public class AddEditActivity extends ActionBarActivity {
 				REQUEST_IMAGE_SELECT);
 	}
 
+	/**
+	 * Get String path of image from Content Provider of gallery, using uri.
+	 * 
+	 * @param uri
+	 * @return String path of image.
+	 */
 	private String getPath(Uri uri) {
 		String[] projection = { MediaStore.Images.Media.DATA };
 		Cursor cursor = this.getContentResolver().query(uri, projection, null,
@@ -457,7 +525,13 @@ public class AddEditActivity extends ActionBarActivity {
 		cursor.moveToFirst();
 		return cursor.getString(columnIndex);
 	}
-
+	
+	/**
+	 * Called to check Internet connection state. Show toast, if device has no Internet connection.
+	 * 
+	 * @return          <code>true</code> if device has Internet connection.
+     *                  <code>false</code> if not.
+	 */
 	private boolean isInternetAvailable() {
 		boolean hasWifiNet = false;
 		boolean hasMobileNet = false;

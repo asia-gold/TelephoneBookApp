@@ -12,6 +12,12 @@ import ru.asia.mytelephonebookapp.ContactsUtils;
 import ru.asia.mytelephonebookapp.models.Contact;
 import android.util.Base64;
 
+/**
+ * Custom event handler for SAX parser.
+ * 
+ * @author Asia
+ *
+ */
 public class XMLContentHandler extends DefaultHandler{
 	
 	private boolean inContact = false;
@@ -22,6 +28,8 @@ public class XMLContentHandler extends DefaultHandler{
 	
 	/**
 	 * Called when parsed data is requested.
+	 *
+	 * @return ArrayList of contact, parsed from xml.
 	 */
 	public ArrayList<Contact> getParsedData() {
 		return listOfContact;

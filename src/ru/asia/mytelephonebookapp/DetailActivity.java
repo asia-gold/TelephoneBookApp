@@ -11,6 +11,12 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+/**
+ * Show details of contact.
+ * 
+ * @author Asia
+ *
+ */
 public class DetailActivity extends ActionBarActivity {
 
 	private ScrollView scrollDetail;

@@ -7,6 +7,12 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 
+/**
+ * Activity with settings. 
+ * 
+ * @author Asia
+ *
+ */
 public class SettingsActivity extends PreferenceActivity {
 	
 	public static final String KEY_PREF_DISPLAY_BY_GENDER = "prefDisplayByGender";

@@ -30,7 +30,7 @@ import android.util.Xml;
 import android.widget.Toast;
 
 /**
- * Exports contacts to xml file on SD card.
+ * Export contacts to xml file on SD card. If error occurred, show toast to inform user.
  * @author Asia
  *
  */
@@ -92,10 +92,15 @@ public class DataContactsExportTask extends AsyncTask<Void, Void, Boolean> {
 		Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 	}
 
+	/**
+	 * Serialize ArrayList of contacts to String.
+	 * 
+	 * @param contacts	- ArrayList for serialization
+	 * @return String representation of ArrayList.
+	 */
 	private String writeXML(ArrayList<Contact> contacts) {
 		XmlSerializer serializer = Xml.newSerializer();
-		StringWriter writer = new StringWriter();
-		
+		StringWriter writer = new StringWriter();		
 		
 		try {
 			serializer.setOutput(writer);
@@ -145,6 +150,12 @@ public class DataContactsExportTask extends AsyncTask<Void, Void, Boolean> {
 		}
 	}
 
+	/**
+	 * Called to check external storage state.
+	 * 
+	 * @return          <code>true</code> if external storage writable.
+     *                  <code>false</code> if not.
+	 */
 	private boolean isExternalStorageWritable() {
 		String state = Environment.getExternalStorageState();
 		if (Environment.MEDIA_MOUNTED.equals(state)) {

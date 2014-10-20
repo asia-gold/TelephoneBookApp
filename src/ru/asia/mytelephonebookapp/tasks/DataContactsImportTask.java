@@ -22,7 +22,7 @@ import android.os.Environment;
 import android.widget.Toast;
 
 /**
- * Checks if the exported file exists and imports it. If not, shows toast to inform user. 
+ * Check if the exported file exists and import it. If not, show toast to inform user. 
  * @author Asia
  *
  */

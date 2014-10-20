@@ -13,8 +13,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 /**
- * Downloads image from String url, returns the bitmap.
- * If error occurred, shows toast to inform user.
+ * Download image from String url, return the bitmap.
+ * If error occurred, show toast to inform user.
  * 
  * @author Asia
  *
