@@ -18,7 +18,7 @@ import org.xml.sax.InputSource;
 import org.xmlpull.v1.XmlSerializer;
 
 import ru.asia.mytelephonebookapp.ContactDBHelper;
-import ru.asia.mytelephonebookapp.ContactsDataSource;
+import ru.asia.mytelephonebookapp.ContactsUtils;
 import ru.asia.mytelephonebookapp.MyTelephoneBookApplication;
 import ru.asia.mytelephonebookapp.R;
 import ru.asia.mytelephonebookapp.models.Contact;
@@ -29,6 +29,11 @@ import android.util.Base64;
 import android.util.Xml;
 import android.widget.Toast;
 
+/**
+ * Exports contacts to .xml file on SD card.
+ * @author Asia
+ *
+ */
 public class DataContactsExportTask extends AsyncTask<Void, Void, Boolean> {
 
 	private static final String EXPORT_FILE_PATH = Environment
@@ -56,10 +61,6 @@ public class DataContactsExportTask extends AsyncTask<Void, Void, Boolean> {
 					.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(document);
-
-			// String path = context.getFilesDir().getPath()
-			// .toString() + "/database.xml";
-			// Log.e("==========", path);
 
 			if (isExternalStorageWritable()) {
 				File file = new File(EXPORT_FILE_PATH, EXPORT_FILE_NAME);
@@ -119,7 +120,7 @@ public class DataContactsExportTask extends AsyncTask<Void, Void, Boolean> {
 				serializer.text(contact.getName());
 				serializer.endTag("", "name");
 				// Date of Birth
-				String dateString = ContactsDataSource.formatDateToString(contact.getDateOfBirth());
+				String dateString = ContactsUtils.formatDateToString(contact.getDateOfBirth());
 				
 				serializer.startTag("", "dateOfBirth");
 				serializer.text(dateString);

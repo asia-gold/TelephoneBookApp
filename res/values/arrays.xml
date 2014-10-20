@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    <string-array name="arraySpinnerGender">
+    <string-array name="array_spinner_gender">
         <item>Male</item>
         <item>Female</item>
     </string-array>
@@ -17,13 +17,13 @@
         <item>Upload from network</item>
     </string-array>
     
-    <string-array name="arrayEntriesByGender">
+    <string-array name="array_entries_by_gender">
         <item>Show male only</item>
         <item>Show female only</item>
         <item>Show all</item>
     </string-array>
     
-    <string-array name="arrayValuesByGender">
+    <string-array name="array_values_by_gender">
         <item>Show male only</item>
         <item>Show female only</item>
         <item>Show all</item>

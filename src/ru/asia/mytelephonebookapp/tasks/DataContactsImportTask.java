@@ -21,6 +21,11 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.widget.Toast;
 
+/**
+ * Checks if the exported file exists and imports it. If not, shows toast to inform user. 
+ * @author Asia
+ *
+ */
 public class DataContactsImportTask extends AsyncTask<Void, Void, ArrayList<Contact>> {
 
 	private static final String IMPORT_FILE_NAME = "/database.xml";
@@ -74,16 +79,16 @@ public class DataContactsImportTask extends AsyncTask<Void, Void, ArrayList<Cont
 			}
 			notifyMainActivity();
 			((MainActivity)context).updateData();
-			//((MainActivity)context).adapter.updateAdapterData(MyTelephoneBookApplication.getDataProvider().getAllContact());
-			//((MainActivity)context).invalidateOptionsMenu();
 			message = context.getResources()
 					.getString(R.string.str_import_result_true);
 		}
 		Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 	}
 	
+	/**
+	 * Set notify preference value to true.
+	 */
 	private void notifyMainActivity() {
-
 		SharedPreferences settings = context.getSharedPreferences("preferences",
 				context.MODE_PRIVATE);
 		Editor editor = settings.edit();

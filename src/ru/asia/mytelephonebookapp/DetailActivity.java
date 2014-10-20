@@ -53,7 +53,7 @@ public class DetailActivity extends ActionBarActivity {
 				tvGender.setText(getResources().getString(R.string.str_female));
 			}
 
-			String dateString = ContactsDataSource
+			String dateString = ContactsUtils
 					.formatDateToString(detailContact.getDateOfBirth());
 			if (dateString == null) {
 				tvDateOfBirth.setText("");

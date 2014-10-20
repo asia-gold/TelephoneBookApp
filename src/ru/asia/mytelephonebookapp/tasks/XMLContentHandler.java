@@ -8,7 +8,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import ru.asia.mytelephonebookapp.ContactsDataSource;
+import ru.asia.mytelephonebookapp.ContactsUtils;
 import ru.asia.mytelephonebookapp.models.Contact;
 import android.util.Base64;
 
@@ -65,7 +65,7 @@ public class XMLContentHandler extends DefaultHandler{
 		} else if (inContact == true && localName.equals("dateOfBirth")) {
 			Date date = null;
 			try {
-				date = ContactsDataSource.formatStringToDate(builder.toString().trim());
+				date = ContactsUtils.formatStringToDate(builder.toString().trim());
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
@@ -79,7 +79,7 @@ public class XMLContentHandler extends DefaultHandler{
 	}
 	
 	/**
-	 * Receive notification of character data inside an element
+	 * Receive notification of character data inside an element.
 	 * 
 	 * Called on the following structure <tag>characters</tag>
 	 */

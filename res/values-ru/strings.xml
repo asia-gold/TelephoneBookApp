@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Телефонный справочник</string>
+    <string name="title_activity_settings">Настройки</string>
+    
+    <string name="str_empty_view">Нажмите + , чтобы добавить контакт</string>
+    
+    <string name="str_male">Мужчины</string>
+    <string name="str_female">Женщины</string>
+
+    <!-- Action Buttons -->
+    <string name="action_add">Добавить</string>
+    <string name="action_remove">Удалить</string>
+    <string name="action_settings">Настройки</string>
+    <string name="action_import_export">Импорт/Экспорт</string>
+    <string name="action_done">Готово</string>
+    <string name="action_edit">Редактировать</string>
+    <string name="action_cancel">Отмена</string>
+
+    <!-- AddEditActivity Strings -->
+    <string name="str_add_contact">Добавить контакт</string>
+    <string name="str_edit_contact">Редактировать контакт %s</string>
+    <string name="str_name">Имя</string>
+    <string name="str_surname">Фамилия</string>
+    <string name="str_date_of_birth">Дата рождения</string>
+    <string name="str_address">Адрес</string>
+    <string name="str_no_camera">На Вашем устройстве нет камеры.</string>
+    <string name="str_no_name_typed">Имя не может быть пустым.</string>
+    <string name="str_no_internet">У вас отсутствует подключение к Интернету.</string>
+    
+    <!-- Import/Export Dialog Strings -->
+    <string name="title_import_export">Импорт/Экспорт</string>
+    
+    <!-- Download Image Task -->
+    <string name="str_error_download">Ошибка загрузки изображения</string>
+    
+    <!-- Export Task Strings -->
+    <string name="str_export_result_true">Данные экспортированы.</string>
+    <string name="str_export_result_false">Данные не экспортированы из-за внутренней ошибки.</string>
+    
+    <!-- Import Task Strings -->
+    <string name="str_import_result_true">Данные импортированы.</string>
+    <string name="str_import_result_false">Нет файла для импорта.</string>
+    
+    <!-- Add Photo Dialog Strings -->
+    <string name="title_add_photo">Добавить фото</string>
+    
+    <!-- Preferences Strings -->
+    <string name="pref_display_category">Опции отображения</string>
+    <string name="pref_display_by_gender_title">Фильтр контактов</string>
+    <string name="pref_display_by_gender_summary">Позволяет выбрать отображение контактов по полу</string>
+    <string name="pref_display_by_gender_default">Все</string>
+    <string name="pref_colors_by_gender_title">Цвет отображения мужчин/женщин</string>
+    <string name="pref_colors_by_gender_summary">Позволяет выбрать цветовую тему</string>
+    <string name="pref_colors_by_gender_default">Голубой/Розовый</string>
+    
+    <string name="str_male_only">Только мужчины</string>
+    <string name="str_female_only">Только женщины</string>
+</resources>

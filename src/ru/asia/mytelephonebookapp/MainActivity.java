@@ -40,11 +40,18 @@ public class MainActivity extends ActionBarActivity {
 	private int gender = 2;
 	private String colorTheme = "Blue/Pink";
 	private boolean notify = false;
+	
+	private boolean firstTime = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		if (firstTime) {
+			firstTime = false;
+			
+		}
 
 		settings = PreferenceManager.getDefaultSharedPreferences(context);
 		String genderSetting = settings.getString("prefDisplayByGender",
@@ -93,7 +100,11 @@ public class MainActivity extends ActionBarActivity {
 		updateData();
 		super.onResume();
 	}
-
+	
+	/**
+	 * @return          <code>true</code> if prefDisplayByGender changes its value.
+     *                  <code>false</code> if not.
+	 */
 	private boolean isGenderSettingChange() {
 		String genderSetting = settings.getString("prefDisplayByGender",
 				getResources().getString(R.string.pref_display_by_gender_default));
@@ -104,7 +115,11 @@ public class MainActivity extends ActionBarActivity {
 		}
 		return false;
 	}
-
+	
+	/**
+	 * @return          <code>true</code> if prefColorsByGender changes its value.
+     *                  <code>false</code> if not.
+	 */
 	private boolean isColorSettingChange() {
 		String colorSetting = settings.getString("prefColorsByGender",
 				getResources().getString(R.string.pref_colors_by_gender_default));
@@ -115,6 +130,10 @@ public class MainActivity extends ActionBarActivity {
 		return false;
 	}
 
+	/**
+	 * @return          <code>true</code> if notify preference changes its value from false to true.
+     *                  <code>false</code> if not.
+	 */
 	private boolean isNotifyChange() {
 		SharedPreferences sPref = getSharedPreferences("preferences", MODE_PRIVATE);
 		notify = sPref.getBoolean("notify", false);
@@ -127,6 +146,10 @@ public class MainActivity extends ActionBarActivity {
 		return false;
 	}
 
+	/**
+	 * Update data of activity, adapter and invalidate options menu
+	 * if one of the preferences has changed.
+	 */
 	public void updateData() {
 		if (isGenderSettingChange() || isColorSettingChange()
 				|| isNotifyChange()) {
@@ -173,9 +196,9 @@ public class MainActivity extends ActionBarActivity {
 
 	private int getIntGender(String genderSettings) {
 		int genderInt = 2;
-		if (genderSettings.matches("Show male only")) {
+		if (genderSettings.matches(getResources().getString(R.string.str_male_only))) {
 			genderInt = 1;
-		} else if (genderSettings.matches("Show female only")) {
+		} else if (genderSettings.matches(getResources().getString(R.string.str_female_only))) {
 			genderInt = 0;
 		} else {
 			genderInt = 2;

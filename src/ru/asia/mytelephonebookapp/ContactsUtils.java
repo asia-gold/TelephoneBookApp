@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class ContactsDataSource {	
+public class ContactsUtils {	
 
 	public static String formatDateToString(Date date) {
 		String dateString = null;

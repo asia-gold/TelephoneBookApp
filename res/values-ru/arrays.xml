@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string-array name="array_spinner_gender">
+        <item>Мужчина</item>
+        <item>Женщина</item>
+    </string-array>
+    
+    <string-array name="array_import_export">
+        <item>Импорт</item>
+        <item>Экспорт</item>
+    </string-array>
+    
+    <string-array name="array_add_photo">
+        <item>Сделать снимок с камеры</item>
+        <item>Выбрать из галлереи</item>
+        <item>Загрузить с сети</item>
+    </string-array>
+    
+    <string-array name="array_entries_by_gender">
+        <item>Только мужчины</item>
+        <item>Только женщины</item>
+        <item>Все</item>
+    </string-array>
+    
+    <string-array name="array_values_by_gender">
+        <item>Только мужчины</item>
+        <item>Только женщины</item>
+        <item>Все</item>
+    </string-array>
+    
+    <string-array name="array_entries_color_theme">
+        <item>Голубой/Розовый</item>
+        <item>Фиолетовый/Жёлтый</item>
+    </string-array>
+    
+    <string-array name="array_values_color_theme">
+        <item>Голубой/Розовый</item>
+        <item>Фиолетовый/Жёлтый</item>
+    </string-array>
+    
+</resources>

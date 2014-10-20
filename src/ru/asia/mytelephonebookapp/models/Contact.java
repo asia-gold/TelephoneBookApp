@@ -1,10 +1,13 @@
 package ru.asia.mytelephonebookapp.models;
 
-import java.io.Serializable;
 import java.util.Date;
 
 
-public class Contact implements Serializable{
+/**
+ * @author Asia
+ *
+ */
+public class Contact{
 	
 	private long id;
 	private byte[] photo;
@@ -14,7 +17,6 @@ public class Contact implements Serializable{
 	private String address;
 	
 	public Contact() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	/*

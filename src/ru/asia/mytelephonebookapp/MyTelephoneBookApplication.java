@@ -13,20 +13,11 @@ public class MyTelephoneBookApplication extends Application{
 		super.onCreate();
 		dataProvider = new SQLiteDataProvider(this);
 		//dataProvider = new MemoryDataProvider(this);
+		//dataProvider.deleteAllContacts();
 	}
 
 	public static DataProvider getDataProvider() {
 		return dataProvider;
 	}
 	
-	@Override
-	public void onTerminate() {
-		if (dataProvider instanceof SQLiteDataProvider) {
-			//dataProvider.deleteAllContacts();
-			((SQLiteDataProvider) dataProvider).close();
-		} else {
-			dataProvider = null;
-		}
-		super.onTerminate();
-	}
 }

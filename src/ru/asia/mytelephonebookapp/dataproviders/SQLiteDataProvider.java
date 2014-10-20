@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import ru.asia.mytelephonebookapp.ContactDBHelper;
-import ru.asia.mytelephonebookapp.ContactsDataSource;
+import ru.asia.mytelephonebookapp.ContactsUtils;
 import ru.asia.mytelephonebookapp.models.Contact;
 import android.content.ContentValues;
 import android.content.Context;
@@ -32,8 +32,6 @@ public class SQLiteDataProvider implements DataProvider {
 	}
 
 	public void close() {
-		database.execSQL("DELETE FROM " + ContactDBHelper.TABLE_NAME);
-        database.close();
 		dbHelper.close();
 	}
 
@@ -45,7 +43,7 @@ public class SQLiteDataProvider implements DataProvider {
 		values.put(ContactDBHelper.COLUMN_NAME, name);
 		int gender = (isMale == true ? 1 : 0);
 		values.put(ContactDBHelper.COLUMN_GENDER, gender);
-		String dateBornString = ContactsDataSource.formatDateToString(dateBorn);
+		String dateBornString = ContactsUtils.formatDateToString(dateBorn);
 		values.put(ContactDBHelper.COLUMN_DATE_BIRTH, dateBornString);
 		values.put(ContactDBHelper.COLUMN_ADDRESS, address);
 		long insertID = database.insert(ContactDBHelper.TABLE_NAME, null,
@@ -69,7 +67,7 @@ public class SQLiteDataProvider implements DataProvider {
 		values.put(ContactDBHelper.COLUMN_NAME, name);
 		int gender = (isMale == true ? 1 : 0);
 		values.put(ContactDBHelper.COLUMN_GENDER, gender);
-		String dateBornString = ContactsDataSource.formatDateToString(dateBorn);
+		String dateBornString = ContactsUtils.formatDateToString(dateBorn);
 		values.put(ContactDBHelper.COLUMN_DATE_BIRTH, dateBornString);
 		values.put(ContactDBHelper.COLUMN_ADDRESS, address);
 		String whereClause = null;
@@ -155,7 +153,7 @@ public class SQLiteDataProvider implements DataProvider {
 		contact.setIsMale(isMale);
 		Date tmpDate = null;
 		try {
-			tmpDate = ContactsDataSource.formatStringToDate(cursor.getString(4));
+			tmpDate = ContactsUtils.formatStringToDate(cursor.getString(4));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

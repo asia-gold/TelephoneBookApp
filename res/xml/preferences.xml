@@ -8,8 +8,8 @@
             android:key="prefDisplayByGender"
             android:title="@string/pref_display_by_gender_title"
             android:summary="@string/pref_display_by_gender_summary"
-            android:entries="@array/arrayEntriesByGender"
-            android:entryValues="@array/arrayValuesByGender"
+            android:entries="@array/array_entries_by_gender"
+            android:entryValues="@array/array_values_by_gender"
             android:defaultValue="Show all"/>
         
         <ListPreference 

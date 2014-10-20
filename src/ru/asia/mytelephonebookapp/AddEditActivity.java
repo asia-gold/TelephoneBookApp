@@ -223,7 +223,7 @@ public class AddEditActivity extends ActionBarActivity {
 				setSpinnerGenderSelection(editContact.getIsMale());
 
 				Date date = editContact.getDateOfBirth();
-				String dateString = ContactsDataSource.formatDateToString(date);
+				String dateString = ContactsUtils.formatDateToString(date);
 				if (dateString.matches("")) {
 					etDateOfBirth.setText("");
 				} else {
@@ -246,7 +246,7 @@ public class AddEditActivity extends ActionBarActivity {
 				etDateOfBirth.setText(dateOfBirth);
 				Date date = null;
 				try {
-					date = ContactsDataSource.formatStringToDate(dateOfBirth);
+					date = ContactsUtils.formatStringToDate(dateOfBirth);
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
@@ -305,7 +305,7 @@ public class AddEditActivity extends ActionBarActivity {
 			String dateString = etDateOfBirth.getText().toString();
 			Date dateBirth = null;
 			try {
-				dateBirth = ContactsDataSource.formatStringToDate(dateString);
+				dateBirth = ContactsUtils.formatStringToDate(dateString);
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
