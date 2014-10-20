@@ -12,6 +12,13 @@ import android.os.AsyncTask;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+/**
+ * Downloads image from String url, returns the bitmap.
+ * If error occurred, shows toast to inform user.
+ * 
+ * @author Asia
+ *
+ */
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap>{
 	
 	private Context context;

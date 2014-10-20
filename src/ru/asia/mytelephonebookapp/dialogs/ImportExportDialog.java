@@ -9,6 +9,12 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+/**
+ * Build and show dialog for import and export data, call appropriate async task for chosen item.
+ * 
+ * @author Asia
+ *
+ */
 public class ImportExportDialog extends DialogFragment {
 
 	@Override
@@ -32,6 +38,5 @@ public class ImportExportDialog extends DialogFragment {
 				});
 		
 		return builder.create();
-	}
-	
+	}	
 }

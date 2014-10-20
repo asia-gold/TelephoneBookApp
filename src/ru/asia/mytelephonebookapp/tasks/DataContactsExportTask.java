@@ -30,7 +30,7 @@ import android.util.Xml;
 import android.widget.Toast;
 
 /**
- * Exports contacts to .xml file on SD card.
+ * Exports contacts to xml file on SD card.
  * @author Asia
  *
  */

@@ -4,6 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+/**
+ * Contains int arrays of colors, checks settings state and sets colors.
+ * 
+ * @author Asia
+ *
+ */
 public class Colors {
 	
 	private static final int[] maleColors = { R.color.male_0, R.color.male_1 };	
@@ -12,14 +18,16 @@ public class Colors {
 	private int maleColor;
 	private int femaleColor;
 	
-	private SharedPreferences colorSettings;
-	
+	private SharedPreferences colorSettings;	
 	private Context context;
 	
 	public Colors(Context context) {
 		this.context = context;
 	}
 	
+	/**
+	 * Checks prefColorsByGender, and sets maleColor and femaleColor.
+	 */
 	private void getColorsFromSettings() {
 		int i = 0;
 		colorSettings = PreferenceManager.getDefaultSharedPreferences(context);
@@ -35,6 +43,10 @@ public class Colors {
 		setFemaleColorId(femaleColors[i]);
 	}
 	
+	/**
+	 * Set Methods
+	 */
+	
 	private void setMaleColorId(int maleColor) {
 		this.maleColor = maleColor;
 	}
@@ -42,6 +54,10 @@ public class Colors {
 	private void setFemaleColorId(int femaleColor) {
 		this.femaleColor = femaleColor;
 	}
+	
+	/**
+	 * Get Methods
+	 */
 	
 	public int getMaleColorId() {
 		getColorsFromSettings();

@@ -51,6 +51,5 @@ public class SettingsActivity extends PreferenceActivity {
 		    getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
 		    super.onPause();
 		}
-	}
-	
+	}	
 }

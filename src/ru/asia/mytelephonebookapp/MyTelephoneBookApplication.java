@@ -12,7 +12,7 @@ public class MyTelephoneBookApplication extends Application{
 	public void onCreate() {
 		super.onCreate();
 		dataProvider = new SQLiteDataProvider(this);
-		//dataProvider = new MemoryDataProvider(this);
+		//dataProvider = new MemoryDataProvider();
 		//dataProvider.deleteAllContacts();
 	}
 

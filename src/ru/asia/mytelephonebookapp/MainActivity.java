@@ -102,6 +102,8 @@ public class MainActivity extends ActionBarActivity {
 	}
 	
 	/**
+	 * Called to check prefDisplayByGender state.
+	 * 
 	 * @return          <code>true</code> if prefDisplayByGender changes its value.
      *                  <code>false</code> if not.
 	 */
@@ -117,6 +119,8 @@ public class MainActivity extends ActionBarActivity {
 	}
 	
 	/**
+	 * Called to check prefColorsByGender state.
+	 * 
 	 * @return          <code>true</code> if prefColorsByGender changes its value.
      *                  <code>false</code> if not.
 	 */
@@ -131,6 +135,8 @@ public class MainActivity extends ActionBarActivity {
 	}
 
 	/**
+	 * Called to check notify preference state.
+	 * 
 	 * @return          <code>true</code> if notify preference changes its value from false to true.
      *                  <code>false</code> if not.
 	 */

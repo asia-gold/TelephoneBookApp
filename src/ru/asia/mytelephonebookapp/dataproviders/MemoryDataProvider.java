@@ -8,20 +8,32 @@ import ru.asia.mytelephonebookapp.models.Contact;
 import android.content.Context;
 import android.util.Log;
 
+/**
+ * Work with contacts from ArrayList. Add, update, delete and get
+ * contacts.
+ * 
+ * @author Asia
+ *
+ */
 public class MemoryDataProvider implements DataProvider {
 	
-	private static final int READ = 1;
-	private static final int WRITE = 2;
-	
 	private ArrayList<Contact> dataInMemory;
-	private Context context;
-	private String fileName = "dataInMemory";
 	
-	public MemoryDataProvider(Context context) {
-		this.context = context;
+	public MemoryDataProvider() {
 		dataInMemory = new ArrayList<Contact>();
 	}
 
+	/**
+	 * Add contact to ArrayList.
+	 * 
+	 * Contact data to add.
+	 * @param photo
+	 * @param name
+	 * @param isMale
+	 * @param dateBorn
+	 * @param address
+	 * @return id of new contact
+	 */
 	@Override
 	public long addContact(byte[] photo, String name, boolean isMale,
 			Date dateBorn, String address) {
@@ -41,6 +53,11 @@ public class MemoryDataProvider implements DataProvider {
 		return id;
 	}
 
+	/**
+	 * Add contact to ArrayList.
+	 * 
+	 * @param contact - contact to add.
+	 */
 	@Override
 	public void addContact(Contact contact) {
 		dataInMemory.add(contact);
@@ -49,10 +66,21 @@ public class MemoryDataProvider implements DataProvider {
 		Log.e("addContact(Contact)", "Id " + id);
 		
 		contact.setId(id);
-		dataInMemory.set((int) id, contact);
-		
+		dataInMemory.set((int) id, contact);		
 	}
 
+	/**
+	 * Update contact, specified by @param id.
+	 * 
+	 * @param id	- id of contact.
+	 * 
+	 * Contact data to update.
+	 * @param photo
+	 * @param name
+	 * @param isMale
+	 * @param dateBorn
+	 * @param address
+	 */
 	@Override
 	public void updateContact(long id, byte[] photo, String name,
 			boolean isMale, Date dateBorn, String address) {
@@ -65,33 +93,63 @@ public class MemoryDataProvider implements DataProvider {
 		dataInMemory.set((int) id, updateContact);		
 	}
 
+	/**
+	 * Delete contact, specified by @param contact, from ArrayList.
+	 * 
+	 * @param contact	- contact to delete.
+	 */
 	@Override
 	public void deleteContact(Contact contact) {
 		dataInMemory.remove(contact);
 		
 	}
 
+	/**
+	 * Delete contacts, specified by @param data, from ArrayList.
+	 * 
+	 * @param data	- contacts to delete
+	 */
 	@Override
 	public void deleteAllContacts(ArrayList<Contact> data) {
 		dataInMemory.removeAll(data);		
 	}
 	
+	/**
+	 * Delete all contacts from ArrayList.
+	 */
 	@Override
 	public void deleteAllContacts() {
 		dataInMemory.clear();		
 	}
 
+	/**
+	 * Get contact from ArrayList, using id.
+	 * 
+	 * @param id	- id of contact.
+	 * @return contact.
+	 */
 	@Override
 	public Contact getContact(long id) {
 		Contact contact = dataInMemory.get((int) id);
 		return contact;
 	}
 
+	/**
+	 * Get all contacts from ArrayList.
+	 * 
+	 * @return ArrayList of contacts.
+	 */
 	@Override
 	public ArrayList<Contact> getAllContact() {
 		return new ArrayList<Contact>(dataInMemory);
 	}
 
+	/**
+	 * Get contacts from ArrayList, specified by @param gender.
+	 * 
+	 * @param gender
+	 * @return ArrayList of contacts.
+	 */
 	@Override
 	public ArrayList<Contact> getAllContactsByGender(int gender) {
 		ArrayList<Contact> contactsByGender = new ArrayList<Contact>();
@@ -118,25 +176,5 @@ public class MemoryDataProvider implements DataProvider {
 		
 		return contactsByGender;
 	}
-
-
-	
-//	private static ArrayList<Contact> readFromFile(Context context, String fileName) throws IOException,
-//    ClassNotFoundException {
-//		FileInputStream fis = context.openFileInput(fileName);
-//		ObjectInputStream ois = new ObjectInputStream(fis);
-//		ArrayList<Contact> contacts = (ArrayList<Contact>)ois.readObject();
-//		ois.close();
-//		fis.close();
-//		return contacts;
-//	}
-//	
-//	private static void writeToFile(Context context, String fileName, ArrayList<Contact> data) throws IOException {
-//		FileOutputStream fos = context.openFileOutput(fileName, Context.MODE_PRIVATE);
-//		ObjectOutputStream oos = new ObjectOutputStream(fos);
-//		oos.writeObject(data);
-//		oos.close();
-//		fos.close();
-//	}
 
 }

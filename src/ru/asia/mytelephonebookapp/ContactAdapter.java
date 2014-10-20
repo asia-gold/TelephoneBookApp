@@ -17,6 +17,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * Custom adapter for ListView. Inflates custom list item layout.
+ * 
+ * @author Asia
+ *
+ */
 public class ContactAdapter extends BaseAdapter {
 
 	private Context context;
@@ -39,6 +45,11 @@ public class ContactAdapter extends BaseAdapter {
 		return checkedStates;
 	}
 
+	/**
+	 * Set new @param data to contactsList, notify adapter data has changed.
+	 * 
+	 * @param data
+	 */
 	public void updateAdapterData(ArrayList<Contact> data) {
 		contactsList.clear();
 		contactsList.addAll(data);
@@ -60,17 +71,17 @@ public class ContactAdapter extends BaseAdapter {
 		return position;
 	}
 	
-	public boolean isChecked(int position) {
-		return checkedStates.get(position, false);
-	}
-
-	public void setChecked(int position, boolean isChecked) {
-		checkedStates.put(position, isChecked);
-	}
-	
-	public void changeState(int position) {
-		setChecked(position, !isChecked(position));
-	}
+//	public boolean isChecked(int position) {
+//		return checkedStates.get(position, false);
+//	}
+//
+//	public void setChecked(int position, boolean isChecked) {
+//		checkedStates.put(position, isChecked);
+//	}
+//	
+//	public void changeState(int position) {
+//		setChecked(position, !isChecked(position));
+//	}
 	
 	static class ViewHolder {
 		public LinearLayout llItem;

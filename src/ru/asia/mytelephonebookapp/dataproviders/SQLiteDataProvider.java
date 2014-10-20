@@ -13,6 +13,13 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+/**
+ * Work with contacts from database. Add, update, delete and get 
+ * contacts.
+ * 
+ * @author Asia
+ *
+ */
 public class SQLiteDataProvider implements DataProvider {
 	
 	private SQLiteDatabase database;
@@ -27,6 +34,11 @@ public class SQLiteDataProvider implements DataProvider {
 		open();
 	}
 
+	/**
+	 * 
+	 * 
+	 * @throws SQLException
+	 */
 	public void open() throws SQLException {
 		database = dbHelper.getWritableDatabase();
 	}
@@ -35,7 +47,17 @@ public class SQLiteDataProvider implements DataProvider {
 		dbHelper.close();
 	}
 
-	// Return id of new data row
+	/**
+	 * Add contact to database.
+	 * 
+	 * Contact data to add.
+	 * @param photo
+	 * @param name
+	 * @param isMale
+	 * @param dateBorn
+	 * @param address
+	 * @return id of new contact.
+	 */
 	public long addContact(byte[] photo, String name, boolean isMale,
 			Date dateBorn, String address) {
 		ContentValues values = new ContentValues();
@@ -51,6 +73,11 @@ public class SQLiteDataProvider implements DataProvider {
 		return insertID;
 	}
 
+	/**
+	 * Add contact to database.
+	 * 
+	 * @param contact - contact to add.
+	 */
 	public void addContact(Contact contact) {
 		byte[] photo = contact.getPhoto();
 		String name = contact.getName();
@@ -60,6 +87,18 @@ public class SQLiteDataProvider implements DataProvider {
 		addContact(photo, name, isMale, dateBorn, address);
 	}
 
+	/**
+	 * Update contact, specified by @param id.
+	 * 
+	 * @param id	- id of contact.
+	 * 
+	 * Contact data to update.
+	 * @param photo
+	 * @param name
+	 * @param isMale
+	 * @param dateBorn
+	 * @param address
+	 */
 	public void updateContact(long id, byte[] photo, String name,
 			boolean isMale, Date dateBorn, String address) {
 		ContentValues values = new ContentValues();
@@ -77,12 +116,22 @@ public class SQLiteDataProvider implements DataProvider {
 		database.update(ContactDBHelper.TABLE_NAME, values, whereClause, null);
 	}
 
+	/**
+	 * Delete contact, specified by @param contact.
+	 * 
+	 * @param contact	- contact to delete.
+	 */
 	public void deleteContact(Contact contact) {
 		long id = contact.getId();
 		database.delete(ContactDBHelper.TABLE_NAME, ContactDBHelper.COLUMN_ID
 				+ " = " + id, null);
 	}
 
+	/**
+	 * Delete contacts, specified by @param data.
+	 * 
+	 * @param data	- contacts to delete
+	 */
 	public void deleteAllContacts(ArrayList<Contact> data) {
 		for (int i = 0; i < data.size(); i++) {
 			Contact c = data.get(i);
@@ -90,10 +139,19 @@ public class SQLiteDataProvider implements DataProvider {
 		}
 	}
 
+	/**
+	 * Delete all contacts from database.
+	 */
 	public void deleteAllContacts() {
 		database.delete(ContactDBHelper.TABLE_NAME, null, null);
 	}
 
+	/**
+	 * Get contact from database, using id.
+	 * 
+	 * @param id	- id of contact.
+	 * @return contact.
+	 */
 	public Contact getContact(long id) {
 		Contact newContact = null;
 		Cursor cursor = database.query(ContactDBHelper.TABLE_NAME, allColumns,
@@ -106,6 +164,11 @@ public class SQLiteDataProvider implements DataProvider {
 		return newContact;
 	}
 
+	/**
+	 * Get all contacts from database.
+	 * 
+	 * @return ArrayList of contacts.
+	 */
 	public ArrayList<Contact> getAllContact() {
 		ArrayList<Contact> contacts = new ArrayList<Contact>();
 
@@ -122,6 +185,12 @@ public class SQLiteDataProvider implements DataProvider {
 		return contacts;
 	}
 
+	/**
+	 * Get contacts from database, specified by @param gender.
+	 * 
+	 * @param gender
+	 * @return ArrayList of contacts.
+	 */
 	public ArrayList<Contact> getAllContactsByGender(int gender) {
 		ArrayList<Contact> contacts = new ArrayList<Contact>();
 		
@@ -144,6 +213,12 @@ public class SQLiteDataProvider implements DataProvider {
 		return contacts;
 	}
 	
+	/**
+	 * Get data from cursor and set data to contact.
+	 * 
+	 * @param cursor
+	 * @return contact with data from cursor
+	 */
 	private Contact cursorToContact(Cursor cursor) {
 		Contact contact = new Contact();
 		contact.setId(cursor.getLong(0));

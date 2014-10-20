@@ -4,6 +4,12 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ * Manage contacts database creation and version changing.
+ * 
+ * @author Asia
+ *
+ */
 public class ContactDBHelper extends SQLiteOpenHelper{
 	
 	public static final String DATABASE_NAME = "telephonebook.db";

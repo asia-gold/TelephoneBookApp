@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -37,7 +36,6 @@ public class DetailActivity extends ActionBarActivity {
 
 		Intent intent = getIntent();
 		long id = intent.getLongExtra("idContact", -1);
-		Log.e("-------------", "ID from Intent" + id);
 		if (id != -1) {
 			detailContact = MyTelephoneBookApplication.getDataProvider()
 					.getContact(id);

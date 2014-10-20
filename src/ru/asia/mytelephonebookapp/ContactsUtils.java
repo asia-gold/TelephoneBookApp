@@ -5,8 +5,20 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * Convert Date to String, and back.
+ * 
+ * @author Asia
+ *
+ */
 public class ContactsUtils {	
 
+	/**
+	 * Convert Date @param date to String.
+	 * 
+	 * @param date
+	 * @return String representation of Date
+	 */
 	public static String formatDateToString(Date date) {
 		String dateString = null;
 		if (date == null) {
@@ -20,6 +32,13 @@ public class ContactsUtils {
 		return dateString;
 	}
 
+	/**
+	 * Convert String @param dateString to Date.
+	 * 
+	 * @param dateString
+	 * @return Date representation of String
+	 * @throws ParseException
+	 */
 	public static Date formatStringToDate(String dateString)
 			throws ParseException {
 		Date date = new Date();
