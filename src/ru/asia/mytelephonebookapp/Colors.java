@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 /**
- * Contains int arrays of colors, checks settings state and sets colors.
+ * Contain int arrays of colors, check settings state and set colors.
  * 
  * @author Asia
  *

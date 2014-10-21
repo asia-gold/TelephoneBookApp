@@ -79,7 +79,7 @@ public class SQLiteDataProvider implements DataProvider {
 	/**
 	 * Add contact to database.
 	 * 
-	 * @param contact - contact to add.
+	 * @param contact - contact for adding.
 	 */
 	public void addContact(Contact contact) {
 		byte[] photo = contact.getPhoto();
@@ -91,7 +91,7 @@ public class SQLiteDataProvider implements DataProvider {
 	}
 
 	/**
-	 * Update contact, specified by id argument.
+	 * Update contact specified by id argument.
 	 * 
 	 * @param id	- id of contact.
 	 * 
@@ -120,7 +120,7 @@ public class SQLiteDataProvider implements DataProvider {
 	}
 
 	/**
-	 * Delete contact, specified by contact argument.
+	 * Delete contact specified by contact argument.
 	 * 
 	 * @param contact	- contact to delete.
 	 */
@@ -131,7 +131,7 @@ public class SQLiteDataProvider implements DataProvider {
 	}
 
 	/**
-	 * Delete contacts, specified by data argument.
+	 * Delete contacts specified by data argument.
 	 * 
 	 * @param data	- contacts to delete
 	 */
@@ -150,7 +150,7 @@ public class SQLiteDataProvider implements DataProvider {
 	}
 
 	/**
-	 * Get contact from database, using id argument.
+	 * Get contact from database using id argument.
 	 * 
 	 * @param id	- id of contact.
 	 * @return contact.
@@ -189,7 +189,7 @@ public class SQLiteDataProvider implements DataProvider {
 	}
 
 	/**
-	 * Get contacts from database, specified by gender argument.
+	 * Get contacts from database specified by gender argument.
 	 * 
 	 * @param gender
 	 * @return ArrayList of contacts.

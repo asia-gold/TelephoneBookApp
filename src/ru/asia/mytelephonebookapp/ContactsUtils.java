@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * Convert Date to String, and back.
+ * Convert Date to String and back.
  * 
  * @author Asia
  *

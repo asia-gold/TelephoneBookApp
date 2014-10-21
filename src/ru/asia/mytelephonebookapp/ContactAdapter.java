@@ -18,7 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
- * Custom adapter for ListView. Inflates custom list item layout.
+ * Custom adapter for ListView. Inflate custom list item layout.
  * 
  * @author Asia
  *

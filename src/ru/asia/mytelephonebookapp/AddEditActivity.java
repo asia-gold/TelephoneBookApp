@@ -139,7 +139,7 @@ public class AddEditActivity extends ActionBarActivity {
 	}
 
 	/**
-	 * Show dialog, when user tap the ImageView, to choose photo source.
+	 * Show dialog when user tap the ImageView to choose photo source.
 	 */
 	private void showAddPhotoDialog() {
 		DialogFragment dialog = new DialogFragment() {
@@ -209,7 +209,7 @@ public class AddEditActivity extends ActionBarActivity {
 	}
 
 	/**
-	 * Call async task to download image from network, using String arrays of urls.
+	 * Call async task to download image from network using String arrays of urls.
 	 */
 	private void downloadImage() {
 		if (isInternetAvailable()) {
@@ -228,9 +228,9 @@ public class AddEditActivity extends ActionBarActivity {
 	}
 
 	/**
-	 * Restore instance state from savedInstanceState argument, if it is not null.
-	 * If it is null, get data from data provider, using id, if it is not equals -1.
-	 * If id equals -1, Activity's views is empty.
+	 * Restore instance state from savedInstanceState argument if it is not null.
+	 * If it is null get data from data provider using id, if it is not equals -1.
+	 * If id equals -1 Activity's views is empty.
 	 * 
 	 * @param savedInstanceState
 	 */
@@ -438,7 +438,7 @@ public class AddEditActivity extends ActionBarActivity {
 	}
 
 	/**
-	 * Create a collision-resistant file name, using a date-time stamp.
+	 * Create a collision-resistant file name using a date-time stamp.
 	 * 
 	 * @return file of image
 	 * @throws IOException
@@ -512,7 +512,7 @@ public class AddEditActivity extends ActionBarActivity {
 	}
 
 	/**
-	 * Get String path of image from Content Provider of gallery, using uri.
+	 * Get String path of image from Content Provider of gallery using uri.
 	 * 
 	 * @param uri
 	 * @return String path of image
@@ -528,7 +528,7 @@ public class AddEditActivity extends ActionBarActivity {
 	}
 	
 	/**
-	 * Check Internet connection state. Show toast, if device has no Internet connection.
+	 * Check Internet connection state. Show toast if device has no Internet connection.
 	 * 
 	 * @return          <code>true</code> if device has Internet connection.
 	 */

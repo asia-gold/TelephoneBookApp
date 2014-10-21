@@ -24,7 +24,7 @@ public class MemoryDataProvider implements DataProvider {
 	/**
 	 * Add contact to ArrayList.
 	 * 
-	 * Contact data to add.
+	 * Contact data for adding.
 	 * @param photo
 	 * @param name
 	 * @param isMale
@@ -52,7 +52,7 @@ public class MemoryDataProvider implements DataProvider {
 	/**
 	 * Add contact to ArrayList.
 	 * 
-	 * @param contact - contact to add.
+	 * @param contact - contact for adding.
 	 */
 	@Override
 	public void addContact(Contact contact) {
@@ -64,7 +64,7 @@ public class MemoryDataProvider implements DataProvider {
 	}
 
 	/**
-	 * Update contact, specified by id argument.
+	 * Update contact specified by id argument.
 	 * 
 	 * @param id	- id of contact.
 	 * 
@@ -88,7 +88,7 @@ public class MemoryDataProvider implements DataProvider {
 	}
 
 	/**
-	 * Delete contact, specified by contact argument, from ArrayList.
+	 * Delete contact specified by contact argument from ArrayList.
 	 * 
 	 * @param contact	- contact to delete.
 	 */
@@ -99,7 +99,7 @@ public class MemoryDataProvider implements DataProvider {
 	}
 
 	/**
-	 * Delete contacts, specified by data argument, from ArrayList.
+	 * Delete contacts specified by data argument from ArrayList.
 	 * 
 	 * @param data	- contacts to delete
 	 */
@@ -117,7 +117,7 @@ public class MemoryDataProvider implements DataProvider {
 	}
 
 	/**
-	 * Get contact from ArrayList, using id.
+	 * Get contact from ArrayList using id.
 	 * 
 	 * @param id	- id of contact.
 	 * @return contact.
@@ -139,7 +139,7 @@ public class MemoryDataProvider implements DataProvider {
 	}
 
 	/**
-	 * Get contacts from ArrayList, specified by gender argument.
+	 * Get contacts from ArrayList specified by gender argument.
 	 * 
 	 * @param gender
 	 * @return ArrayList of contacts.
