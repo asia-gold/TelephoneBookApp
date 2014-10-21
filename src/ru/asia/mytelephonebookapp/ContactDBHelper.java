@@ -12,11 +12,20 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class ContactDBHelper extends SQLiteOpenHelper{
 	
+	/**
+	 * Database name and version.
+	 */
 	public static final String DATABASE_NAME = "telephonebook.db";
 	private static final int DATADASE_VERSION = 1;
 	
+	/**
+	 * Table name.
+	 */
 	public static final String TABLE_NAME = "contacts";
 	
+	/**
+	 * Columns names.
+	 */
 	public static final String COLUMN_ID = "_id";
 	public static final String COLUMN_PHOTO = "photo";
 	public static final String COLUMN_NAME = "name";
@@ -24,6 +33,9 @@ public class ContactDBHelper extends SQLiteOpenHelper{
 	public static final String COLUMN_DATE_BIRTH = "dateBorn";
 	public static final String COLUMN_ADDRESS = "address";
 			
+	/**
+	 * Database creation SQL statement.
+	 */
 	private static final String DATABASE_CREATE = "create table "
 			+ TABLE_NAME + "(" + COLUMN_ID + " integer primary key autoincrement, "
 			+ COLUMN_PHOTO + " BLOB, " + COLUMN_NAME + " text not null, " 

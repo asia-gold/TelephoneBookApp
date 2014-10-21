@@ -45,7 +45,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 /**
- * Activity for add new contact or edit existing.
+ * Activity for adding new contact or editing existing.
  * 
  * @author Asia
  *
@@ -55,6 +55,9 @@ public class AddEditActivity extends ActionBarActivity {
 	private static final int REQUEST_IMAGE_CAPTURE = 1;
 	private static final int REQUEST_IMAGE_SELECT = 2;
 
+	/**
+	 * String arrays of urls of images.
+	 */
 	private static final String[] maleUrlImages = {
 			"http://img1.wikia.nocookie.net/__cb20101014052403/en.futurama/images/4/45/Dr._John_A._Zoidberg.png",
 			"http://upload.wikimedia.org/wikipedia/ru/9/97/Philip_J._Fry.png",
@@ -225,7 +228,7 @@ public class AddEditActivity extends ActionBarActivity {
 	}
 
 	/**
-	 * Restore instance state from @param savedInstanceState, if it is not null.
+	 * Restore instance state from savedInstanceState argument, if it is not null.
 	 * If it is null, get data from data provider, using id, if it is not equals -1.
 	 * If id equals -1, Activity's views is empty.
 	 * 
@@ -382,11 +385,10 @@ public class AddEditActivity extends ActionBarActivity {
 	}
 
 	/**
-	 * Get boolean representation of String @param gender.
+	 * Get boolean representation of gender argument.
 	 * 
 	 * @param gender
 	 * @return          <code>true</code> if @param gender matches str_male.
-     *                  <code>false</code> if not.
 	 */
 	private boolean getBooleanFromString(String gender) {
 		boolean isMale = false;
@@ -397,10 +399,9 @@ public class AddEditActivity extends ActionBarActivity {
 	}
 
 	/**
-	 * Called to check camera available.
+	 * Check camera available.
 	 * 
 	 * @return          <code>true</code> if device has camera.
-     *                  <code>false</code> if not.
 	 */
 	private boolean isCameraAvailable() {
 		final PackageManager packageManager = getPackageManager();
@@ -437,9 +438,9 @@ public class AddEditActivity extends ActionBarActivity {
 	}
 
 	/**
-	 * create a collision-resistant file name, using a date-time stamp.
+	 * Create a collision-resistant file name, using a date-time stamp.
 	 * 
-	 * @return file of image.
+	 * @return file of image
 	 * @throws IOException
 	 */
 	private File createImageFile() throws IOException {
@@ -514,7 +515,7 @@ public class AddEditActivity extends ActionBarActivity {
 	 * Get String path of image from Content Provider of gallery, using uri.
 	 * 
 	 * @param uri
-	 * @return String path of image.
+	 * @return String path of image
 	 */
 	private String getPath(Uri uri) {
 		String[] projection = { MediaStore.Images.Media.DATA };
@@ -527,10 +528,9 @@ public class AddEditActivity extends ActionBarActivity {
 	}
 	
 	/**
-	 * Called to check Internet connection state. Show toast, if device has no Internet connection.
+	 * Check Internet connection state. Show toast, if device has no Internet connection.
 	 * 
 	 * @return          <code>true</code> if device has Internet connection.
-     *                  <code>false</code> if not.
 	 */
 	private boolean isInternetAvailable() {
 		boolean hasWifiNet = false;

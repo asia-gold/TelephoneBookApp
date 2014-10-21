@@ -6,8 +6,8 @@
     
     <string name="str_empty_view">Нажмите + , чтобы добавить контакт</string>
     
-    <string name="str_male">Мужчины</string>
-    <string name="str_female">Женщины</string>
+    <string name="str_male">Мужчина</string>
+    <string name="str_female">Женщина</string>
 
     <!-- Action Buttons -->
     <string name="action_add">Добавить</string>

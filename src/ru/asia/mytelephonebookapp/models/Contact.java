@@ -4,6 +4,8 @@ import java.util.Date;
 
 
 /**
+ * Model of contact.
+ * 
  * @author Asia
  *
  */

@@ -14,7 +14,7 @@ import java.util.Locale;
 public class ContactsUtils {	
 
 	/**
-	 * Convert Date @param date to String.
+	 * Convert Date to String.
 	 * 
 	 * @param date
 	 * @return String representation of Date
@@ -33,7 +33,7 @@ public class ContactsUtils {
 	}
 
 	/**
-	 * Convert String @param dateString to Date.
+	 * Convert String to Date.
 	 * 
 	 * @param dateString
 	 * @return Date representation of String

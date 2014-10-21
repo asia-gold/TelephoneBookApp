@@ -37,7 +37,7 @@ public interface DataProvider {
 	
 	
 	/**
-	 * Update contact, specified by @param id.
+	 * Update contact, specified by id argument.
 	 * 
 	 * @param id	- id of contact.
 	 * 
@@ -52,14 +52,14 @@ public interface DataProvider {
 			boolean isMale, Date dateBorn, String address);
 	
 	/**
-	 * Delete contact, specified by @param contact.
+	 * Delete contact, specified by contact argument.
 	 * 
 	 * @param contact	- contact to delete.
 	 */
 	void deleteContact(Contact contact);
 	
 	/**
-	 * Delete contacts, specified by @param data.
+	 * Delete contacts, specified by data argument.
 	 * 
 	 * @param data	- contacts to delete
 	 */
@@ -86,7 +86,7 @@ public interface DataProvider {
 	ArrayList<Contact> getAllContact();
 	
 	/**
-	 * Get contacts from provider, specified by @param gender.
+	 * Get contacts from provider, specified by gender argument.
 	 * 
 	 * @param gender
 	 * @return ArrayList of contacts.

@@ -11,7 +11,9 @@ public class MyTelephoneBookApplication extends Application{
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		// Use this to work with SQLiteDatabase
 		dataProvider = new SQLiteDataProvider(this);
+		// Use this to work with ArrayList
 		//dataProvider = new MemoryDataProvider();
 		//dataProvider.deleteAllContacts();
 	}

@@ -23,6 +23,12 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/**
+ * Main Activity of application. Show ListView of contacts.
+ * 
+ * @author Asia
+ *
+ */
 public class MainActivity extends ActionBarActivity {
 
 	private Context context = this;
@@ -40,18 +46,11 @@ public class MainActivity extends ActionBarActivity {
 	private int gender = 2;
 	private String colorTheme = "Blue/Pink";
 	private boolean notify = false;
-	
-	private boolean firstTime = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		if (firstTime) {
-			firstTime = false;
-			
-		}
 
 		settings = PreferenceManager.getDefaultSharedPreferences(context);
 		String genderSetting = settings.getString("prefDisplayByGender",
@@ -102,10 +101,9 @@ public class MainActivity extends ActionBarActivity {
 	}
 	
 	/**
-	 * Called to check prefDisplayByGender state.
+	 * Check contacts filter by gender state.
 	 * 
-	 * @return          <code>true</code> if prefDisplayByGender changes its value.
-     *                  <code>false</code> if not.
+	 * @return          <code>true</code> if gender filtering mode was changed.
 	 */
 	private boolean isGenderSettingChange() {
 		String genderSetting = settings.getString("prefDisplayByGender",
@@ -119,10 +117,9 @@ public class MainActivity extends ActionBarActivity {
 	}
 	
 	/**
-	 * Called to check prefColorsByGender state.
+	 * Check color preference state.
 	 * 
-	 * @return          <code>true</code> if prefColorsByGender changes its value.
-     *                  <code>false</code> if not.
+	 * @return          <code>true</code> if color preference state was changed.
 	 */
 	private boolean isColorSettingChange() {
 		String colorSetting = settings.getString("prefColorsByGender",
@@ -135,11 +132,9 @@ public class MainActivity extends ActionBarActivity {
 	}
 
 	/**
-	 * Called to check notify preference state.
+	 * Check notify preference state.
 	 * 
-	 * @return          <code>true</code> if notify preference changes its value from false to true.
-     *                  <code>false</code> if not.
-	 */
+	 * @return          <code>true</code> if notify preference was changed.	 */
 	private boolean isNotifyChange() {
 		SharedPreferences sPref = getSharedPreferences("preferences", MODE_PRIVATE);
 		notify = sPref.getBoolean("notify", false);
@@ -154,7 +149,7 @@ public class MainActivity extends ActionBarActivity {
 
 	/**
 	 * Update data of activity, adapter and invalidate options menu
-	 * if one of the preferences has changed.
+	 * if one of the preferences has been changed.
 	 */
 	public void updateData() {
 		if (isGenderSettingChange() || isColorSettingChange()
@@ -200,6 +195,12 @@ public class MainActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	/**
+	 * Get int representation of String genderSettings argument.
+	 * 
+	 * @param genderSettings
+	 * @return int representation of String gender.
+	 */
 	private int getIntGender(String genderSettings) {
 		int genderInt = 2;
 		if (genderSettings.matches(getResources().getString(R.string.str_male_only))) {
@@ -212,6 +213,9 @@ public class MainActivity extends ActionBarActivity {
 		return genderInt;
 	}
 
+	/**
+	 * Customize activity for action mode.
+	 */
 	private void startRemoveListItemMode() {
 		removeModeActive = true;
 		removeMode = this
@@ -222,6 +226,9 @@ public class MainActivity extends ActionBarActivity {
 		lvContacts.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 	}
 
+	/**
+	 * Return default activity state. 
+	 */
 	private void endRemoveListItemMode() {
 		removeModeActive = false;
 		lvContacts.setAdapter(adapter);
@@ -232,6 +239,12 @@ public class MainActivity extends ActionBarActivity {
 		invalidateOptionsMenu();
 	}
 
+	/**
+	 * Action mode for removing contacts from ListView.
+	 * 
+	 * @author Asia
+	 *
+	 */
 	private class RemoveListItemActionModeCallback implements
 			ActionMode.Callback {
 

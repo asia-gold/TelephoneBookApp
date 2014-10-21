@@ -8,7 +8,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 
 /**
- * Activity with settings. 
+ * Activity with settings. Contacts filter and color settings.
  * 
  * @author Asia
  *

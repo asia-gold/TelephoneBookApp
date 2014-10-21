@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.Iterator;
 
 import ru.asia.mytelephonebookapp.models.Contact;
-import android.content.Context;
-import android.util.Log;
 
 /**
  * Work with contacts from ArrayList. Add, update, delete and get
@@ -45,9 +43,7 @@ public class MemoryDataProvider implements DataProvider {
 		newContact.setAddress(address);
 		dataInMemory.add(newContact);
 		long id = (long)dataInMemory.indexOf(newContact);
-		
-		Log.e("addContact", "Id " + id);
-		
+
 		newContact.setId(id);
 		dataInMemory.set((int) id, newContact);
 		return id;
@@ -63,14 +59,12 @@ public class MemoryDataProvider implements DataProvider {
 		dataInMemory.add(contact);
 		long id = (long)dataInMemory.indexOf(contact);
 		
-		Log.e("addContact(Contact)", "Id " + id);
-		
 		contact.setId(id);
 		dataInMemory.set((int) id, contact);		
 	}
 
 	/**
-	 * Update contact, specified by @param id.
+	 * Update contact, specified by id argument.
 	 * 
 	 * @param id	- id of contact.
 	 * 
@@ -94,7 +88,7 @@ public class MemoryDataProvider implements DataProvider {
 	}
 
 	/**
-	 * Delete contact, specified by @param contact, from ArrayList.
+	 * Delete contact, specified by contact argument, from ArrayList.
 	 * 
 	 * @param contact	- contact to delete.
 	 */
@@ -105,7 +99,7 @@ public class MemoryDataProvider implements DataProvider {
 	}
 
 	/**
-	 * Delete contacts, specified by @param data, from ArrayList.
+	 * Delete contacts, specified by data argument, from ArrayList.
 	 * 
 	 * @param data	- contacts to delete
 	 */
@@ -145,7 +139,7 @@ public class MemoryDataProvider implements DataProvider {
 	}
 
 	/**
-	 * Get contacts from ArrayList, specified by @param gender.
+	 * Get contacts from ArrayList, specified by gender argument.
 	 * 
 	 * @param gender
 	 * @return ArrayList of contacts.
@@ -171,8 +165,6 @@ public class MemoryDataProvider implements DataProvider {
 				}
 			}
 		}
-		
-		Log.e("MemoryDataProvider", "contactsByGender " + contactsByGender.toString());
 		
 		return contactsByGender;
 	}

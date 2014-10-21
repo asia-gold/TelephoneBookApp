@@ -41,12 +41,16 @@ public class ContactAdapter extends BaseAdapter {
 		checkedStates = new SparseBooleanArray(contactsList.size());
 	}
 	
+	/**
+	 * Get checked items of ArrayList.
+	 * @return SparseBooleanArray of checked items.
+	 */
 	public SparseBooleanArray getCheckedStates() {
 		return checkedStates;
 	}
 
 	/**
-	 * Set new @param data to contactsList, notify adapter data has changed.
+	 * Set new data to contactsList, notify adapter data has been changed.
 	 * 
 	 * @param data
 	 */
@@ -71,18 +75,12 @@ public class ContactAdapter extends BaseAdapter {
 		return position;
 	}
 	
-//	public boolean isChecked(int position) {
-//		return checkedStates.get(position, false);
-//	}
-//
-//	public void setChecked(int position, boolean isChecked) {
-//		checkedStates.put(position, isChecked);
-//	}
-//	
-//	public void changeState(int position) {
-//		setChecked(position, !isChecked(position));
-//	}
-	
+	/**
+	 * Hold references to the views in item layout.
+	 * 
+	 * @author Asia
+	 *
+	 */
 	static class ViewHolder {
 		public LinearLayout llItem;
 		public ImageView ivPhoto;
@@ -132,7 +130,7 @@ public class ContactAdapter extends BaseAdapter {
 				photoArray, 0, photoArray.length));
 		viewHolder.tvName.setText(tmpValue.getName());
 		
-		if (isRemove == true) {
+		if (isRemove) {
 			viewHolder.chbRemove.setTag(position);
 			viewHolder.chbRemove.setChecked(checkedStates.get(position, false));
 			viewHolder.chbRemove.setOnCheckedChangeListener(new OnCheckedChangeListener() {

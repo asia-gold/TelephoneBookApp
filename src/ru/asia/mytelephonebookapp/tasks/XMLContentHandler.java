@@ -27,7 +27,7 @@ public class XMLContentHandler extends DefaultHandler{
 	private ArrayList<Contact> listOfContact = new ArrayList<Contact>();
 	
 	/**
-	 * Called when parsed data is requested.
+	 * Get parsed data.
 	 *
 	 * @return ArrayList of contact, parsed from xml.
 	 */
@@ -37,8 +37,6 @@ public class XMLContentHandler extends DefaultHandler{
 	
 	/**
 	 * Receive notification of the start of an element.
-	 * 
-	 * Called in opening tag <contact>
 	 */
 	@Override
 	public void startElement(String uri, String localName, String qName,
@@ -52,8 +50,6 @@ public class XMLContentHandler extends DefaultHandler{
 	
 	/**
 	 * Receive notification of the end of an element.
-	 * 
-	 * Called in end tag </contact>
 	 */
 	@Override
 	public void endElement(String uri, String localName, String qName)
@@ -88,8 +84,6 @@ public class XMLContentHandler extends DefaultHandler{
 	
 	/**
 	 * Receive notification of character data inside an element.
-	 * 
-	 * Called on the following structure <tag>characters</tag>
 	 */
 	@Override
 	public void characters(char[] ch, int start, int length)

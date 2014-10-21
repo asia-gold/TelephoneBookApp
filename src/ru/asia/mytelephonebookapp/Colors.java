@@ -12,6 +12,9 @@ import android.preference.PreferenceManager;
  */
 public class Colors {
 	
+	/**
+	 * Int arrays of colors.
+	 */
 	private static final int[] maleColors = { R.color.male_0, R.color.male_1 };	
 	private static final int[] femaleColors = { R.color.female_0, R.color.female_1 };
 	
@@ -26,7 +29,7 @@ public class Colors {
 	}
 	
 	/**
-	 * Checks prefColorsByGender, and sets maleColor and femaleColor.
+	 * Check prefColorsByGender, and set maleColor and femaleColor.
 	 */
 	private void getColorsFromSettings() {
 		int i = 0;

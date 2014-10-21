@@ -151,10 +151,9 @@ public class DataContactsExportTask extends AsyncTask<Void, Void, Boolean> {
 	}
 
 	/**
-	 * Called to check external storage state.
+	 * Check external storage state.
 	 * 
 	 * @return          <code>true</code> if external storage writable.
-     *                  <code>false</code> if not.
 	 */
 	private boolean isExternalStorageWritable() {
 		String state = Environment.getExternalStorageState();
