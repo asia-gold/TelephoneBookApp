@@ -42,6 +42,7 @@
     <!-- Import Task Strings -->
     <string name="str_import_result_true">Данные импортированы.</string>
     <string name="str_import_result_false">Нет файла для импорта.</string>
+    <string name="str_no_sd_card">SD карта отсутствует.</string>
     
     <!-- Add Photo Dialog Strings -->
     <string name="title_add_photo">Добавить фото</string>

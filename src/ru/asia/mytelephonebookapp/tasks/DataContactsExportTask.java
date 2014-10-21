@@ -36,10 +36,10 @@ import android.widget.Toast;
  */
 public class DataContactsExportTask extends AsyncTask<Void, Void, Boolean> {
 
-	private static final String EXPORT_FILE_PATH = Environment
-			.getExternalStorageDirectory().getPath();
-	private static final String EXPORT_FILE_NAME = "/database.xml";
+
 	private Context context;
+
+	private static final String EXPORT_FILE_NAME = "/database.xml";
 
 	public DataContactsExportTask(Context context) {
 		this.context = context;
@@ -63,7 +63,7 @@ public class DataContactsExportTask extends AsyncTask<Void, Void, Boolean> {
 			DOMSource source = new DOMSource(document);
 
 			if (isExternalStorageWritable()) {
-				File file = new File(EXPORT_FILE_PATH, EXPORT_FILE_NAME);
+				File file = new File(context.getExternalFilesDir(null), EXPORT_FILE_NAME);
 				file.createNewFile();
 				file.getParentFile().mkdirs();
 				FileOutputStream fos = new FileOutputStream(file);
@@ -89,7 +89,7 @@ public class DataContactsExportTask extends AsyncTask<Void, Void, Boolean> {
 			message = context.getResources().getString(
 					R.string.str_export_result_false);
 		}
-		Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+		showToast(message);
 	}
 
 	/**
@@ -160,7 +160,17 @@ public class DataContactsExportTask extends AsyncTask<Void, Void, Boolean> {
 		if (Environment.MEDIA_MOUNTED.equals(state)) {
 			return true;
 		}
+		showToast(context.getResources().getString(R.string.str_no_sd_card));
 		return false;
+	}
+	
+	/**
+	 * Inform user.
+	 * 
+	 * @param message
+	 */
+	private void showToast(String message) {
+		Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 	}
 
 }

@@ -41,9 +41,9 @@ public class DataContactsImportTask extends AsyncTask<Void, Void, ArrayList<Cont
 	@Override
 	protected ArrayList<Contact> doInBackground(Void... params) {
 
-		File sdCard = Environment.getExternalStorageDirectory();
+		File sdCard = context.getExternalFilesDir(null);
 		File importFile = new File(sdCard, IMPORT_FILE_NAME);
-		contacts = new ArrayList<Contact>();
+		contacts = null;
 
 		FileInputStream xmlFileiInput = null;
 		try {

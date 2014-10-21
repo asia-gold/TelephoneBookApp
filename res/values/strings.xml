@@ -40,17 +40,18 @@
     <string name="str_export_result_false">Data wasn\'t exported because of internal error.</string>
     
     <!-- Import Task Strings -->
-    <string name="str_import_result_true">Data imported.</string>
+    <string name="str_import_result_true">Data was imported.</string>
     <string name="str_import_result_false">No files for import.</string>
+    <string name="str_no_sd_card">SD card not mounted.</string>
     
     <!-- Add Photo Dialog Strings -->
     <string name="title_add_photo">Add Photo</string>
     
     <!-- Preferences Strings -->
-    <string name="pref_display_category">Опции отображения</string>
-    <string name="pref_display_by_gender_title">Фильтр контактов</string>
-    <string name="pref_display_by_gender_summary">Позволяет выбрать отображение контактов по полу</string>
-    <string name="pref_display_by_gender_default">Все</string>
+    <string name="pref_display_category">Display Options</string>
+    <string name="pref_display_by_gender_title">Contacts filter</string>
+    <string name="pref_display_by_gender_summary">Allows to select contacts to display</string>
+    <string name="pref_display_by_gender_default">Show all</string>
     <string name="pref_colors_by_gender_title">Choose color theme</string>
     <string name="pref_colors_by_gender_summary">Allows to select color theme</string>
     <string name="pref_colors_by_gender_default">Blue/Pink</string>

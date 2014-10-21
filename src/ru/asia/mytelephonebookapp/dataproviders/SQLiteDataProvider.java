@@ -53,7 +53,7 @@ public class SQLiteDataProvider implements DataProvider {
 	/**
 	 * Add contact to database.
 	 * 
-	 * Contact data to add.
+	 * Contact data for adding.
 	 * @param photo
 	 * @param name
 	 * @param isMale
@@ -150,7 +150,7 @@ public class SQLiteDataProvider implements DataProvider {
 	}
 
 	/**
-	 * Get contact from database, using id.
+	 * Get contact from database, using id argument.
 	 * 
 	 * @param id	- id of contact.
 	 * @return contact.
@@ -220,7 +220,7 @@ public class SQLiteDataProvider implements DataProvider {
 	 * Get data from cursor and set data to contact.
 	 * 
 	 * @param cursor
-	 * @return contact with data from cursor
+	 * @return contact with data from cursor.
 	 */
 	private Contact cursorToContact(Cursor cursor) {
 		Contact contact = new Contact();
