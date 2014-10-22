@@ -11,7 +11,6 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -155,10 +154,7 @@ public class MainActivity extends ActionBarActivity {
 		if (isGenderSettingChange() || isColorSettingChange()
 				|| isNotifyChange()) {
 			data = MyTelephoneBookApplication.getDataProvider()
-					.getAllContactsByGender(gender);
-			
-			Log.e("MainActivity", "data " + data.toString());
-			
+					.getAllContactsByGender(gender);			
 			adapter.updateAdapterData(data);
 			invalidateOptionsMenu();
 		}
